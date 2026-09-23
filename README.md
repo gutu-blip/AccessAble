@@ -1,70 +1,162 @@
-# Getting Started with Create React App
+# AccessAble
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A web platform connecting persons with disabilities (PWDs) with vetted jobs, beneficiary aid, training programs, and community events—with accommodations confirmed upfront.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Overview
 
-### `npm start`
+Many inclusive and PWD-targeted opportunities go unnoticed because they are scattered across fragmented job boards, corporate websites, and community groups. When opportunities are found, critical accessibility details—such as physical accessibility, sign language interpretation, or assistive tech compatibility—are often omitted or treated as an afterthought.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+**AccessAble** eliminates the guesswork by serving as a single discovery engine where all listings feature transparent, standardized accommodation specifications.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## Core Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 1. Zero-Barrier Opportunity Discovery
 
-### `npm run build`
+* **Faceted Accommodation Search:** Filter by specific accessibility provisions including Screen Reader Compatibility, Wheelchair / Step-Free Access, ASL / CART Interpreting, and Neurodivergent-Friendly environments.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+* **Opportunity Categories:** jobs, apprenticeships, fellowships, events, and grant programs.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+* **Flexible Work Formats:** Filter by Remote Only, Hybrid, or On-site Verified listings.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+* **Accommodation Badges:** Visual and machine-readable accommodation indicators directly on listing cards.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+### 2. Detailed Accommodation Transparency
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+* Dedicated accommodation panels detailing on-site access, digital format readiness, and point-of-contact details for custom adjustments.
+* Alternative submission pathways (supporting voice notes, plain text, and video applications).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 3. Submission & Moderation Pipeline
 
-### Code Splitting
+* Guided posting flow for employers and event hosts with mandatory accommodation disclosures.
+* Administrative verification pipeline to ensure opportunities adhere to accessibility standards prior to publication.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### 4. Built-in Accessibility Toolkit
 
-### Analyzing the Bundle Size
+* High-contrast theme toggle.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
+* Dynamic typography scaling and dyslexia-friendly font settings.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
+* Full keyboard navigability with skip-to-content links and screen-reader announcements.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+## Accessibility Standards
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+AccessAble is architected to meet **WCAG 2.1 Level AA/AAA** and **ADA compliance guidelines**:
 
-### `npm run build` fails to minify
+* **Semantic HTML5:** Native landmark tags (`<main>`, `<nav>`, `<aside>`, `<header>`) for predictable screen-reader navigation.
+* **ARIA Support:** Dynamic live regions (`aria-live`) for live search results, filter counts, and modal states.
+* **Keyboard Navigation:** Logical tab ordering, visible focus outlines, and keyboard traps avoided across all overlays.
+* **Color Contrast:** Strict contrast compliance across both default and high-contrast modes.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
+
+## Tech Stack
+
+* **Frontend:** Create React App (`react-scripts` 5.0.1), React 19.3, JavaScript (no Next.js / App Router, no TypeScript)
+* **Styling & Components:** Tailwind CSS 3.4, `@tailwindcss/forms`, PostCSS + Autoprefixer, Material Symbols Outlined, Plus Jakarta Sans / Inter / Lexend / OpenDyslexic fonts (no Radix UI / Headless UI, no Lucide Icons)
+* **State & Data Fetching:** React hooks (`useState` / `useEffect` / `useMemo`), Firebase Realtime Database realtime subscriptions (`onValue`), `localStorage` draft persistence (no TanStack Query, no Zustand)
+* **Database & Backend:** Firebase Realtime Database (`europe-west1`, project `accessablebyhex`) + Firebase Storage (opportunity logos), Firebase Hosting with SPA rewrites (no Supabase / PostgreSQL, no Row-Level Security, no Auth in use)
+* **Testing & Perf:** Jest + React Testing Library (`@testing-library/react` / `jest-dom` / `user-event`), `web-vitals` (no `@axe-core/react`, Playwright, or Lighthouse CI configured)
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+* Node.js `>= 18.x`
+* npm (repo uses `package-lock.json`)
+
+### Installation
+
+1. **Clone the repository:**
+```bash
+git clone https://github.com/gutu-blip/AccessAble.git
+cd AccessAble
+
+```
+
+
+2. **Install dependencies:**
+```bash
+npm install
+
+```
+
+
+3. **Configure environment variables:**
+No `.env.local` file is required. The Firebase config is hardcoded in `src/firebase.js` (project `accessablebyhex`, RTDB `https://accessablebyhex-default-rtdb.europe-west1.firebasedatabase.app`). `.env.local` is gitignored but unused.
+
+
+4. **Run the development server:**
+```bash
+npm start
+
+```
+
+
+Open [http://localhost:3000](http://localhost:3000?utm_source=gemini) in your browser.
+
+---
+
+## Testing for Accessibility
+
+Run tests and builds with the available CRA scripts:
+
+```bash
+# Run Jest tests in interactive watch mode (React Testing Library)
+npm test
+
+# Create a production build in the `build/` folder (served by Firebase Hosting)
+npm run build
+
+```
+
+There are no `test:a11y`, `test:e2e`, or `lint` scripts in `package.json`.
+
+---
+
+## Project Structure
+
+```text
+AccessAble/
+├── public/               # CRA static assets (index.html, manifest.json, icons)
+├── build/                # Production build output (Firebase Hosting `public` dir)
+├── src/
+│   ├── index.js          # ReactDOM entry point
+│   ├── App.js            # Page router (home / details / submission via useState)
+│   ├── Home.js           # Home discovery feed, search, filters, bookmarks
+│   ├── Details.js        # Opportunity detail page
+│   ├── SubmissionForm.js # Multi-step posting form (Basic / Logistics / Accommodations)
+│   ├── firebase.js       # Hardcoded Firebase app / RTDB / Storage init
+│   ├── services/
+│   │   └── opportunities.js # RTDB CRUD, subscriptions, validation (schemaVersion: 1)
+│   ├── index.css         # Tailwind directives + a11y helpers
+│   ├── App.css
+│   └── App.test.js       # Default CRA Jest test
+├── firebase.json         # Hosting: `public: build` + SPA rewrites to /index.html
+├── .firebaserc           # Default Firebase project: `accessablebyhex`
+├── database.rules.json   # RTDB validation rules for `opportunities` / `saved`
+├── tailwind.config.js    # Tailwind 3.4 tokens, `darkMode: 'class'`
+└── postcss.config.js     # tailwindcss + autoprefixer
+
+```
+
+---
+
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for details.
