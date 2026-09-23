@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>AccessAble — Inclusive Career Discovery</title>
+<!-- Google Fonts: Plus Jakarta Sans & Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<!-- Tailwind CSS v3 with Forms & Container Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script data-purpose="tailwind-configuration">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            },
+            accent: {
+              lime: '#84cc16',
+              limeDark: '#4d7c0f',
+              limeLight: '#f7fee7'
+            }
+          },
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+          },
+          boxShadow: {
+            'card': '0 8px 24px -4px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.04)',
+            'float-blue': '0 12px 28px -4px rgba(29, 78, 216, 0.35)',
+            'nav': '0 10px 30px -5px rgba(0, 0, 0, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.06)',
+            'pill': '0 2px 8px rgba(0, 0, 0, 0.04)'
+          }
+        }
+      }
+    };
+  </script>
+<style data-purpose="mobile-layout-styles">
+    /* iOS friendly bounce & layout defaults */
+    html {
+      -webkit-tap-highlight-color: transparent;
+      scroll-behavior: smooth;
+    }
+    body {
+      overscroll-behavior-y: none;
+      -webkit-font-smoothing: antialiased;
+    }
+    /* Hide scrollbars while retaining scroll capability */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-[#f0f4f9] text-slate-800 font-sans antialiased min-h-screen flex justify-center selection:bg-blue-200">
+<!-- Mobile Viewport Container (~390px iPhone standard frame) -->
+<div class="w-full max-w-[420px] bg-[#f8fafc] min-h-screen flex flex-col relative shadow-2xl pb-28 border-x border-slate-200/60">
+<!-- BEGIN: iOSStatusBar -->
+<!-- Matches reference top clock & system indicators -->
+<div class="w-full px-6 pt-3 pb-1 flex justify-between items-center text-xs font-semibold text-slate-800 select-none" data-purpose="ios-status-bar">
+<span>9:41</span>
+<!-- Notch spacer / Dynamic island placeholder -->
+<div class="w-20 h-4 bg-slate-900/10 rounded-full mx-auto hidden sm:block"></div>
+<div class="flex items-center gap-1.5 text-slate-800">
+<span class="material-symbols-outlined text-[15px]">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-[15px]">wifi</span>
+<span class="material-symbols-outlined text-[17px]">battery_full</span>
+</div>
+</div>
+<!-- END: iOSStatusBar -->
+<!-- BEGIN: AppHeader -->
+<!-- Top profile, location selector, notifications, brand logo & quick accessibility toolbar -->
+<header class="px-5 pt-2 pb-3">
+<!-- Top Row: Avatar + Location dropdown + Notification Bell -->
+<div class="flex items-center justify-between gap-2">
+<!-- User Avatar with Verified Green Dot -->
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="w-10 h-10 rounded-full bg-blue-100 ring-2 ring-blue-600/30 overflow-hidden flex items-center justify-center">
+<span class="material-symbols-outlined text-blue-700 text-2xl">account_circle</span>
+</div>
+<span class="absolute bottom-0 right-0 w-3 h-3 bg-lime-500 rounded-full border-2 border-white"></span>
+</div>
+<!-- Location Selector Pill -->
+<div class="flex flex-col cursor-pointer">
+<div class="flex items-center gap-1 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+<span>My Location</span>
+<span class="material-symbols-outlined text-[13px] text-slate-400">expand_more</span>
+</div>
+<div class="flex items-center gap-1 text-xs font-extrabold text-slate-800">
+<span class="material-symbols-outlined text-[14px] text-blue-600">location_on</span>
+<span class="truncate max-w-[140px]">Remote &amp; Global</span>
+</div>
+</div>
+</div>
+<!-- Notification Bell Pill -->
+<div class="flex items-center gap-2">
+<button aria-label="Notifications" class="relative w-10 h-10 rounded-full bg-white border border-slate-200/80 shadow-sm flex items-center justify-center text-slate-600 active:scale-95 transition-all" type="button">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-2 right-2.5 w-2 h-2 bg-rose-500 rounded-full ring-2 ring-white"></span>
+</button>
+</div>
+</div>
+<!-- Official AccessAble Logo Bar with Inclusive Careers Tagline -->
+<div class="mt-3 pt-2 pb-1 flex items-center justify-between border-t border-slate-200/60">
+<a aria-label="AccessAble Home" class="flex items-center gap-2" href="#">
+<!-- Logo Image provided in prompt: https://lh3.googleusercontent.com/aida/AEtjO1UcUUfm62pYMep7tOW-goOTSsHjXoiyOMmBX8xP7UNttRoC8tTkworD7wpW4h4NKIyGNFWD3SyQ3GJ84Sf8U6OTN_FviUlmAZlr-Q87RVEaQnWch6kxeOpolLbvU3DqIyslV4gw_EwrhZkvaSjFa_gY5mZR94UuLqZsK3im5jopilRLHIhY8yVIoCFUb1OM5EhQYXFt66sJzKcDzzweZJIFu41fV1bS0qOnjrv8msniIGqg_cFlVIgkECB4DaSRWhaU-iI_bm6W5A -->
+<img alt="AccessAble Brand Logo" class="h-9 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UcUUfm62pYMep7tOW-goOTSsHjXoiyOMmBX8xP7UNttRoC8tTkworD7wpW4h4NKIyGNFWD3SyQ3GJ84Sf8U6OTN_FviUlmAZlr-Q87RVEaQnWch6kxeOpolLbvU3DqIyslV4gw_EwrhZkvaSjFa_gY5mZR94UuLqZsK3im5jopilRLHIhY8yVIoCFUb1OM5EhQYXFt66sJzKcDzzweZJIFu41fV1bS0qOnjrv8msniIGqg_cFlVIgkECB4DaSRWhaU-iI_bm6W5A"/>
+</a>
+<span class="text-[10px] font-extrabold uppercase tracking-wider text-lime-700 bg-lime-100/90 border border-lime-300 px-2.5 py-1 rounded-full">
+          Inclusive Careers
+        </span>
+</div>
+<!-- Quick Accessibility Toolbar for Mobile (WCAG Friendly sizing & contrast) -->
+<div class="mt-2.5 flex items-center justify-between bg-white border border-slate-200/80 rounded-2xl px-3 py-1.5 shadow-pill text-xs">
+<span class="text-[11px] font-bold text-slate-400 flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px] text-blue-600">accessibility_new</span>
+          Assist Mode
+        </span>
+<div class="flex items-center gap-1.5">
+<!-- Text scale buttons -->
+<button aria-label="Decrease text size" class="h-6 px-2 bg-slate-100 hover:bg-slate-200 active:bg-blue-100 rounded-lg text-slate-700 font-bold text-[10px] flex items-center" type="button">A-</button>
+<button aria-label="Increase text size" class="h-6 px-2 bg-slate-100 hover:bg-slate-200 active:bg-blue-100 rounded-lg text-slate-700 font-bold text-[11px] flex items-center" type="button">A+</button>
+<!-- High Contrast Toggle Button -->
+<button aria-label="Toggle high contrast" class="h-6 px-2 bg-slate-100 hover:bg-slate-200 active:bg-blue-100 rounded-lg text-slate-700 font-medium text-[10px] flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[13px] text-blue-600">contrast</span>
+            Contrast
+          </button>
+<!-- Dyslexic Font Toggle Button -->
+<button aria-label="Toggle dyslexic font" class="h-6 px-2 bg-slate-100 hover:bg-slate-200 active:bg-blue-100 rounded-lg text-slate-700 font-medium text-[10px] flex items-center gap-0.5" type="button">
+<span class="material-symbols-outlined text-[13px] text-lime-600">font_download</span>
+            Dyslexic
+          </button>
+</div>
+</div>
+</header>
+<!-- END: AppHeader -->
+<!-- BEGIN: ReminderBanner -->
+<!-- Matches exact Reference image countdown & interview reminder -->
+<section class="px-5 py-2">
+<div class="bg-gradient-to-r from-blue-50/90 via-white to-lime-50/80 border border-blue-200/70 rounded-3xl p-3.5 shadow-sm flex items-center justify-between gap-3">
+<div class="flex items-center gap-3">
+<!-- Timer Icon Badge with radial pulse -->
+<div class="w-10 h-10 rounded-2xl bg-white shadow-sm border border-blue-100 flex items-center justify-center shrink-0 text-blue-600">
+<span class="material-symbols-outlined text-[22px]">timer</span>
+</div>
+<div>
+<div class="flex items-center gap-1.5">
+<span class="font-extrabold text-[11px] text-slate-900">Upcoming Interview</span>
+<span class="bg-lime-200/80 text-lime-900 text-[9px] font-bold px-1.5 py-0.2 rounded-md">ASL Verified</span>
+</div>
+<p class="text-[11px] text-slate-600 leading-tight mt-0.5 font-medium truncate max-w-[170px]">
+              InclusionTech Labs • Zoom in 2h
+            </p>
+</div>
+</div>
+<!-- Countdown badge + chevron -->
+<div class="flex items-center gap-1.5 shrink-0">
+<div class="bg-white border border-slate-200 px-2.5 py-1.5 rounded-xl font-mono text-xs font-bold text-slate-800 tracking-wider shadow-xs">
+            09 : 45
+          </div>
+<button aria-label="View interview details" class="w-7 h-7 rounded-full bg-white border border-slate-200/80 text-slate-500 flex items-center justify-center active:scale-95" type="button">
+<span class="material-symbols-outlined text-[15px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- END: ReminderBanner -->
+<!-- BEGIN: SearchAndFilters -->
+<!-- Search Bar + Voice + Filter Button + Category Horizontal Chips -->
+<section class="px-5 pt-2 pb-1 space-y-3">
+<!-- Search Input Container -->
+<div class="relative flex items-center bg-white rounded-full border border-slate-200/90 shadow-sm px-4 py-2 focus-within:ring-2 focus-within:ring-blue-600 transition-all">
+<span class="material-symbols-outlined text-slate-400 text-[20px] mr-2">search</span>
+<input class="w-full bg-transparent border-none outline-none text-xs text-slate-800 placeholder:text-slate-400 p-0 focus:ring-0" placeholder="Search inclusive jobs, internships..." type="text"/>
+<!-- Voice Search & Filter Adjustment Pill (from Reference 1) -->
+<div class="flex items-center gap-1.5 pl-2 border-l border-slate-200">
+<button aria-label="Voice search" class="text-slate-400 hover:text-blue-600 transition-colors p-1" type="button">
+<span class="material-symbols-outlined text-[18px]">mic</span>
+</button>
+<button aria-label="Open filter settings" class="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center active:scale-90 transition-all" type="button">
+<span class="material-symbols-outlined text-[17px]">tune</span>
+</button>
+</div>
+</div>
+<!-- Quick Category Pills (Horizontally Scrollable) -->
+<div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-1 -mx-5 px-5 select-none">
+<button class="px-4 py-2 rounded-full font-bold text-xs bg-[#1d4ed8] text-white shadow-sm shrink-0 flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[14px]">stars</span>
+          See All
+        </button>
+<button class="px-3.5 py-2 rounded-full font-semibold text-xs bg-white text-slate-700 border border-slate-200 shadow-pill shrink-0 hover:bg-slate-50 active:bg-blue-50" type="button">
+          Full Time
+        </button>
+<button class="px-3.5 py-2 rounded-full font-semibold text-xs bg-white text-slate-700 border border-slate-200 shadow-pill shrink-0 hover:bg-slate-50 active:bg-blue-50" type="button">
+          Part Time
+        </button>
+<button class="px-3.5 py-2 rounded-full font-semibold text-xs bg-white text-slate-700 border border-slate-200 shadow-pill shrink-0 flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[14px] text-blue-600">home_work</span>
+          100% Remote
+        </button>
+<button class="px-3.5 py-2 rounded-full font-semibold text-xs bg-white text-slate-700 border border-slate-200 shadow-pill shrink-0 flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[14px] text-lime-600">visibility</span>
+          Screen Reader Verified
+        </button>
+<button class="px-3.5 py-2 rounded-full font-semibold text-xs bg-white text-slate-700 border border-slate-200 shadow-pill shrink-0 flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[14px] text-blue-600">sign_language</span>
+          ASL Interpreters
+        </button>
+<button class="px-3.5 py-2 rounded-full font-semibold text-xs bg-white text-slate-700 border border-slate-200 shadow-pill shrink-0 flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[14px] text-lime-600">accessible</span>
+          Step-Free Campus
+        </button>
+</div>
+</section>
+<!-- END: SearchAndFilters -->
+<!-- BEGIN: RecommendedCarousel -->
+<!-- Direct replica of Reference 1's "Recommended 🚀" horizontal cards -->
+<section class="mt-4 px-5">
+<!-- Section Header -->
+<div class="flex items-center justify-between mb-2.5">
+<div class="flex items-center gap-1.5">
+<h2 class="text-sm font-extrabold text-slate-900 tracking-tight flex items-center gap-1">
+            Recommended
+            <span>🚀</span>
+</h2>
+<span class="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded-full">Top Matches</span>
+</div>
+<a class="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-0.5" href="#">
+          See all
+          <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+</a>
+</div>
+<!-- Horizontal Cards Scrollable Strip -->
+<div class="flex gap-3.5 overflow-x-auto no-scrollbar py-1 -mx-5 px-5">
+<!-- Card A: Vibrant Gradient Blue Hero Card (from Reference Image 1 Google card) -->
+<article class="w-[280px] shrink-0 bg-gradient-to-br from-[#1d4ed8] via-[#2563eb] to-[#38bdf8] text-white rounded-3xl p-4 shadow-float-blue relative overflow-hidden flex flex-col justify-between">
+<!-- Background decorative radial glow -->
+<div class="absolute -right-8 -bottom-8 w-28 h-28 rounded-full bg-white/10 blur-xl pointer-events-none"></div>
+<div>
+<!-- Top Company row -->
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-10 h-10 rounded-2xl bg-white p-1.5 shadow-md flex items-center justify-center">
+<!-- Company Monogram / Badge -->
+<span class="font-extrabold text-blue-700 text-base">IT</span>
+</div>
+<div>
+<div class="flex items-center gap-1">
+<span class="font-bold text-xs text-white">InclusionTech</span>
+<span class="bg-lime-400 text-slate-950 text-[9px] font-extrabold px-1.5 py-0.2 rounded-full inline-flex items-center gap-0.5">
+                      ✓ Trusted
+                    </span>
+</div>
+<span class="text-[10px] text-blue-100 font-medium">100% Remote • Global</span>
+</div>
+</div>
+<!-- Bookmark Icon Pill -->
+<button aria-label="Bookmark Senior UX Accessibility Specialist" class="w-7 h-7 rounded-full bg-white/20 text-white flex items-center justify-center active:scale-90" type="button">
+<span class="material-symbols-outlined text-[16px]">bookmark</span>
+</button>
+</div>
+<!-- Job Title & Compensation -->
+<div class="mt-3">
+<h3 class="font-extrabold text-sm text-white leading-snug">Senior UX Accessibility Specialist</h3>
+<p class="text-xs font-semibold text-blue-100 mt-1">$125,000 - $145,000 / yr</p>
+</div>
+<!-- Accommodations Pill Line -->
+<div class="mt-2.5 flex flex-wrap gap-1">
+<span class="bg-white/20 backdrop-blur-xs text-[10px] font-medium text-white px-2 py-0.5 rounded-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[11px] text-lime-300">visibility</span> Screen Reader Verified
+              </span>
+<span class="bg-white/20 backdrop-blur-xs text-[10px] font-medium text-white px-2 py-0.5 rounded-md">
+                $2,500 Ergo Grant
+              </span>
+</div>
+</div>
+<!-- Bottom Row: Applicants Stack & Apply Button -->
+<div class="mt-4 pt-2.5 border-t border-white/20 flex items-center justify-between">
+<div class="flex items-center">
+<!-- Avatar Stack with fallback initials/shapes -->
+<div class="flex -space-x-1.5">
+<div class="w-5 h-5 rounded-full ring-2 ring-white bg-amber-200 text-amber-900 text-[8px] font-bold flex items-center justify-center">JD</div>
+<div class="w-5 h-5 rounded-full ring-2 ring-white bg-purple-200 text-purple-900 text-[8px] font-bold flex items-center justify-center">MK</div>
+<div class="w-5 h-5 rounded-full ring-2 ring-white bg-teal-200 text-teal-900 text-[8px] font-bold flex items-center justify-center">SL</div>
+</div>
+<span class="text-[10px] font-semibold text-blue-100 ml-1.5">+14 applied</span>
+</div>
+<button class="bg-white text-blue-700 hover:bg-blue-50 font-extrabold text-[11px] px-3.5 py-1.5 rounded-full shadow-sm flex items-center gap-1 active:scale-95 transition-transform" type="button">
+              Apply ↗
+            </button>
+</div>
+</article>
+<!-- Card B: Clean White Card (from Reference Image 1 secondary card) -->
+<article class="w-[270px] shrink-0 bg-white border border-slate-200/90 rounded-3xl p-4 shadow-card flex flex-col justify-between">
+<div>
+<!-- Top Company Row -->
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-10 h-10 rounded-2xl bg-lime-100 text-lime-800 font-extrabold text-base flex items-center justify-center shadow-xs">
+                  OP
+                </div>
+<div>
+<div class="flex items-center gap-1">
+<span class="font-bold text-xs text-slate-800">Open Pathways</span>
+<span class="bg-blue-100 text-blue-800 text-[9px] font-extrabold px-1.5 py-0.2 rounded-full inline-flex items-center gap-0.5">
+                      ✓ Trusted
+                    </span>
+</div>
+<span class="text-[10px] text-slate-500 font-medium">Boston, MA • Hybrid</span>
+</div>
+</div>
+<!-- Bookmark Outline Button -->
+<button aria-label="Bookmark Inclusive Curriculum Designer" class="w-7 h-7 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center active:scale-90" type="button">
+<span class="material-symbols-outlined text-[16px]">bookmark_border</span>
+</button>
+</div>
+<!-- Job Title & Compensation -->
+<div class="mt-3">
+<h3 class="font-extrabold text-sm text-slate-900 leading-snug">Inclusive Curriculum Designer</h3>
+<p class="text-xs font-semibold text-lime-700 mt-1">$85,000 - $98,000 / yr</p>
+</div>
+<!-- Accommodations Pill Line -->
+<div class="mt-2.5 flex flex-wrap gap-1">
+<span class="bg-slate-100 text-[10px] font-medium text-slate-700 px-2 py-0.5 rounded-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[11px] text-blue-600">sign_language</span> ASL On-Demand
+              </span>
+<span class="bg-slate-100 text-[10px] font-medium text-slate-700 px-2 py-0.5 rounded-md">
+                Step-Free Campus
+              </span>
+</div>
+</div>
+<!-- Bottom Row: Applicants Stack & Apply Button -->
+<div class="mt-4 pt-2.5 border-t border-slate-100 flex items-center justify-between">
+<div class="flex items-center">
+<div class="flex -space-x-1.5">
+<div class="w-5 h-5 rounded-full ring-2 ring-white bg-indigo-200 text-indigo-900 text-[8px] font-bold flex items-center justify-center">AR</div>
+<div class="w-5 h-5 rounded-full ring-2 ring-white bg-rose-200 text-rose-900 text-[8px] font-bold flex items-center justify-center">TL</div>
+</div>
+<span class="text-[10px] font-semibold text-slate-500 ml-1.5">+6 applied</span>
+</div>
+<button class="bg-blue-50 text-blue-700 hover:bg-blue-600 hover:text-white font-extrabold text-[11px] px-3.5 py-1.5 rounded-full active:scale-95 transition-colors" type="button">
+              Apply ↗
+            </button>
+</div>
+</article>
+</div>
+</section>
+<!-- END: RecommendedCarousel -->
+<!-- BEGIN: AccommodationAuditBanner -->
+<!-- Level AAA Pre-Audited Guarantee Card -->
+<section class="mt-4 px-5">
+<div class="bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-700 text-white rounded-3xl p-4 shadow-card relative overflow-hidden flex items-center justify-between gap-3">
+<div class="flex items-center gap-3">
+<div class="w-11 h-11 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-lime-300 text-2xl">verified_user</span>
+</div>
+<div>
+<div class="flex items-center gap-1.5">
+<span class="text-xs font-bold leading-tight">Need Accommodations?</span>
+<span class="bg-lime-400 text-slate-950 font-extrabold text-[9px] px-1.5 py-0.2 rounded-md">AAA Audit</span>
+</div>
+<p class="text-[10px] text-blue-100 mt-0.5 leading-snug">
+              Screen readers, sensory checks &amp; ASL verified before interview.
+            </p>
+</div>
+</div>
+<button class="bg-lime-400 text-slate-900 font-extrabold text-[10px] px-3 py-2 rounded-full shrink-0 shadow-sm active:scale-95 transition-transform" type="button">
+          Audit Request
+        </button>
+</div>
+</section>
+<!-- END: AccommodationAuditBanner -->
+<!-- BEGIN: LatestVerifiedSection -->
+<!-- Matches Reference 1 "Latest Post" & Screen 9 Opportunity stack -->
+<section class="mt-5 px-5">
+<!-- Section Header -->
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-1.5">
+<h2 class="text-sm font-extrabold text-slate-900 tracking-tight">Verified Roles</h2>
+<span class="bg-lime-100 text-lime-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-lime-600"></span> 64 Open
+          </span>
+</div>
+<!-- Sort Dropdown Pill -->
+<button class="bg-white border border-slate-200 text-slate-700 text-[11px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1 shadow-xs active:bg-slate-50" type="button">
+          Recently Added
+          <span class="material-symbols-outlined text-[13px] text-slate-400">expand_more</span>
+</button>
+</div>
+<!-- Quick role micro-filters from reference 3 -->
+<div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pb-2">
+<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-blue-100 text-blue-700 shrink-0">UI/UX Designer</span>
+<span class="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-white border border-slate-200 text-slate-600 shrink-0">Frontend &amp; QA</span>
+<span class="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-white border border-slate-200 text-slate-600 shrink-0">Remote</span>
+<span class="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-white border border-slate-200 text-slate-600 shrink-0">Speech-to-Text</span>
+</div>
+<!-- Job Cards Stack (Mobile tactile cards) -->
+<div class="mt-2 space-y-3.5">
+<!-- Job Card 1: EquiGlobal Software -->
+<article class="bg-white border border-slate-200/90 hover:border-blue-400 active:scale-[0.99] rounded-3xl p-4 shadow-card transition-all">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-700 flex items-center justify-center font-extrabold text-sm shrink-0 border border-indigo-100">
+                EG
+              </div>
+<div>
+<div class="flex items-center gap-1.5">
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wide">EquiGlobal Software</span>
+<span class="inline-flex items-center gap-0.5 text-[9px] font-extrabold text-blue-700 bg-blue-50 px-1.5 py-0.2 rounded-full">
+<span class="material-symbols-outlined text-[10px]">verified</span> Trusted
+                  </span>
+</div>
+<h3 class="text-xs font-extrabold text-slate-900 mt-0.5">Accessibility QA Analyst &amp; Tester</h3>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="text-xs font-bold text-blue-700">$55/hr</span>
+<span class="text-slate-300">•</span>
+<span class="text-[11px] text-slate-500 font-medium">Contract • Remote</span>
+</div>
+</div>
+</div>
+<button aria-label="Bookmark EquiGlobal role" class="text-slate-400 active:text-blue-600 p-1" type="button">
+<span class="material-symbols-outlined text-[18px]">bookmark_border</span>
+</button>
+</div>
+<!-- Accommodation Micro-tags -->
+<div class="mt-3 pt-2.5 border-t border-slate-100 flex flex-wrap gap-1">
+<span class="text-[10px] font-semibold text-lime-800 bg-lime-50 border border-lime-200/60 px-2 py-0.5 rounded-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[11px]">zoom_in</span> NVDA/JAWS Tested
+            </span>
+<span class="text-[10px] font-medium text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[11px]">psychology</span> Neurodivergent Mentorship
+            </span>
+<span class="text-[10px] font-medium text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md">
+              Async Comms
+            </span>
+</div>
+<!-- Bottom Footer Row -->
+<div class="mt-3 pt-2 flex items-center justify-between text-xs">
+<span class="text-[10px] text-slate-400">22 applied • Posted 3d ago</span>
+<button class="bg-slate-100 hover:bg-blue-600 hover:text-white text-slate-800 font-bold text-[11px] px-3.5 py-1.5 rounded-full transition-colors" type="button">
+              Apply Now
+            </button>
+</div>
+</article>
+<!-- Job Card 2: Horizon Media Network -->
+<article class="bg-white border border-slate-200/90 hover:border-blue-400 active:scale-[0.99] rounded-3xl p-4 shadow-card transition-all">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-2xl bg-amber-50 text-amber-800 flex items-center justify-center font-extrabold text-sm shrink-0 border border-amber-100">
+                HM
+              </div>
+<div>
+<div class="flex items-center gap-1.5">
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Horizon Media</span>
+<span class="inline-flex items-center gap-0.5 text-[9px] font-extrabold text-blue-700 bg-blue-50 px-1.5 py-0.2 rounded-full">
+<span class="material-symbols-outlined text-[10px]">verified</span> Trusted
+                  </span>
+</div>
+<h3 class="text-xs font-extrabold text-slate-900 mt-0.5">Digital Content Specialist (ASL)</h3>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="text-xs font-bold text-blue-700">$78k - $90k/yr</span>
+<span class="text-slate-300">•</span>
+<span class="text-[11px] text-slate-500 font-medium">Full-Time • Hybrid (NY)</span>
+</div>
+</div>
+</div>
+<button aria-label="Bookmark Horizon Media role" class="text-slate-400 active:text-blue-600 p-1" type="button">
+<span class="material-symbols-outlined text-[18px]">bookmark_border</span>
+</button>
+</div>
+<!-- Accommodation Micro-tags -->
+<div class="mt-3 pt-2.5 border-t border-slate-100 flex flex-wrap gap-1">
+<span class="text-[10px] font-semibold text-blue-800 bg-blue-50 border border-blue-200/60 px-2 py-0.5 rounded-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[11px]">hearing_disabled</span> Deaf Culture First
+            </span>
+<span class="text-[10px] font-medium text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[11px]">videocam</span> Video Relay Service
+            </span>
+<span class="text-[10px] font-medium text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md">
+              Live Captions
+            </span>
+</div>
+<!-- Bottom Footer Row -->
+<div class="mt-3 pt-2 flex items-center justify-between text-xs">
+<span class="text-[10px] text-slate-400">11 applied • Posted 4d ago</span>
+<button class="bg-slate-100 hover:bg-blue-600 hover:text-white text-slate-800 font-bold text-[11px] px-3.5 py-1.5 rounded-full transition-colors" type="button">
+              Apply Now
+            </button>
+</div>
+</article>
+<!-- Job Card 3: CareBridge Health -->
+<article class="bg-white border border-slate-200/90 hover:border-blue-400 active:scale-[0.99] rounded-3xl p-4 shadow-card transition-all">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-2xl bg-teal-50 text-teal-800 flex items-center justify-center font-extrabold text-sm shrink-0 border border-teal-100">
+                CB
+              </div>
+<div>
+<div class="flex items-center gap-1.5">
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wide">CareBridge Health</span>
+<span class="inline-flex items-center gap-0.5 text-[9px] font-extrabold text-blue-700 bg-blue-50 px-1.5 py-0.2 rounded-full">
+<span class="material-symbols-outlined text-[10px]">verified</span> Trusted
+                  </span>
+</div>
+<h3 class="text-xs font-extrabold text-slate-900 mt-0.5">Customer Success Representative</h3>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="text-xs font-bold text-blue-700">$60k - $72k/yr</span>
+<span class="text-slate-300">•</span>
+<span class="text-[11px] text-slate-500 font-medium">Full-Time • Remote</span>
+</div>
+</div>
+</div>
+<button aria-label="Bookmark CareBridge role" class="text-slate-400 active:text-blue-600 p-1" type="button">
+<span class="material-symbols-outlined text-[18px]">bookmark_border</span>
+</button>
+</div>
+<!-- Accommodation Micro-tags -->
+<div class="mt-3 pt-2.5 border-t border-slate-100 flex flex-wrap gap-1">
+<span class="text-[10px] font-semibold text-lime-800 bg-lime-50 border border-lime-200/60 px-2 py-0.5 rounded-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[11px]">record_voice_over</span> Speech-to-Text Support
+            </span>
+<span class="text-[10px] font-medium text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[11px]">coffee</span> Flexible Breaks
+            </span>
+<span class="text-[10px] font-medium text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md">
+              Sensory Friendly
+            </span>
+</div>
+<!-- Bottom Footer Row -->
+<div class="mt-3 pt-2 flex items-center justify-between text-xs">
+<span class="text-[10px] text-slate-400">30 applied • Posted 5d ago</span>
+<button class="bg-slate-100 hover:bg-blue-600 hover:text-white text-slate-800 font-bold text-[11px] px-3.5 py-1.5 rounded-full transition-colors" type="button">
+              Apply Now
+            </button>
+</div>
+</article>
+<!-- Job Card 4: Aura Design Systems -->
+<article class="bg-white border border-slate-200/90 hover:border-blue-400 active:scale-[0.99] rounded-3xl p-4 shadow-card transition-all">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-2xl bg-lime-100 text-lime-900 flex items-center justify-center font-extrabold text-sm shrink-0 border border-lime-200">
+                AD
+              </div>
+<div>
+<div class="flex items-center gap-1.5">
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Aura Design Systems</span>
+<span class="inline-flex items-center gap-0.5 text-[9px] font-extrabold text-blue-700 bg-blue-50 px-1.5 py-0.2 rounded-full">
+<span class="material-symbols-outlined text-[10px]">verified</span> Trusted
+                  </span>
+</div>
+<h3 class="text-xs font-extrabold text-slate-900 mt-0.5">Front-End Accessibility Engineer</h3>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="text-xs font-bold text-blue-700">$130k - $155k/yr</span>
+<span class="text-slate-300">•</span>
+<span class="text-[11px] text-slate-500 font-medium">Full-Time • Remote</span>
+</div>
+</div>
+</div>
+<button aria-label="Bookmark Aura role" class="text-slate-400 active:text-blue-600 p-1" type="button">
+<span class="material-symbols-outlined text-[18px]">bookmark_border</span>
+</button>
+</div>
+<!-- Accommodation Micro-tags -->
+<div class="mt-3 pt-2.5 border-t border-slate-100 flex flex-wrap gap-1">
+<span class="text-[10px] font-semibold text-lime-800 bg-lime-50 border border-lime-200/60 px-2 py-0.5 rounded-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[11px]">desktop_windows</span> Hardware Grant
+            </span>
+<span class="text-[10px] font-medium text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[11px]">contrast</span> Contrast Tooling
+            </span>
+<span class="text-[10px] font-medium text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md">
+              Autistic Community Group
+            </span>
+</div>
+<!-- Bottom Footer Row -->
+<div class="mt-3 pt-2 flex items-center justify-between text-xs">
+<span class="text-[10px] text-slate-400">19 applied • Posted 1w ago</span>
+<button class="bg-slate-100 hover:bg-blue-600 hover:text-white text-slate-800 font-bold text-[11px] px-3.5 py-1.5 rounded-full transition-colors" type="button">
+              Apply Now
+            </button>
+</div>
+</article>
+</div>
+</section>
+<!-- END: LatestVerifiedSection -->
+<!-- BEGIN: FloatingBottomNavigation -->
+<!-- Direct translation of the floating pill navigation bar with active blue indicator and center circle from Reference 1 -->
+<nav aria-label="Mobile Navigation" class="fixed bottom-3 inset-x-0 mx-auto w-[92%] max-w-[380px] bg-white/95 backdrop-blur-lg border border-slate-200/80 rounded-full px-3 py-2 shadow-nav z-50 flex items-center justify-between select-none">
+<!-- Home / Browse Tab (Active State with reference pill glow) -->
+<a aria-current="page" class="flex flex-col items-center justify-center w-12 py-1 text-[#1d4ed8]" href="#">
+<span class="material-symbols-outlined text-[22px]">home</span>
+<span class="text-[10px] font-extrabold tracking-tight">Home</span>
+</a>
+<!-- Jobs / Opportunities Tab -->
+<a class="flex flex-col items-center justify-center w-12 py-1 text-slate-400 hover:text-slate-700 transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">work</span>
+<span class="text-[10px] font-semibold tracking-tight">Jobs</span>
+</a>
+<!-- Center Floating Action Button (Matching Reference 1 round scanner/explore button) -->
+<div class="-mt-5">
+<button aria-label="Explore &amp; Scan Accommodations" class="w-12 h-12 rounded-full bg-gradient-to-tr from-blue-700 to-blue-400 text-white shadow-float-blue flex items-center justify-center active:scale-95 transition-transform border-2 border-white ring-4 ring-blue-100/60" type="button">
+<span class="material-symbols-outlined text-[24px]">filter_center_focus</span>
+</button>
+</div>
+<!-- Saved Tab with Badge -->
+<a class="flex flex-col items-center justify-center w-12 py-1 text-slate-400 hover:text-slate-700 transition-colors relative" href="#">
+<span class="material-symbols-outlined text-[22px]">bookmark</span>
+<span class="text-[10px] font-semibold tracking-tight">Saved</span>
+<span class="absolute top-1 right-2 w-4 h-4 bg-lime-500 text-slate-900 rounded-full text-[9px] font-extrabold flex items-center justify-center ring-2 ring-white">3</span>
+</a>
+<!-- Profile Tab -->
+<a class="flex flex-col items-center justify-center w-12 py-1 text-slate-400 hover:text-slate-700 transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">person</span>
+<span class="text-[10px] font-semibold tracking-tight">Profile</span>
+</a>
+</nav>
+<!-- END: FloatingBottomNavigation -->
+<!-- BEGIN: HomeIndicator -->
+<!-- Native iOS home drag bar indicator -->
+<div class="w-32 h-1 bg-slate-300 rounded-full mx-auto mt-4 mb-1"></div>
+<!-- END: HomeIndicator -->
+</div>
+</body></html>

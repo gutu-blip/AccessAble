@@ -49,6 +49,29 @@ const QUICK_FILTERS = [
 
 const SORT_OPTIONS = ['Most Relevant', 'Newest', 'Highest Accommodation Match', 'Salary (High to Low)'];
 
+// Mobile-only constants — converted verbatim from HomeMobile.html
+const MOBILE_SORT_OPTIONS = ['Most Relevant', 'Newest', 'Highest Accommodation'];
+
+const MOBILE_QUICK_PILLS = [
+  { label: 'All Opportunities', icon: 'all_inclusive', iconClass: null },
+  { label: 'Screen Reader Verified', icon: 'visibility', iconClass: 'text-secondary' },
+  { label: 'ASL Interpreters', icon: 'sign_language', iconClass: 'text-primary' },
+  { label: 'Wheelchair Accessible', icon: 'accessible', iconClass: 'text-secondary' },
+  { label: '100% Remote', icon: 'home_work', iconClass: 'text-primary' },
+  { label: 'Neurodivergent Friendly', icon: 'psychology', iconClass: 'text-secondary' },
+  { label: 'Flexible Hours', icon: 'hourglass_top', iconClass: 'text-primary' },
+];
+
+const MOBILE_FILTER_PILLS = [
+  { key: 'all', label: 'All Opportunities', icon: 'all_inclusive' },
+  { key: 'screen-reader', label: 'Screen Reader Verified', icon: 'visibility', iconClass: 'text-primary', quickKey: 'Screen Reader Verified' },
+  { key: 'asl', label: 'ASL Fluent / Provided', icon: 'sign_language', iconClass: 'text-secondary', quickKey: 'ASL Fluent / Provided' },
+  { key: 'wheelchair', label: 'Wheelchair Accessible', icon: 'accessible', iconClass: 'text-primary', quickKey: 'Wheelchair Accessible' },
+  { key: 'remote', label: '100% Remote', icon: 'home_work', iconClass: 'text-secondary', quickKey: '100% Remote' },
+  { key: 'neurodiversity', label: 'Neurodiversity Friendly', icon: 'psychology', iconClass: 'text-primary', quickKey: 'Neurodiversity Friendly' },
+  { key: 'assistive-tech', label: 'Assistive Tech Provided', icon: 'devices', iconClass: 'text-secondary', quickKey: 'Assistive Tech Provided' },
+];
+
 const PAGE_SIZE = 6;
 
 // Category metadata for the RTDB `basic.category` enum:
@@ -233,10 +256,13 @@ const QUICK_FILTER_KEYWORDS = {
   'All Opportunities': null,
   'Screen Reader Verified': ['screen reader', 'nvda', 'jaws', 'magnifier'],
   'ASL Fluent / Provided': ['asl'],
+  'ASL Interpreters': ['asl'],
   'Wheelchair Accessible': ['wheelchair', 'step-free'],
   '100% Remote': ['remote'],
   'Neurodiversity Friendly': ['neurodivergent', 'neurodiversity', 'autistic', 'sensory', 'quiet', 'asynchronous'],
+  'Neurodivergent Friendly': ['neurodivergent', 'neurodiversity', 'autistic', 'sensory', 'quiet', 'asynchronous'],
   'Assistive Tech Provided': ['ergonomic', 'speech-to-text', 'captioning', 'transcription', 'relay', 'contrast'],
+  'Flexible Hours': ['flexible', 'quiet', 'asynchronous'],
 };
 
 const SAVED_RTDB_PATH = 'saved';
@@ -1186,6 +1212,9 @@ function Home({ onViewDetails, onPostOpportunity }) {
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [detailsOpp, setDetailsOpp] = useState(null);
   const [infoTopic, setInfoTopic] = useState(null);
+  // Mobile-only chrome: sort dropdown + filter bottomsheet (ported from HomeMobile.html vanilla JS)
+  const [mobileSortOpen, setMobileSortOpen] = useState(false);
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const toastIdRef = useRef(0);
 
   // Navigate to the Details.js page. The clicked card item is forwarded so
@@ -1427,11 +1456,12 @@ function Home({ onViewDetails, onPostOpportunity }) {
       return true;
     });
     const sorted = [...filtered];
-    if (sortBy === 'Newest') {
+    const normalizedSort = String(sortBy || '').trim();
+    if (normalizedSort === 'Newest') {
       sorted.sort((a, b) => getTimestamp(b) - getTimestamp(a));
-    } else if (sortBy === 'Highest Accommodation Match') {
+    } else if (normalizedSort === 'Highest Accommodation Match' || normalizedSort === 'Highest Accommodation') {
       sorted.sort((a, b) => countAccommodations(b) - countAccommodations(a) || getTimestamp(b) - getTimestamp(a));
-    } else if (sortBy === 'Salary (High to Low)') {
+    } else if (normalizedSort === 'Salary (High to Low)') {
       sorted.sort(
         (a, b) =>
           parseCompensationValue(b?.logistics?.compensation) -
@@ -1472,6 +1502,39 @@ function Home({ onViewDetails, onPostOpportunity }) {
   const heroRolesLabel = isLoading ? 'Loading verified roles…' : `${opportunities.length} Verified ${opportunities.length === 1 ? 'Role' : 'Roles'}`;
   const heroEmployersLabel = isLoading ? 'Loading employers…' : `${employerCount} Inclusive ${employerCount === 1 ? 'Employer' : 'Employers'}`;
 
+  // Mobile chrome effects: lock scroll when filters sheet open, close sort on outside click
+  useEffect(() => {
+    if (mobileFiltersOpen) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => { document.body.style.overflow = prev; };
+    }
+    return undefined;
+  }, [mobileFiltersOpen]);
+
+  useEffect(() => {
+    if (!mobileSortOpen) return undefined;
+    const onPointerDown = (e) => {
+      if (e.target.closest('[data-mobile-sort-root]')) return;
+      setMobileSortOpen(false);
+    };
+    const onKeyDown = (e) => { if (e.key === 'Escape') setMobileSortOpen(false); };
+    document.addEventListener('pointerdown', onPointerDown);
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown);
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [mobileSortOpen]);
+
+  // Keep mobile filter sheet in sync with body overflow for closing via Esc
+  useEffect(() => {
+    if (!mobileFiltersOpen) return undefined;
+    const onKeyDown = (e) => { if (e.key === 'Escape') setMobileFiltersOpen(false); };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [mobileFiltersOpen]);
+
   // Standalone fallback: if Home is used without App's onViewDetails,
   // navigate by rendering the Details.js page directly with the clicked item.
   if (showDetailsPage && typeof onViewDetails !== 'function') {
@@ -1491,10 +1554,17 @@ function Home({ onViewDetails, onPostOpportunity }) {
   }
 
   return (
-    // Mirrors the HTML <body class="bg-surface font-body-md ..."> canvas.
+    // Root mirrors <body> from both Desktop + Mobile HTML shells.
+    // Desktop UI (large devices) keeps every className verbatim from Home.html
+    // Mobile UI (HomeMobile.html) is rendered exclusively on <lg via lg:hidden.
     <div className={`bg-surface font-body-md text-body-md text-on-surface antialiased${highContrast ? ' high-contrast-mode' : ''}${dyslexiaFont ? ' dyslexia-font' : ''}`}>
       <style>{FIDELITY_STYLES}</style>
-      <header className="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div className="h-20 w-full px-gutter-mobile lg:px-gutter flex items-center justify-between gap-space-md"><div className="flex items-center gap-space-md shrink-0"><a className="flex items-center gap-space-sm focus:outline-none focus:ring-4 focus:ring-primary-container rounded-full" data-path="browse-opportunities" href="#" onClick={() => { setView('browse'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCDjVcBc3SNANVDT_ft-chQPXJCLOQGldM-AKBAD84S97xfkIkmjOznYOtxgWiW5Dbv2hTdSkGJo8eDJF1uCwzv-W-Ghj0kM_grRYiD-0zFLledBnQ9udNAAE2K36tqe-gOPhRfYoS38KIQ3At2QtkO6UFAKvlJja-KOoArAyMH27rewac-QfhWctu8fNbtWxq40lHIyPqF-yjA0mQbO0CWxR1-sKK_GV4uKF8obS2ONVis9Nykdf-Oqp7fqxZegFIOvE" alt="AccessAble Logo" className="h-10 w-auto object-contain" /><div className="flex flex-col"><span className="font-headline-sm text-headline-sm text-primary tracking-tight font-extrabold">AccessAble</span></div></a></div><div className="hidden md:flex flex-1 max-w-xl mx-space-sm"><div className="w-full flex items-center bg-surface-container-low px-space-md py-space-xs rounded-full shadow-[0_2px_12px_rgba(0,0,0,0.04)] focus-within:ring-2 focus-within:ring-primary-container"><span className="material-symbols-outlined text-outline mr-space-sm">search</span><input aria-label="Search inclusive jobs, internships, accommodations" className="w-full bg-transparent border-none outline-none font-body-sm text-body-sm text-on-surface placeholder:text-outline" placeholder="Search inclusive jobs, internships, accommodations..." type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} /></div></div><nav className="hidden xl:flex items-center gap-space-xs bg-surface-container-low p-1.5 rounded-full" data-active-classes="bg-primary text-on-primary font-label-md rounded-full shadow-sm"><button aria-current={view === "browse" ? "page" : undefined} className={view === "browse" ? "px-space-md py-2 transition-all bg-primary text-on-primary font-label-md rounded-full shadow-sm" : "px-space-md py-2 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all"} onClick={() => setView("browse")} type="button">Browse Opportunities</button><button aria-current={view === "saved" ? "page" : undefined} className={view === "saved" ? "px-space-md py-2 transition-all bg-primary text-on-primary font-label-md rounded-full shadow-sm flex items-center gap-1.5" : "px-space-md py-2 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all flex items-center gap-1.5"} onClick={() => setView("saved")} type="button">Saved Bookmarks{bookmarked.length > 0 ? (<span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-secondary-container px-1 font-label-sm text-label-sm font-bold text-on-secondary-fixed">{bookmarked.length}</span>) : null}</button></nav><div className="flex items-center gap-space-sm shrink-0"><div className="hidden sm:flex items-center gap-1 bg-surface-container-low px-2 py-1 rounded-full text-on-surface-variant"><button aria-pressed={highContrast} className={highContrast ? ACTIVE_A11Y_BTN : A11Y_BTN} onClick={() => setHighContrast((v) => !v)} title="Toggle High Contrast" type="button"><span className="material-symbols-outlined text-[20px]">contrast</span></button><button aria-pressed={largeText} className={largeText ? ACTIVE_A11Y_BTN : A11Y_BTN} onClick={() => setLargeText((v) => !v)} title="Text Size Options" type="button"><span className="material-symbols-outlined text-[20px]">text_fields</span></button><button aria-pressed={dyslexiaFont} className={dyslexiaFont ? ACTIVE_A11Y_BTN : A11Y_BTN} onClick={() => setDyslexiaFont((v) => !v)} title="Universal Accessibility Options" type="button"><span className="material-symbols-outlined text-[20px]">accessibility</span></button></div><button className="hidden sm:inline-flex items-center justify-center bg-primary-container text-on-primary px-space-lg py-2.5 rounded-full font-label-md text-label-md shadow-sm hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-secondary-container transition-transform" onClick={openCreateModal} type="button">Post an Opportunity</button><div className="flex items-center ml-space-xs" data-menu-root><div className="relative"><button aria-expanded={profileOpen} aria-haspopup="menu" aria-label="Account menu" className="block rounded-full focus:outline-none focus:ring-4 focus:ring-primary-container" onClick={() => setProfileOpen((v) => !v)} type="button"><img alt="Profile" className="w-8 h-8 rounded-full object-cover ring-2 ring-secondary-container" src="https://lh3.googleusercontent.com/aida/AEtjO1VNhLS90sGEsrGZ4QTntCwO2KXWJl3z598WV0kITWYBuSL7zQYm0n6q799qV9ZDVq6a-2qzH9MhYEWr_pGzq8mxMSVe8JefZOglP-0LPl0necCYsTlYSKP2el0-E5dq678kpSUDcrwBI35nO_VHGJQGtDpw75E6j9cjj0fR_y639Vb6qP_D7otM3hrleIb-3mYbOsBLr9zQN7FbbalfsIMCUizv6yUVCbmcc2MhiOggcFFPJbt-6BjxI16mCYl3kgtWB50d1OBlsew" /></button>{profileOpen ? (<div aria-label="Account" role="menu" className="fixed right-4 top-20 z-50 w-64 rounded-2xl bg-surface-container-lowest p-2 shadow-xl ring-1 ring-outline-variant"><div className="flex items-center gap-3 rounded-xl bg-surface-container-low px-3 py-2.5"><img alt="" className="h-9 w-9 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1VNhLS90sGEsrGZ4QTntCwO2KXWJl3z598WV0kITWYBuSL7zQYm0n6q799qV9ZDVq6a-2qzH9MhYEWr_pGzq8mxMSVe8JefZOglP-0LPl0necCYsTlYSKP2el0-E5dq678kpSUDcrwBI35nO_VHGJQGtDpw75E6j9cjj0fR_y639Vb6qP_D7otM3hrleIb-3mYbOsBLr9zQN7FbbalfsIMCUizv6yUVCbmcc2MhiOggcFFPJbt-6BjxI16mCYl3kgtWB50d1OBlsew" /><div className="flex flex-col"><span className="font-label-md text-label-md font-bold text-on-surface">My AccessAble</span><span className="font-label-sm text-label-sm text-on-surface-variant">{bookmarked.length} saved {bookmarked.length === 1 ? "opportunity" : "opportunities"}</span></div></div><button role="menuitem" className="mt-1 flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left font-body-sm text-body-sm text-on-surface hover:bg-surface-container" onClick={() => { setView("saved"); setProfileOpen(false); }} type="button"><span className="material-symbols-outlined text-[20px]" aria-hidden="true">bookmark</span>Saved bookmarks</button><button role="menuitem" className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left font-body-sm text-body-sm text-on-surface hover:bg-surface-container" onClick={openCreateModal} type="button"><span className="material-symbols-outlined text-[20px]" aria-hidden="true">post_add</span>Post an opportunity</button><button role="menuitem" className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left font-body-sm text-body-sm text-on-surface hover:bg-surface-container" onClick={() => { resetFilters(); setProfileOpen(false); }} type="button"><span className="material-symbols-outlined text-[20px]" aria-hidden="true">restart_alt</span>Reset all filters</button><button role="menuitem" className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left font-body-sm text-body-sm text-on-surface hover:bg-surface-container" onClick={() => setHighContrast((v) => !v)} type="button"><span className="material-symbols-outlined text-[20px]" aria-hidden="true">contrast</span>High contrast: {highContrast ? "on" : "off"}</button></div>) : null}</div></div></div></div></header><aside className="fixed left-0 top-20 bottom-0 w-72 bg-surface-container-lowest shadow-[1px_0_12px_rgba(0,0,0,0.03)] z-40 overflow-y-auto p-space-md flex flex-col gap-space-lg"><div className="flex items-center justify-between pb-space-xs"><div className="flex items-center gap-2"><span className="material-symbols-outlined text-primary text-[20px]">tune</span><span className="font-label-lg text-label-lg font-bold text-on-surface">Faceted Filters</span>{activeFacetCount > 0 ? (<span className="rounded-full bg-primary-fixed px-2 py-0.5 font-label-sm text-label-sm font-bold text-on-primary-fixed">{activeFacetCount} active</span>) : null}</div><button className="font-label-sm text-label-sm text-primary hover:underline" onClick={resetFilters} type="button">Reset</button></div><div className="space-y-space-sm"><span className="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider">Opportunity Type</span><div className="space-y-1.5"><label className="flex items-center gap-2 text-on-surface-variant hover:text-on-surface cursor-pointer text-body-sm font-body-sm"><input checked={opportunityType.includes("Full-Time Jobs")} className="w-4 h-4 rounded text-primary focus:ring-primary-container" onChange={() => toggleInList(setOpportunityType, "Full-Time Jobs")} type="checkbox" value="Full-Time Jobs" />Full-Time Jobs</label><label className="flex items-center gap-2 text-on-surface-variant hover:text-on-surface cursor-pointer text-body-sm font-body-sm"><input checked={opportunityType.includes("Internships & Co-ops")} className="w-4 h-4 rounded text-primary focus:ring-primary-container" onChange={() => toggleInList(setOpportunityType, "Internships & Co-ops")} type="checkbox" value="Internships & Co-ops" />Internships &amp; Co-ops</label><label className="flex items-center gap-2 text-on-surface-variant hover:text-on-surface cursor-pointer text-body-sm font-body-sm"><input checked={opportunityType.includes("Apprenticeships")} className="w-4 h-4 rounded text-primary focus:ring-primary-container" onChange={() => toggleInList(setOpportunityType, "Apprenticeships")} type="checkbox" value="Apprenticeships" />Apprenticeships</label><label className="flex items-center gap-2 text-on-surface-variant hover:text-on-surface cursor-pointer text-body-sm font-body-sm"><input checked={opportunityType.includes("Fellowships")} className="w-4 h-4 rounded text-primary focus:ring-primary-container" onChange={() => toggleInList(setOpportunityType, "Fellowships")} type="checkbox" value="Fellowships" />Fellowships</label></div></div><div className="space-y-space-sm"><div className="flex items-center gap-1.5"><span className="material-symbols-outlined text-secondary text-[18px]">verified</span><span className="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider">Accommodations</span></div><div className="space-y-1.5"><label className="flex items-center gap-2 text-on-surface-variant hover:text-on-surface cursor-pointer text-body-sm font-body-sm"><input checked={accommodation.includes("Screen Reader Compatible")} className="w-4 h-4 rounded text-primary focus:ring-primary-container" onChange={() => toggleInList(setAccommodation, "Screen Reader Compatible")} type="checkbox" value="Screen Reader Compatible" />Screen Reader Compatible</label><label className="flex items-center gap-2 text-on-surface-variant hover:text-on-surface cursor-pointer text-body-sm font-body-sm"><input checked={accommodation.includes("Wheelchair / Step-Free")} className="w-4 h-4 rounded text-primary focus:ring-primary-container" onChange={() => toggleInList(setAccommodation, "Wheelchair / Step-Free")} type="checkbox" value="Wheelchair / Step-Free" />Wheelchair / Step-Free</label><label className="flex items-center gap-2 text-on-surface-variant hover:text-on-surface cursor-pointer text-body-sm font-body-sm"><input checked={accommodation.includes("ASL / CART Interpreting")} className="w-4 h-4 rounded text-primary focus:ring-primary-container" onChange={() => toggleInList(setAccommodation, "ASL / CART Interpreting")} type="checkbox" value="ASL / CART Interpreting" />ASL / CART Interpreting</label><label className="flex items-center gap-2 text-on-surface-variant hover:text-on-surface cursor-pointer text-body-sm font-body-sm"><input checked={accommodation.includes("Flexible Hours / Rest Breaks")} className="w-4 h-4 rounded text-primary focus:ring-primary-container" onChange={() => toggleInList(setAccommodation, "Flexible Hours / Rest Breaks")} type="checkbox" value="Flexible Hours / Rest Breaks" />Flexible Hours / Rest Breaks</label><label className="flex items-center gap-2 text-on-surface-variant hover:text-on-surface cursor-pointer text-body-sm font-body-sm"><input checked={accommodation.includes("Neurodivergent Friendly")} className="w-4 h-4 rounded text-primary focus:ring-primary-container" onChange={() => toggleInList(setAccommodation, "Neurodivergent Friendly")} type="checkbox" value="Neurodivergent Friendly" />Neurodivergent Friendly</label></div></div><div className="space-y-space-sm"><span className="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider">Work Mode</span><div className="space-y-1.5"><label className="flex items-center gap-2 text-on-surface-variant hover:text-on-surface cursor-pointer text-body-sm font-body-sm"><input checked={workMode.includes("Remote Only")} className="w-4 h-4 rounded text-primary focus:ring-primary-container" onChange={() => toggleInList(setWorkMode, "Remote Only")} type="checkbox" value="Remote Only" />Remote Only</label><label className="flex items-center gap-2 text-on-surface-variant hover:text-on-surface cursor-pointer text-body-sm font-body-sm"><input checked={workMode.includes("Hybrid")} className="w-4 h-4 rounded text-primary focus:ring-primary-container" onChange={() => toggleInList(setWorkMode, "Hybrid")} type="checkbox" value="Hybrid" />Hybrid</label><label className="flex items-center gap-2 text-on-surface-variant hover:text-on-surface cursor-pointer text-body-sm font-body-sm"><input checked={workMode.includes("On-site Verified")} className="w-4 h-4 rounded text-primary focus:ring-primary-container" onChange={() => toggleInList(setWorkMode, "On-site Verified")} type="checkbox" value="On-site Verified" />On-site Verified</label></div></div></aside><div className="pl-72"><main className="w-full pt-20 bg-surface min-h-[calc(100vh-14rem)]"><div className="flex flex-col w-full">
+      {/* Material symbols + scrollbar helpers — shared verbatim from HomeMobile.html <style> */}
+      <style>{`.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 500,'GRAD' 0,'opsz' 24;display:inline-block;vertical-align:middle;line-height:1}.material-symbols-fill{font-variation-settings:'FILL' 1,'wght' 600,'GRAD' 0,'opsz' 24}.scrollbar-none::-webkit-scrollbar{display:none}.scrollbar-none{-ms-overflow-style:none;scrollbar-width:none}`}</style>
+
+      {/* ===================== DESKTOP SHELL (lg+) ===================== */}
+      <div className="hidden lg:block">
+        <header className="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div className="h-20 w-full px-gutter-mobile lg:px-gutter flex items-center justify-between gap-space-md"><div className="flex items-center gap-space-md shrink-0"><a className="flex items-center gap-space-sm focus:outline-none focus:ring-4 focus:ring-primary-container rounded-full" data-path="browse-opportunities" href="#" onClick={() => { setView('browse'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCDjVcBc3SNANVDT_ft-chQPXJCLOQGldM-AKBAD84S97xfkIkmjOznYOtxgWiW5Dbv2hTdSkGJo8eDJF1uCwzv-W-Ghj0kM_grRYiD-0zFLledBnQ9udNAAE2K36tqe-gOPhRfYoS38KIQ3At2QtkO6UFAKvlJja-KOoArAyMH27rewac-QfhWctu8fNbtWxq40lHIyPqF-yjA0mQbO0CWxR1-sKK_GV4uKF8obS2ONVis9Nykdf-Oqp7fqxZegFIOvE" alt="AccessAble Logo" className="h-10 w-auto object-contain" /><div className="flex flex-col"><span className="font-headline-sm text-headline-sm text-primary tracking-tight font-extrabold">AccessAble</span></div></a></div><div className="hidden md:flex flex-1 max-w-xl mx-space-sm"><div className="w-full flex items-center bg-surface-container-low px-space-md py-space-xs rounded-full shadow-[0_2px_12px_rgba(0,0,0,0.04)] focus-within:ring-2 focus-within:ring-primary-container"><span className="material-symbols-outlined text-outline mr-space-sm">search</span><input aria-label="Search inclusive jobs, internships, accommodations" className="w-full bg-transparent border-none outline-none font-body-sm text-body-sm text-on-surface placeholder:text-outline" placeholder="Search inclusive jobs, internships, accommodations..." type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} /></div></div><nav className="hidden xl:flex items-center gap-space-xs bg-surface-container-low p-1.5 rounded-full" data-active-classes="bg-primary text-on-primary font-label-md rounded-full shadow-sm"><button aria-current={view === "browse" ? "page" : undefined} className={view === "browse" ? "px-space-md py-2 transition-all bg-primary text-on-primary font-label-md rounded-full shadow-sm" : "px-space-md py-2 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all"} onClick={() => setView("browse")} type="button">Browse Opportunities</button><button aria-current={view === "saved" ? "page" : undefined} className={view === "saved" ? "px-space-md py-2 transition-all bg-primary text-on-primary font-label-md rounded-full shadow-sm flex items-center gap-1.5" : "px-space-md py-2 rounded-full font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all flex items-center gap-1.5"} onClick={() => setView("saved")} type="button">Saved Bookmarks{bookmarked.length > 0 ? (<span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-secondary-container px-1 font-label-sm text-label-sm font-bold text-on-secondary-fixed">{bookmarked.length}</span>) : null}</button></nav><div className="flex items-center gap-space-sm shrink-0"><div className="hidden sm:flex items-center gap-1 bg-surface-container-low px-2 py-1 rounded-full text-on-surface-variant"><button aria-pressed={highContrast} className={highContrast ? ACTIVE_A11Y_BTN : A11Y_BTN} onClick={() => setHighContrast((v) => !v)} title="Toggle High Contrast" type="button"><span className="material-symbols-outlined text-[20px]">contrast</span></button><button aria-pressed={largeText} className={largeText ? ACTIVE_A11Y_BTN : A11Y_BTN} onClick={() => setLargeText((v) => !v)} title="Text Size Options" type="button"><span className="material-symbols-outlined text-[20px]">text_fields</span></button><button aria-pressed={dyslexiaFont} className={dyslexiaFont ? ACTIVE_A11Y_BTN : A11Y_BTN} onClick={() => setDyslexiaFont((v) => !v)} title="Universal Accessibility Options" type="button"><span className="material-symbols-outlined text-[20px]">accessibility</span></button></div><button className="hidden sm:inline-flex items-center justify-center bg-primary-container text-on-primary px-space-lg py-2.5 rounded-full font-label-md text-label-md shadow-sm hover:scale-[1.02] focus:outline-none focus:ring-4 focus:ring-secondary-container transition-transform" onClick={openCreateModal} type="button">Post an Opportunity</button><div className="flex items-center ml-space-xs" data-menu-root><div className="relative"><button aria-expanded={profileOpen} aria-haspopup="menu" aria-label="Account menu" className="block rounded-full focus:outline-none focus:ring-4 focus:ring-primary-container" onClick={() => setProfileOpen((v) => !v)} type="button"><img alt="Profile" className="w-8 h-8 rounded-full object-cover ring-2 ring-secondary-container" src="https://lh3.googleusercontent.com/aida/AEtjO1VNhLS90sGEsrGZ4QTntCwO2KXWJl3z598WV0kITWYBuSL7zQYm0n6q799qV9ZDVq6a-2qzH9MhYEWr_pGzq8mxMSVe8JefZOglP-0LPl0necCYsTlYSKP2el0-E5dq678kpSUDcrwBI35nO_VHGJQGtDpw75E6j9cjj0fR_y639Vb6qP_D7otM3hrleIb-3mYbOsBLr9zQN7FbbalfsIMCUizv6yUVCbmcc2MhiOggcFFPJbt-6BjxI16mCYl3kgtWB50d1OBlsew" /></button>{profileOpen ? (<div aria-label="Account" role="menu" className="fixed right-4 top-20 z-50 w-64 rounded-2xl bg-surface-container-lowest p-2 shadow-xl ring-1 ring-outline-variant"><div className="flex items-center gap-3 rounded-xl bg-surface-container-low px-3 py-2.5"><img alt="" className="h-9 w-9 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida/AEtjO1VNhLS90sGEsrGZ4QTntCwO2KXWJl3z598WV0kITWYBuSL7zQYm0n6q799qV9ZDVq6a-2qzH9MhYEWr_pGzq8mxMSVe8JefZOglP-0LPl0necCYsTlYSKP2el0-E5dq678kpSUDcrwBI35nO_VHGJQGtDpw75E6j9cjj0fR_y639Vb6qP_D7otM3hrleIb-3mYbOsBLr9zQN7FbbalfsIMCUizv6yUVCbmcc2MhiOggcFFPJbt-6BjxI16mCYl3kgtWB50d1OBlsew" /><div className="flex flex-col"><span className="font-label-md text-label-md font-bold text-on-surface">My AccessAble</span><span className="font-label-sm text-label-sm text-on-surface-variant">{bookmarked.length} saved {bookmarked.length === 1 ? "opportunity" : "opportunities"}</span></div></div><button role="menuitem" className="mt-1 flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left font-body-sm text-body-sm text-on-surface hover:bg-surface-container" onClick={() => { setView("saved"); setProfileOpen(false); }} type="button"><span className="material-symbols-outlined text-[20px]" aria-hidden="true">bookmark</span>Saved bookmarks</button><button role="menuitem" className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left font-body-sm text-body-sm text-on-surface hover:bg-surface-container" onClick={openCreateModal} type="button"><span className="material-symbols-outlined text-[20px]" aria-hidden="true">post_add</span>Post an opportunity</button><button role="menuitem" className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left font-body-sm text-body-sm text-on-surface hover:bg-surface-container" onClick={() => { resetFilters(); setProfileOpen(false); }} type="button"><span className="material-symbols-outlined text-[20px]" aria-hidden="true">restart_alt</span>Reset all filters</button><button role="menuitem" className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-left font-body-sm text-body-sm text-on-surface hover:bg-surface-container" onClick={() => setHighContrast((v) => !v)} type="button"><span className="material-symbols-outlined text-[20px]" aria-hidden="true">contrast</span>High contrast: {highContrast ? "on" : "off"}</button></div>) : null}</div></div></div></div></header><aside className="fixed left-0 top-20 bottom-0 w-72 bg-surface-container-lowest shadow-[1px_0_12px_rgba(0,0,0,0.03)] z-40 overflow-y-auto p-space-md flex flex-col gap-space-lg"><div className="flex items-center justify-between pb-space-xs"><div className="flex items-center gap-2"><span className="material-symbols-outlined text-primary text-[20px]">tune</span><span className="font-label-lg text-label-lg font-bold text-on-surface">Faceted Filters</span>{activeFacetCount > 0 ? (<span className="rounded-full bg-primary-fixed px-2 py-0.5 font-label-sm text-label-sm font-bold text-on-primary-fixed">{activeFacetCount} active</span>) : null}</div><button className="font-label-sm text-label-sm text-primary hover:underline" onClick={resetFilters} type="button">Reset</button></div><div className="space-y-space-sm"><span className="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider">Opportunity Type</span><div className="space-y-1.5"><label className="flex items-center gap-2 text-on-surface-variant hover:text-on-surface cursor-pointer text-body-sm font-body-sm"><input checked={opportunityType.includes("Full-Time Jobs")} className="w-4 h-4 rounded text-primary focus:ring-primary-container" onChange={() => toggleInList(setOpportunityType, "Full-Time Jobs")} type="checkbox" value="Full-Time Jobs" />Full-Time Jobs</label><label className="flex items-center gap-2 text-on-surface-variant hover:text-on-surface cursor-pointer text-body-sm font-body-sm"><input checked={opportunityType.includes("Internships & Co-ops")} className="w-4 h-4 rounded text-primary focus:ring-primary-container" onChange={() => toggleInList(setOpportunityType, "Internships & Co-ops")} type="checkbox" value="Internships & Co-ops" />Internships &amp; Co-ops</label><label className="flex items-center gap-2 text-on-surface-variant hover:text-on-surface cursor-pointer text-body-sm font-body-sm"><input checked={opportunityType.includes("Apprenticeships")} className="w-4 h-4 rounded text-primary focus:ring-primary-container" onChange={() => toggleInList(setOpportunityType, "Apprenticeships")} type="checkbox" value="Apprenticeships" />Apprenticeships</label><label className="flex items-center gap-2 text-on-surface-variant hover:text-on-surface cursor-pointer text-body-sm font-body-sm"><input checked={opportunityType.includes("Fellowships")} className="w-4 h-4 rounded text-primary focus:ring-primary-container" onChange={() => toggleInList(setOpportunityType, "Fellowships")} type="checkbox" value="Fellowships" />Fellowships</label></div></div><div className="space-y-space-sm"><div className="flex items-center gap-1.5"><span className="material-symbols-outlined text-secondary text-[18px]">verified</span><span className="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider">Accommodations</span></div><div className="space-y-1.5"><label className="flex items-center gap-2 text-on-surface-variant hover:text-on-surface cursor-pointer text-body-sm font-body-sm"><input checked={accommodation.includes("Screen Reader Compatible")} className="w-4 h-4 rounded text-primary focus:ring-primary-container" onChange={() => toggleInList(setAccommodation, "Screen Reader Compatible")} type="checkbox" value="Screen Reader Compatible" />Screen Reader Compatible</label><label className="flex items-center gap-2 text-on-surface-variant hover:text-on-surface cursor-pointer text-body-sm font-body-sm"><input checked={accommodation.includes("Wheelchair / Step-Free")} className="w-4 h-4 rounded text-primary focus:ring-primary-container" onChange={() => toggleInList(setAccommodation, "Wheelchair / Step-Free")} type="checkbox" value="Wheelchair / Step-Free" />Wheelchair / Step-Free</label><label className="flex items-center gap-2 text-on-surface-variant hover:text-on-surface cursor-pointer text-body-sm font-body-sm"><input checked={accommodation.includes("ASL / CART Interpreting")} className="w-4 h-4 rounded text-primary focus:ring-primary-container" onChange={() => toggleInList(setAccommodation, "ASL / CART Interpreting")} type="checkbox" value="ASL / CART Interpreting" />ASL / CART Interpreting</label><label className="flex items-center gap-2 text-on-surface-variant hover:text-on-surface cursor-pointer text-body-sm font-body-sm"><input checked={accommodation.includes("Flexible Hours / Rest Breaks")} className="w-4 h-4 rounded text-primary focus:ring-primary-container" onChange={() => toggleInList(setAccommodation, "Flexible Hours / Rest Breaks")} type="checkbox" value="Flexible Hours / Rest Breaks" />Flexible Hours / Rest Breaks</label><label className="flex items-center gap-2 text-on-surface-variant hover:text-on-surface cursor-pointer text-body-sm font-body-sm"><input checked={accommodation.includes("Neurodivergent Friendly")} className="w-4 h-4 rounded text-primary focus:ring-primary-container" onChange={() => toggleInList(setAccommodation, "Neurodivergent Friendly")} type="checkbox" value="Neurodivergent Friendly" />Neurodivergent Friendly</label></div></div><div className="space-y-space-sm"><span className="font-label-md text-label-md font-bold text-on-surface uppercase tracking-wider">Work Mode</span><div className="space-y-1.5"><label className="flex items-center gap-2 text-on-surface-variant hover:text-on-surface cursor-pointer text-body-sm font-body-sm"><input checked={workMode.includes("Remote Only")} className="w-4 h-4 rounded text-primary focus:ring-primary-container" onChange={() => toggleInList(setWorkMode, "Remote Only")} type="checkbox" value="Remote Only" />Remote Only</label><label className="flex items-center gap-2 text-on-surface-variant hover:text-on-surface cursor-pointer text-body-sm font-body-sm"><input checked={workMode.includes("Hybrid")} className="w-4 h-4 rounded text-primary focus:ring-primary-container" onChange={() => toggleInList(setWorkMode, "Hybrid")} type="checkbox" value="Hybrid" />Hybrid</label><label className="flex items-center gap-2 text-on-surface-variant hover:text-on-surface cursor-pointer text-body-sm font-body-sm"><input checked={workMode.includes("On-site Verified")} className="w-4 h-4 rounded text-primary focus:ring-primary-container" onChange={() => toggleInList(setWorkMode, "On-site Verified")} type="checkbox" value="On-site Verified" />On-site Verified</label></div></div></aside><div className="pl-72"><main className="w-full pt-20 bg-surface min-h-[calc(100vh-14rem)]"><div className="flex flex-col w-full">
       <div className="w-full px-gutter-mobile lg:px-gutter py-space-md max-w-7xl mx-auto flex flex-col gap-space-lg">
       <div className="px-gutter-mobile pt-space-md md:hidden"><div className="flex w-full items-center rounded-full bg-surface-container-lowest px-space-md py-space-xs shadow-sm focus-within:ring-2 focus-within:ring-primary-container"><span className="material-symbols-outlined text-outline mr-space-sm">search</span><input aria-label="Search opportunities" className="w-full border-none bg-transparent outline-none font-body-sm text-body-sm text-on-surface placeholder:text-outline" placeholder="Search opportunities..." type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} /></div></div>
       {/* Hero / Discovery Editorial Cluster Section */}
@@ -1675,7 +1745,6 @@ function Home({ onViewDetails, onPostOpportunity }) {
           const deadline = formatReadableDate(opp?.logistics?.applicationDeadline);
           const startDate = formatReadableDate(opp?.logistics?.startDate);
           const posted = formatPostedAgo(opp);
-          const applyUrl = opp?.details?.applicationUrl || '#';
           const bookmarkedActive = isBookmarked(opp.id);
           const avatarStyle = AVATAR_STYLES[index % AVATAR_STYLES.length];
           const venueFull = String(opp?.logistics?.venueAddress || '').trim();
@@ -1774,7 +1843,361 @@ function Home({ onViewDetails, onPostOpportunity }) {
       <nav aria-label="Pagination Navigation" className="flex items-center justify-center gap-2 pt-space-md pb-space-lg"><button className="px-4 py-2 rounded-full font-label-md text-label-md bg-surface-container-low text-on-surface hover:bg-surface-container transition-colors flex items-center gap-1" disabled={safePage === 1} onClick={() => setCurrentPage((p) => Math.max(1, p - 1))} type="button"><span className="material-symbols-outlined text-[18px]">chevron_left</span>Previous</button><div className="flex items-center gap-1.5">{paginationPages.map((page) => (page === "ellipsis" ? (<span key="ellipsis" className="px-2 text-outline">...</span>) : (<button key={page} aria-current={safePage === page ? "page" : undefined} className={safePage === page ? PAGINATION_ACTIVE : PAGINATION_IDLE} onClick={() => setCurrentPage(page)} type="button">{page}</button>)))}</div><button className="px-4 py-2 rounded-full font-label-md text-label-md bg-surface-container-low text-on-surface hover:bg-surface-container transition-colors flex items-center gap-1" disabled={safePage === totalPages} onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))} type="button">Next<span className="material-symbols-outlined text-[18px]">chevron_right</span></button></nav>
       </div>
       </div></main><footer className="w-full bg-surface-container-lowest shadow-[0_-1px_12px_rgba(0,0,0,0.03)]"><div className="w-full px-gutter-mobile lg:px-gutter py-space-lg flex flex-col md:flex-row items-center justify-between gap-space-md"><div className="flex items-center gap-space-sm"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCWku6ZpPWVXtQt8w0ZpnuVTJ3ERcAUjTsNDCMtXeJoM_KVv2GV-jdxKNW3Q0317oU-QiSsAU5-Hvi-GGS5CG1JQLYor_cZn6TEIabQ179mcPhmD5sa009E6aLgQAVrv9cvBgq9J8RydE-yT9pxn-6N7VY8dDB0qMwlNFiIFinqKFSvCcD6TydKg0JseRyear8GpWElbW9zrbhZsNctm-Dnu5DQjENKBiUSkd19yl1VkxbAuStiBLZnmm06z7zjRsjy60" alt="AccessAble Logo" className="h-6 w-auto object-contain" /><span className="font-body-sm text-body-sm text-on-surface-variant">© 2025 AccessAble. Universal accessibility verified.</span></div><div className="flex items-center gap-space-md font-label-sm text-label-sm text-on-surface-variant"><button className="hover:text-primary transition-colors" onClick={() => setInfoTopic("employer-guide")} type="button">Employer Guide</button><button className="hover:text-primary transition-colors" onClick={() => setInfoTopic("universal-statement")} type="button">Universal Statement</button><button className="hover:text-primary transition-colors" onClick={() => setInfoTopic("privacy")} type="button">Privacy Policy</button><button className="hover:text-primary transition-colors" onClick={() => setInfoTopic("terms")} type="button">Terms</button></div></div></footer></div>
-      {/* Production overlays: notifications, CRUD dialogs, live details, info pages */}
+      </div>
+
+      {/* ===================== MOBILE SHELL (<lg) — verbatim from HomeMobile.html ===================== */}
+      <div className="lg:hidden bg-background text-on-surface min-h-screen pb-24">
+        <div className="max-w-md mx-auto min-h-screen bg-background relative shadow-2xl flex flex-col">
+          {/* Top App Bar — HomeMobile.html header 1:1 */}
+          <header className="bg-surface-container-lowest sticky top-0 z-40 px-3.5 h-14 w-full flex items-center justify-between shadow-sm">
+            <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-1.5">
+                <img alt="AccessAble Brand Emblem" className="w-7 h-7 rounded-full object-contain bg-primary-fixed p-1" src="https://lh3.googleusercontent.com/aida/AEtjO1WLbGjCfL8UicmlrkOSPAlssnO2OKaHqD5ZXNt6Y6AnemO3fCsMGqNqSPVA7A6I75AZzg_skLwDxS_Ngo_fHorj7FqRayG9Kme_o1gdhINxcyYDAaX7VKZfR5VjCvoNemrwJEutzuzSgBqrmVq33om0-QkmmQWB-Ok-TjAqe3K6He4LMj2BhdIl3j8FgN7oBdCbMlUT0UxK2nGKlZJPZgAHQg8pDGsOulOofmVt7o2ojH3I30RS1hWZfscJDhxZwJcRDr59vnvcDcc" />
+                <div className="flex flex-col leading-tight">
+                  <span className="text-[17px] leading-[20px] font-bold text-primary tracking-tight">AccessAble</span>
+                  <span className="text-[11px] leading-[14px] text-secondary font-bold tracking-wide">Inclusive Opportunities</span>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <div className="relative">
+                <img className="w-8 h-8 rounded-full object-cover border-2 border-secondary-container shadow-sm" alt="User profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIJCwJksaH0vkO6FJC1uu5jQp6Pcn0k_nj9XU0HpEl1D-b-7ACBcJRB1JyIgEEnAtKtZ-LSLFPy6VU9uhecje7xZYErXHb6u_7uBr7QoeB2ztGwoQgxVoxuVXnOSIYhRKP9hNqj6c8o4fxsUWDAYMruxmQ9M4hKmjw69wtY3Wi3WfnieG1PEicihUKnDlTdpbT-UTt-GJjSCe-JDEZTX7hoLStly9L_5nRnKDU1eCWrTUurOS-fn67YA" />
+                <span className="absolute bottom-0 right-0 w-3 h-3 bg-secondary-container border-2 border-surface-container-lowest rounded-full"></span>
+              </div>
+            </div>
+          </header>
+
+          {/* Sub-header & Quick Accessibility Controls Toolstrip — HomeMobile.html 1:1 with shared a11y state */}
+          <section className="bg-surface-container-lowest px-3.5 py-1.5 shadow-sm border-b border-surface-container">
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-[11px] leading-[14px] font-bold text-on-surface break-words whitespace-normal flex-1 min-w-0">Accessibility toggles</span>
+              <div className="flex items-center gap-1.5 shrink-0">
+                <button aria-label="Accessibility Settings" aria-pressed={highContrast} onClick={() => setHighContrast((v) => !v)} className={`w-7 h-7 rounded-full flex items-center justify-center active:scale-95 transition-all shrink-0 ${highContrast ? 'bg-secondary-container text-on-secondary-fixed' : 'bg-surface-container-low text-primary hover:bg-surface-container'}`}>
+                  <span className="material-symbols-outlined text-[18px]">accessibility_new</span>
+                </button>
+                <div className="flex items-center gap-0.5 bg-surface-container-low px-1.5 py-0.5 rounded-full border border-outline-variant/30">
+                <button onClick={() => setLargeText(false)} className={`px-1 text-xs font-bold transition-colors ${!largeText ? 'text-on-surface' : 'text-on-surface-variant hover:text-primary'}`} title="Decrease font size">A-</button>
+                <span className="w-[1px] h-3 bg-outline-variant"></span>
+                <button onClick={() => setLargeText(true)} className={`px-1 text-xs font-bold transition-colors ${largeText ? 'text-on-surface bg-secondary-container/40 rounded px-1' : 'text-on-surface hover:text-primary'}`} title="Increase font size">A+</button>
+                <span className="w-[1px] h-3 bg-outline-variant"></span>
+                <button onClick={() => setHighContrast((v) => !v)} className={`p-0.5 rounded transition-colors flex items-center ${highContrast ? 'text-primary bg-primary-fixed/50' : 'text-on-surface-variant hover:text-primary'}`} title="High Contrast Mode">
+                  <span className="material-symbols-outlined text-sm">contrast</span>
+                </button>
+                <span className="w-[1px] h-3 bg-outline-variant"></span>
+                <button aria-label="Dyslexia Font" aria-pressed={dyslexiaFont} onClick={() => setDyslexiaFont((v) => !v)} className={`p-0.5 rounded flex items-center ${dyslexiaFont ? 'text-secondary bg-secondary-container/40' : 'text-secondary font-bold text-xs hover:text-primary'}`} title="Dyslexia Friendly Font">
+                  <span className="material-symbols-outlined text-sm">format_letter_spacing</span>
+                </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Main Content Stream — HomeMobile.html <main> 1:1 but dynamic & logic-bound */}
+          <main className="flex-1 px-3.5 pt-3 space-y-3">
+            {/* Dynamic Search & Voice Command Bar (Pill Form) — shared searchQuery */}
+            <div className="relative bg-surface-container-lowest rounded-full shadow-sm flex items-center p-1 border border-outline-variant/40 focus-within:ring-2 focus-within:ring-primary-container transition-all">
+              <div className="pl-2.5 pr-1.5 flex items-center text-primary">
+                <span className="material-symbols-outlined text-[20px]">search</span>
+              </div>
+              <input
+                className="w-full bg-transparent border-none outline-none text-on-surface placeholder:text-outline font-body-sm text-body-sm focus:outline-none focus:ring-0 focus:border-transparent focus:ring-offset-0 p-0"
+                placeholder="Search verified roles, accommodations..."
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <div className="flex items-center gap-1 pr-0.5">
+                <button aria-label="Open filter preferences" onClick={() => setMobileFiltersOpen(true)} className="w-8 h-8 rounded-full bg-primary-container text-on-primary hover:bg-primary flex items-center justify-center active:scale-95 transition-all shadow-sm">
+                  <span className="material-symbols-outlined text-[18px]">tune</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Category Filter Pills (Horizontal Scroll) — shared activeQuickFilter */}
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <h2 className="text-[13px] leading-[18px] text-on-surface font-bold">Accommodations &amp; Categories</h2>
+                <button onClick={resetFilters} className="text-[11px] leading-[14px] text-primary font-bold hover:underline">Clear All</button>
+              </div>
+              <div className="flex gap-1.5 overflow-x-auto scrollbar-none pb-1 -mx-3.5 px-3.5">
+                {MOBILE_QUICK_PILLS.map((pill) => {
+                  const isActive = activeQuickFilter === pill.label || (pill.label === 'ASL Interpreters' && activeQuickFilter === 'ASL Fluent / Provided') || (pill.label === 'Neurodivergent Friendly' && activeQuickFilter === 'Neurodivergent Friendly');
+                  // Normalize: activeQuickFilter may be Neurodiversity variant; treat both as active for Neurodivergent pill
+                  const normalizedActive = activeQuickFilter === 'Neurodiversity Friendly' && pill.label === 'Neurodivergent Friendly' ? true : isActive;
+                  const reallyActive = normalizedActive || activeQuickFilter === pill.label;
+                  return (
+                    <button
+                      key={pill.label}
+                      aria-pressed={reallyActive}
+                      onClick={() => setActiveQuickFilter(pill.label === 'ASL Interpreters' ? 'ASL Fluent / Provided' : pill.label === 'Neurodivergent Friendly' ? 'Neurodiversity Friendly' : pill.label)}
+                      className={reallyActive ? 'flex-shrink-0 bg-primary-container text-on-primary px-3 py-1.5 rounded-full text-[12px] leading-[16px] font-bold shadow-sm flex items-center gap-1 active:scale-95 transition-all' : 'flex-shrink-0 bg-surface-container-lowest text-on-surface border border-outline-variant/60 hover:bg-surface-container px-3 py-1.5 rounded-full text-[12px] leading-[16px] font-semibold shadow-sm flex items-center gap-1 active:scale-95 transition-all'}
+                      type="button"
+                    >
+                      <span className={`material-symbols-outlined text-[13px] ${pill.iconClass || ''}`}>{pill.icon}</span>
+                      <span>{pill.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Feed Header — shared visibleCount + sortBy */}
+            <div className="flex items-center justify-between pt-0.5">
+              <div className="flex items-center gap-2">
+                <h2 className="text-[16px] leading-[22px] font-bold text-on-surface">{visibleCount} {visibleCount === 1 ? 'opportunity' : 'opportunities'} found</h2>
+              </div>
+              <div className="relative flex items-center gap-1 text-outline font-label-sm text-label-sm" data-mobile-sort-root>
+                <span>Sort:</span>
+                <button onClick={() => setMobileSortOpen((v) => !v)} className="font-bold text-primary flex items-center gap-0.5 hover:bg-surface-container px-2 py-1 rounded-full transition-colors" type="button">
+                  <span>{MOBILE_SORT_OPTIONS.includes(sortBy) ? sortBy : sortBy === 'Highest Accommodation Match' ? 'Highest Accommodation' : sortBy}</span>
+                  <span className="material-symbols-outlined text-base transition-transform" style={{ transform: mobileSortOpen ? 'rotate(180deg)' : 'rotate(0deg)' }}>arrow_drop_down</span>
+                </button>
+                <div className={`${mobileSortOpen ? '' : 'hidden'} absolute right-0 top-full mt-2 w-52 bg-surface-container-lowest rounded-2xl shadow-xl border border-outline-variant/40 overflow-hidden z-30`}>
+                  <div className="py-1.5">
+                    {MOBILE_SORT_OPTIONS.map((opt) => {
+                      const mappedOpt = opt === 'Highest Accommodation' ? 'Highest Accommodation Match' : opt;
+                      const normalizedSortBy = sortBy === 'Highest Accommodation Match' ? 'Highest Accommodation' : sortBy;
+                      const isActive = normalizedSortBy === opt;
+                      return (
+                        <button
+                          key={opt}
+                          data-sort={opt}
+                          onClick={() => { setSortBy(mappedOpt); setMobileSortOpen(false); }}
+                          className={isActive ? 'w-full text-left px-3.5 py-2 text-[13px] leading-[18px] font-bold bg-primary-container text-on-primary flex items-center justify-between' : 'w-full text-left px-3.5 py-2 text-[13px] leading-[18px] font-semibold text-on-surface hover:bg-surface-container flex items-center justify-between'}
+                          type="button"
+                        >
+                          <span>{opt}</span>
+                          {isActive ? <span className="material-symbols-outlined text-base">check</span> : null}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Dynamic Opportunity Cards — uses pagedOpportunities shared with desktop */}
+            {isLoading ? (
+              <div className="space-y-2.5">
+                {[0,1,2].map((s) => (
+                  <div key={s} className="bg-surface-container-lowest rounded-2xl p-4 shadow-sm border border-outline-variant/40 animate-pulse">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-10 h-10 rounded-xl bg-surface-container"></div>
+                      <div className="flex-1 space-y-2">
+                        <div className="h-3 w-24 bg-surface-container rounded"></div>
+                        <div className="h-4 w-3/4 bg-surface-container rounded"></div>
+                      </div>
+                    </div>
+                    <div className="mt-4 h-12 bg-surface-container-low rounded-2xl"></div>
+                  </div>
+                ))}
+              </div>
+            ) : loadError ? (
+              <div className="bg-surface-container-lowest rounded-2xl p-4 shadow-sm border border-outline-variant/40 flex flex-col items-center gap-2.5 text-center">
+                <span className="material-symbols-outlined text-[26px] text-error">cloud_off</span>
+                <p className="text-[14px] leading-[20px] font-bold text-on-surface">Couldn&apos;t load opportunities</p>
+                <button onClick={() => setRetryTick((t) => t+1)} className="bg-primary text-on-primary px-4 py-1.5 rounded-full text-[13px] leading-[18px] font-bold" type="button">Retry</button>
+              </div>
+            ) : pagedOpportunities.length === 0 ? (
+              <div className="bg-surface-container-lowest rounded-2xl p-4 shadow-sm border border-outline-variant/40 flex flex-col items-center gap-1.5 text-center">
+                <span className="material-symbols-outlined text-[24px] text-outline">search_off</span>
+                <h3 className="text-[16px] leading-[22px] font-bold text-on-surface">No opportunities match</h3>
+                <p className="font-body-sm text-body-sm text-on-surface-variant">{view === 'saved' && bookmarked.length===0 ? 'No saved bookmarks yet.' : 'Try clearing filters or another search.'}</p>
+                <button onClick={resetFilters} className="mt-1.5 bg-surface-container-low px-4 py-1.5 rounded-full text-[13px] leading-[18px] font-bold text-on-surface" type="button">Clear filters</button>
+              </div>
+            ) : (
+              <div className="space-y-2.5">
+                {pagedOpportunities.map((opp, index) => {
+                  const orgName = opp?.basic?.organization?.name || 'Inclusive Employer';
+                  const title = opp?.basic?.title || 'Untitled opportunity';
+                  const compensation = String(opp?.logistics?.compensation || '').trim();
+                  const deliveryLabel = formatDeliveryLabel(opp?.logistics?.deliveryMode);
+                  const categoryMeta = getCategoryMeta(opp?.basic?.category);
+                  const pills = getAccommodationPills(opp);
+                  const posted = formatPostedAgo(opp);
+                  const deadline = formatReadableDate(opp?.logistics?.applicationDeadline);
+                  const startDate = formatReadableDate(opp?.logistics?.startDate);
+                  const bookmarkedActive = isBookmarked(opp.id);
+                  const avatarStyle = AVATAR_STYLES[index % AVATAR_STYLES.length];
+                  const logoUrl = opp?.basic?.organization?.logo?.downloadURL || null;
+                  const initials = getInitials(orgName);
+                  // icons mapping for accommodation pills on mobile: first pill gets primary/secondary tint
+                  return (
+                    <article key={opp.id} className="bg-surface-container-lowest rounded-2xl p-4 shadow-sm border border-outline-variant/40 hover:shadow-md transition-shadow">
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex items-center gap-2.5 min-w-0">
+                          {logoUrl ? (
+                            <img src={logoUrl} alt={`${orgName} logo`} className="w-10 h-10 rounded-xl object-cover border border-outline-variant/30 bg-surface-container-low shrink-0" />
+                          ) : (
+                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-[15px] font-extrabold shrink-0 ${avatarStyle}`}>
+                              {initials}
+                            </div>
+                          )}
+                          <div className="min-w-0">
+                            <span className="text-[13px] leading-[18px] font-bold text-on-surface block truncate">{orgName}</span>
+                            <div className="flex items-center gap-1 flex-wrap mt-0.5">
+                              <span className="inline-flex items-center gap-0.5 bg-secondary-fixed/50 text-on-secondary-fixed text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+                                <span className="material-symbols-outlined text-[12px]">{categoryMeta.icon}</span>
+                                <span>{categoryMeta.label}</span>
+                              </span>
+                              <p className="text-[11px] leading-[14px] text-outline truncate">{deliveryLabel || formatLocation(opp)}</p>
+                            </div>
+                          </div>
+                        </div>
+                        <button aria-label={`Save ${title}`} aria-pressed={bookmarkedActive} onClick={() => toggleBookmark(opp.id)} className={`w-8 h-8 rounded-full flex items-center justify-center transition-all shrink-0 ${bookmarkedActive ? 'bg-secondary-container text-on-secondary-fixed' : 'bg-surface-container-low hover:bg-surface-container text-outline hover:text-primary'}`} type="button">
+                          <span className="material-symbols-outlined text-[20px]">{bookmarkedActive ? 'bookmark' : 'bookmark_border'}</span>
+                        </button>
+                      </div>
+                      <div className="mt-2.5">
+                        <h3 className="text-[16px] leading-[22px] font-bold text-on-surface">
+                          <button onClick={() => handleViewDetails(opp)} className="text-left hover:text-primary" type="button">{title}</button>
+                        </h3>
+                        {compensation && <p className="text-[13px] leading-[18px] text-primary font-bold mt-0.5">{compensation}</p>}
+                      </div>
+                      {pills.length > 0 && (
+                        <div className="mt-2.5 flex flex-wrap gap-1">
+                          {pills.slice(0,4).map((pill) => (
+                            <span key={pill.key} className="inline-flex items-center gap-1 bg-surface-container text-on-surface-variant text-[11px] leading-[14px] font-semibold px-2 py-1 rounded-full">
+                              <span className="material-symbols-outlined text-primary text-[13px]">{pill.icon}</span>
+                              <span>{pill.label}</span>
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                      <div className="mt-3 pt-2.5 border-t border-surface-container flex items-center justify-between gap-2">
+                        <span className="text-[11px] leading-[14px] text-outline flex items-center gap-1 min-w-0">
+                          <span className="material-symbols-outlined text-[14px]">history</span>
+                          <span className="truncate">{posted}</span>
+                        </span>
+                        <button onClick={() => handleViewDetails(opp)} className="bg-primary hover:bg-primary-container text-on-primary text-[13px] leading-[18px] font-bold px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1 active:scale-95 shadow-sm shrink-0" type="button">
+                          <span>{deadline ? 'View Details' : startDate ? 'View Details' : 'View Details'}</span>
+                          <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+                        </button>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+            )}
+
+            {/* Mobile pagination — shares desktop pagination state */}
+            {totalPages > 1 && !isLoading && !loadError && pagedOpportunities.length > 0 && (
+              <nav aria-label="Mobile pagination" className="flex items-center justify-center gap-1 pt-1.5">
+                <button disabled={safePage===1} onClick={() => setCurrentPage((p)=>Math.max(1,p-1))} className="px-3 py-1.5 rounded-full text-on-surface bg-surface-container-low disabled:opacity-40 flex items-center gap-1 text-[12px] leading-[16px] font-semibold" type="button"><span className="material-symbols-outlined text-[14px]">chevron_left</span>Prev</button>
+                <span className="text-[12px] leading-[16px] text-on-surface font-bold px-2">{safePage} / {totalPages}</span>
+                <button disabled={safePage===totalPages} onClick={() => setCurrentPage((p)=>Math.min(totalPages,p+1))} className="px-3 py-1.5 rounded-full text-on-surface bg-surface-container-low disabled:opacity-40 flex items-center gap-1 text-[12px] leading-[16px] font-semibold" type="button">Next<span className="material-symbols-outlined text-[14px]">chevron_right</span></button>
+              </nav>
+            )}
+          </main>
+
+          {/* Bottom Navigation Bar — HomeMobile.html JSON schema verified */}
+          <nav className="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-1.5 max-w-md mx-auto right-0 bg-surface-container-lowest shadow-lg border-t border-surface-container">
+            <button onClick={() => { setView('browse'); setMobileFiltersOpen(false); window.scrollTo({top:0,behavior:'smooth'}); }} className={`flex flex-col items-center justify-center min-w-[60px] min-h-[44px] rounded-xl px-2.5 py-0.5 active:scale-95 transition-transform duration-150 ${view==='browse' ? 'bg-primary-container text-on-primary' : 'text-on-surface-variant hover:bg-surface-container'}`} type="button">
+              <span className={`material-symbols-outlined text-[22px] leading-none ${view==='browse' ? 'material-symbols-fill' : ''}`}>explore</span>
+              <span className="text-[11px] leading-[14px] font-bold">Browse</span>
+            </button>
+            <button onClick={openCreateModal} className="flex flex-col items-center justify-center min-w-[60px] min-h-[44px] text-on-surface-variant hover:bg-surface-container rounded-xl px-2.5 py-0.5 active:scale-95 transition-transform duration-150" type="button">
+              <span className="material-symbols-outlined text-[22px] leading-none">add_circle</span>
+              <span className="text-[11px] leading-[14px] font-bold">Post</span>
+            </button>
+            <button onClick={() => setView('saved')} className={`flex flex-col items-center justify-center min-w-[60px] min-h-[44px] rounded-xl px-2.5 py-0.5 active:scale-95 transition-transform duration-150 relative ${view==='saved' ? 'bg-primary-container text-on-primary' : 'text-on-surface-variant hover:bg-surface-container'}`} type="button">
+              <span className="material-symbols-outlined text-[22px] leading-none">bookmark</span>
+              {bookmarked.length>0 && <span className="absolute top-0.5 right-2.5 w-4 h-4 bg-secondary-container text-on-secondary-container text-[10px] font-extrabold rounded-full flex items-center justify-center">{bookmarked.length}</span>}
+              <span className="text-[11px] leading-[14px] font-bold">Saved</span>
+            </button>
+            <button onClick={() => setProfileOpen((v)=>!v)} className={`flex flex-col items-center justify-center min-w-[60px] min-h-[44px] rounded-xl px-2.5 py-0.5 active:scale-95 transition-transform duration-150 ${profileOpen ? 'bg-primary-container text-on-primary' : 'text-on-surface-variant hover:bg-surface-container'}`} type="button">
+              <span className="material-symbols-outlined text-[22px] leading-none">person</span>
+              <span className="text-[11px] leading-[14px] font-bold">Profile</span>
+            </button>
+          </nav>
+
+          {/* Filters BottomSheet Modal — React port of HomeMobile.html vanilla JS */}
+          {mobileFiltersOpen && <div onClick={() => setMobileFiltersOpen(false)} className="fixed inset-0 bg-inverse-surface/40 backdrop-blur-sm z-40 max-w-md mx-auto" aria-hidden="true"></div>}
+          <div className={`${mobileFiltersOpen ? '' : 'hidden'} fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-surface-container-lowest rounded-t-3xl shadow-2xl z-50 max-h-[80vh] flex flex-col overflow-hidden`} style={{ transform: mobileFiltersOpen ? 'translateY(0)' : 'translateY(100%)', transition: 'transform 300ms cubic-bezier(0.32, 0.72, 0, 1)' }}>
+            <div className="flex justify-center pt-2.5 pb-1.5">
+              <span className="w-9 h-1 bg-outline-variant rounded-full"></span>
+            </div>
+            <div className="flex items-center justify-between px-4 pb-2.5 border-b border-surface-container">
+              <h3 className="text-[17px] leading-[22px] font-bold text-on-surface">Filters</h3>
+              <div className="flex items-center gap-1.5">
+                <button onClick={() => { resetFilters(); }} className="text-[12px] leading-[16px] font-bold text-primary hover:underline px-2 py-1" type="button">Clear All</button>
+                <button aria-label="Close filters" onClick={() => setMobileFiltersOpen(false)} className="w-8 h-8 rounded-full bg-surface-container-low hover:bg-surface-container flex items-center justify-center text-on-surface active:scale-95 transition-all" type="button">
+                  <span className="material-symbols-outlined text-[18px]">close</span>
+                </button>
+              </div>
+            </div>
+            <div className="flex-1 overflow-y-auto px-4 py-3 space-y-4 scrollbar-none">
+              <div>
+                <h4 className="text-[13px] leading-[18px] font-bold text-on-surface mb-2">Opportunity Type</h4>
+                <div className="flex flex-wrap gap-1.5">
+                  {MOBILE_FILTER_PILLS.map((pill) => {
+                    const normalizedQuick = activeQuickFilter === 'Neurodiversity Friendly' ? 'Neurodiversity Friendly' : activeQuickFilter;
+                    const isActive = (pill.key === 'all' && activeQuickFilter === 'All Opportunities') || (pill.quickKey && normalizedQuick === pill.quickKey);
+                    return (
+                      <button
+                        key={pill.key}
+                        onClick={() => {
+                          if (pill.key === 'all') setActiveQuickFilter('All Opportunities');
+                          else setActiveQuickFilter(pill.quickKey);
+                        }}
+                        className={isActive ? 'bg-primary text-on-primary px-3 py-1.5 rounded-full text-[12px] leading-[16px] font-bold shadow-sm flex items-center gap-1' : 'bg-surface-container-low border border-outline-variant/60 text-on-surface px-3 py-1.5 rounded-full text-[12px] leading-[16px] font-semibold flex items-center gap-1 hover:bg-surface-container'}
+                        type="button"
+                      >
+                        <span className={`material-symbols-outlined text-[13px] ${pill.iconClass || ''}`}>{pill.icon}</span>
+                        <span>{pill.label}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              <div>
+                <h4 className="text-[13px] leading-[18px] font-bold text-on-surface mb-2">Work Arrangement</h4>
+                <div className="flex flex-wrap gap-1.5">
+                  <label className="inline-flex items-center gap-1.5 bg-surface-container px-3 py-1.5 rounded-full text-[12px] leading-[16px] font-semibold text-on-surface cursor-pointer hover:bg-surface-container-high">
+                    <input type="checkbox" checked={workMode.includes('Remote Only')} onChange={() => toggleInList(setWorkMode, 'Remote Only')} className="rounded text-primary focus:ring-primary w-3.5 h-3.5" /> Remote
+                  </label>
+                  <label className="inline-flex items-center gap-1.5 bg-surface-container px-3 py-1.5 rounded-full text-[12px] leading-[16px] font-semibold text-on-surface cursor-pointer hover:bg-surface-container-high">
+                    <input type="checkbox" checked={workMode.includes('Hybrid')} onChange={() => toggleInList(setWorkMode, 'Hybrid')} className="rounded text-primary focus:ring-primary w-3.5 h-3.5" /> Hybrid
+                  </label>
+                  <label className="inline-flex items-center gap-1.5 bg-surface-container px-3 py-1.5 rounded-full text-[12px] leading-[16px] font-semibold text-on-surface cursor-pointer hover:bg-surface-container-high">
+                    <input type="checkbox" checked={workMode.includes('On-site Verified')} onChange={() => toggleInList(setWorkMode, 'On-site Verified')} className="rounded text-primary focus:ring-primary w-3.5 h-3.5" /> On-site
+                  </label>
+                  <label className="inline-flex items-center gap-1.5 bg-surface-container px-3 py-1.5 rounded-full text-[12px] leading-[16px] font-semibold text-on-surface cursor-pointer hover:bg-surface-container-high">
+                    <input type="checkbox" checked={accommodation.includes('Flexible Hours / Rest Breaks')} onChange={() => toggleInList(setAccommodation, 'Flexible Hours / Rest Breaks')} className="rounded text-primary focus:ring-primary w-3.5 h-3.5" /> Flexible Hours
+                  </label>
+                </div>
+              </div>
+              <div>
+                <h4 className="text-[13px] leading-[18px] font-bold text-on-surface mb-2">Verified Accommodations</h4>
+                <div className="flex flex-wrap gap-1.5">
+                  <label className="inline-flex items-center gap-1 bg-surface-container px-2.5 py-1.5 rounded-full text-[12px] leading-[16px] font-semibold text-on-surface cursor-pointer hover:bg-surface-container-high">
+                    <span className="material-symbols-outlined text-primary text-[13px]">visibility</span> Screen Reader Verified
+                    <input type="checkbox" checked={accommodation.includes('Screen Reader Compatible')} onChange={() => toggleInList(setAccommodation, 'Screen Reader Compatible')} className="rounded text-primary focus:ring-primary w-3.5 h-3.5" />
+                  </label>
+                  <label className="inline-flex items-center gap-1 bg-surface-container px-2.5 py-1.5 rounded-full text-[12px] leading-[16px] font-semibold text-on-surface cursor-pointer hover:bg-surface-container-high">
+                    <span className="material-symbols-outlined text-secondary text-[13px]">sign_language</span> ASL Interpreters
+                    <input type="checkbox" checked={accommodation.includes('ASL / CART Interpreting')} onChange={() => toggleInList(setAccommodation, 'ASL / CART Interpreting')} className="rounded text-primary focus:ring-primary w-3.5 h-3.5" />
+                  </label>
+                  <label className="inline-flex items-center gap-1 bg-surface-container px-2.5 py-1.5 rounded-full text-[12px] leading-[16px] font-semibold text-on-surface cursor-pointer hover:bg-surface-container-high">
+                    <span className="material-symbols-outlined text-primary text-[13px]">accessible</span> Wheelchair Accessible
+                    <input type="checkbox" checked={accommodation.includes('Wheelchair / Step-Free')} onChange={() => toggleInList(setAccommodation, 'Wheelchair / Step-Free')} className="rounded text-primary focus:ring-primary w-3.5 h-3.5" />
+                  </label>
+                  <label className="inline-flex items-center gap-1 bg-surface-container px-2.5 py-1.5 rounded-full text-[12px] leading-[16px] font-semibold text-on-surface cursor-pointer hover:bg-surface-container-high">
+                    <span className="material-symbols-outlined text-secondary text-[13px]">devices</span> Assistive Tech Provided
+                    <input type="checkbox" checked={accommodation.includes('Neurodivergent Friendly')} onChange={() => toggleInList(setAccommodation, 'Neurodivergent Friendly')} className="rounded text-primary focus:ring-primary w-3.5 h-3.5" />
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div className="p-3.5 border-t border-surface-container bg-surface-container-lowest flex items-center gap-2.5">
+              <button onClick={() => setMobileFiltersOpen(false)} className="flex-1 bg-surface-container hover:bg-surface-container-high text-on-surface text-[13px] leading-[18px] font-bold py-2.5 rounded-full" type="button">Cancel</button>
+              <button onClick={() => setMobileFiltersOpen(false)} className="flex-1 bg-primary hover:bg-primary-container text-on-primary text-[13px] leading-[18px] font-bold py-2.5 rounded-full shadow-md" type="button">Show {visibleCount} Results</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Shared overlays (toasts, dialogs) — remain outside lg split so they overlay both shells */}
       <ToastStack toasts={toasts} onDismiss={dismissToast} />
       {formModal ? (
         <OpportunityFormModal

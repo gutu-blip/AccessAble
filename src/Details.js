@@ -61,6 +61,13 @@ const FIDELITY_STYLES = `
   .shadow-xs { box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06); }
   .shadow-2xs { box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04); }
   .py-0\\.2 { padding-top: 0.05rem; padding-bottom: 0.05rem; }
+  /* Mobile-only utilities ported from DetailsMobile.html tailwind.config */
+  .shadow-card { box-shadow: 0 8px 24px -4px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.04); }
+  .shadow-float-blue { box-shadow: 0 12px 28px -4px rgba(29, 78, 216, 0.35); }
+  .shadow-nav { box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.06); }
+  .shadow-pill { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04); }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 `;
 
 // Category catalogue. `grant` is displayed as "Funding" and both
@@ -450,7 +457,13 @@ function Details({
     setSelectedId(opp.id);
     if (typeof onSelectOpportunity === 'function') onSelectOpportunity(opp);
     if (typeof document !== 'undefined') {
-      document.getElementById('opportunity-detail-card')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Prefer the card visible at the current breakpoint (mobile card below lg,
+      // desktop card at lg+). Both share the same state/selection logic.
+      const isMobileViewport = typeof window !== 'undefined' && window.innerWidth < 1024;
+      const mobileCard = document.getElementById('opportunity-detail-card-mobile');
+      const desktopCard = document.getElementById('opportunity-detail-card');
+      const target = isMobileViewport && mobileCard ? mobileCard : desktopCard || mobileCard;
+      target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
@@ -502,11 +515,11 @@ function Details({
         aria-pressed={isActive}
         className={
           isActive
-            ? 'py-2 rounded-xl text-xs font-bold text-slate-900 bg-white shadow-xs flex items-center justify-center gap-1'
-            : 'py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1 transition-colors'
+            ? 'py-1.5 lg:py-2 px-1 rounded-lg lg:rounded-xl text-[11px] lg:text-xs font-bold text-slate-900 bg-white shadow-xs flex items-center justify-center gap-1 whitespace-nowrap truncate'
+            : 'py-1.5 lg:py-2 px-1 rounded-lg lg:rounded-xl text-[11px] lg:text-xs font-semibold text-slate-600 hover:text-slate-900 flex items-center justify-center gap-1 transition-colors whitespace-nowrap truncate'
         }
       >
-        <span className="material-symbols-outlined text-[15px]">{icon}</span>
+        <span className="material-symbols-outlined text-[13px] lg:text-[15px] shrink-0">{icon}</span>
         {label}
       </button>
     );
@@ -518,8 +531,8 @@ function Details({
       style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}
     >
       <style>{FIDELITY_STYLES}</style>
-      {/* Floating Modern Header Bar matching Reference Structure */}
-      <header className="sticky top-0 z-50 px-4 sm:px-6 lg:px-8 pt-4 pb-2 backdrop-blur-md bg-[#f8fafc]/80 transition-all">
+      {/* Floating Modern Header Bar matching Reference Structure — desktop / large devices only */}
+      <header className="hidden lg:block sticky top-0 z-50 px-4 sm:px-6 lg:px-8 pt-4 pb-2 backdrop-blur-md bg-[#f8fafc]/80 transition-all">
       <div className="max-w-[1580px] mx-auto bg-white/95 rounded-3xl lg:rounded-full px-5 py-3 shadow-soft border border-slate-200/70 flex flex-wrap items-center justify-between gap-4">
       {/* Brand Logo (matching Home.js) */}
       <div className="flex items-center gap-4 shrink-0">
@@ -595,8 +608,8 @@ function Details({
       })}
       </div>
       </header>
-      {/* MAIN SPLIT WORKSPACE: Left/Center Listing Feed + Right Detail Preview (Unified 2-Screen Reference Model) */}
-      <main className="flex-1 max-w-[1580px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-5">
+      {/* MAIN SPLIT WORKSPACE: Left/Center Listing Feed + Right Detail Preview (Unified 2-Screen Reference Model) — desktop only */}
+      <main className="hidden lg:block flex-1 max-w-[1580px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-5">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
       {/* LEFT & CENTER REGION (Cols 1-7 on desktop): Features, Reminders, and Feed Cards */}
       <div className="lg:col-span-7 xl:col-span-7 flex flex-col gap-6">
@@ -1120,8 +1133,8 @@ function Details({
       </div>
       </div>
       </main>
-      {/* Clean Minimal Footer matching Brand Spec */}
-      <footer className="mt-auto border-t border-slate-200/80 bg-white">
+      {/* Clean Minimal Footer matching Brand Spec — desktop only */}
+      <footer className="hidden lg:block mt-auto border-t border-slate-200/80 bg-white">
       <div className="max-w-[1580px] mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
       <div className="flex items-center gap-3">
       <img alt="AccessAble Logo" className="h-6 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDr5881s4MY59MfVF4TM8OXqJ8RABAUG7jHO6uGql_63-aO3pE_UAwsGXnbYKvZj-uE4bnniuPNPTQafrlwKBJco7x3d4jjiEEl33NIBulca-xw7LDWZHrrl91isRVVRwKo-GNPeV2rkLzDqXRbsyvAHvVCrlbWwYYiKMDaapesVmJJmpm0zREBQKqUCK584JTat7QnFAEqqFCJ2AczHG-qpHbPmnGDpie-wkQQYvB976m2E0RsF0FLIMZkv38B5n6-uUQ" />
@@ -1135,6 +1148,597 @@ function Details({
       </div>
       </div>
       </footer>
+      {/* ------------------------------------------------------------------
+        * Mobile UI — React port of src/DetailsMobile.html.
+        * Visible only below lg (desktop header/main/footer above are
+        * `hidden lg:block`). Shares ALL logic/state with desktop:
+        * searchQuery, activeCategory, activeChip, activeTab, expanded,
+        * pagedFeed, selected, bookmarks, pagination, handlers.
+        * ------------------------------------------------------------------ */}
+      <div className="lg:hidden w-full max-w-[420px] mx-auto bg-[#f8fafc] min-h-screen flex flex-col relative shadow-lg border-x border-slate-200/60">
+        {/* BEGIN: AppHeader (mobile adaptation of floating desktop header) */}
+        <header className="sticky top-0 z-50 px-3 pt-2 pb-1.5 backdrop-blur-md bg-[#f8fafc]/90">
+          <div className="bg-white/95 rounded-2xl px-3 py-2.5 shadow-card border border-slate-200/70 flex flex-col gap-2">
+            <div className="flex items-center justify-between gap-2">
+              <button
+                type="button"
+                aria-label="Back to opportunities"
+                onClick={handleBack}
+                className="w-8 h-8 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center active:scale-95 shrink-0"
+              >
+                <span className="material-symbols-outlined text-[18px]">arrow_back</span>
+              </button>
+              <a aria-label="AccessAble Home" className="flex items-center gap-1.5 flex-1 min-w-0" href="#" onClick={handleBack}>
+                <img
+                  alt="AccessAble Logo"
+                  className="h-7 w-auto object-contain"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCDjVcBc3SNANVDT_ft-chQPXJCLOQGldM-AKBAD84S97xfkIkmjOznYOtxgWiW5Dbv2hTdSkGJo8eDJF1uCwzv-W-Ghj0kM_grRYiD-0zFLledBnQ9udNAAE2K36tqe-gOPhRfYoS38KIQ3At2QtkO6UFAKvlJja-KOoArAyMH27rewac-QfhWctu8fNbtWxq40lHIyPqF-yjA0mQbO0CWxR1-sKK_GV4uKF8obS2ONVis9Nykdf-Oqp7fqxZegFIOvE"
+                />
+                <span className="font-extrabold text-[13px] text-slate-900 tracking-tight truncate">AccessAble</span>
+              </a>
+              <div className="relative shrink-0">
+                <img
+                  alt="User Profile"
+                  className="w-8 h-8 rounded-full object-cover ring-2 ring-lime-400 p-0.5 bg-white"
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0E56Ep7QQ2RWEOr7wwZZFbbCebGpKXC7Ch0UasYNbRkQYe3LuQFvyB2FFrLinDcsrvpS-zRTTguJ44PBRsX3BAZNWMqHdNx6Ke9sTQmZzkxVVS7MGU5VoDmjSJIEY8_-wp9GpnAJKPYN_xji0CJ5S_Ed5iCnIckMYrUzWvkVXW6AWAdeH1hhiMx-VEi21Ygb1j-yrDJ55taKxFTTLDdoHtw01DCC7xA31A-jeFAH8d4WAtcF9boi41e7SnW7pNvxKJ2I"
+                />
+                <span className="absolute -bottom-0.5 -right-0.5 bg-lime-500 w-2.5 h-2.5 rounded-full border-2 border-white"></span>
+              </div>
+            </div>
+            <div className="relative flex items-center bg-slate-100/80 focus-within:bg-white focus-within:ring-2 focus-within:ring-blue-600 rounded-full border border-slate-200 px-3 py-1.5">
+              <span className="material-symbols-outlined text-slate-400 text-[16px] mr-1.5">search</span>
+              <input
+                className="w-full bg-transparent border-none outline-none text-xs text-slate-800 placeholder:text-slate-400 p-0 focus:ring-0"
+                placeholder="Search related opportunities..."
+                type="text"
+                aria-label="Search related opportunities"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center bg-slate-100/90 rounded-full p-0.5 gap-0.5">
+                <button className="p-1 rounded-full hover:bg-white text-slate-600" title="High Contrast Mode" type="button">
+                  <span className="material-symbols-outlined text-[16px]">contrast</span>
+                </button>
+                <button className="p-1 rounded-full hover:bg-white text-slate-600" title="Adjust Text Scaling" type="button">
+                  <span className="material-symbols-outlined text-[16px]">text_fields</span>
+                </button>
+                <button className="p-1 rounded-full hover:bg-white text-slate-600" title="Universal Accessibility Guide" type="button">
+                  <span className="material-symbols-outlined text-[16px]">accessibility_new</span>
+                </button>
+              </div>
+              <a
+                className="inline-flex items-center gap-1 bg-[#1d4ed8] text-white font-semibold text-[11px] px-3 py-1.5 rounded-full shadow-sm shrink-0"
+                href="#"
+                onClick={handlePostOpportunity}
+              >
+                <span className="material-symbols-outlined text-[14px]">add_circle</span>
+                Post Opportunity
+              </a>
+            </div>
+          </div>
+          <div className="pt-1.5 flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+            {CATEGORY_PILLS.map((pill) => {
+              const isActive = activeCategory === pill.value;
+              return (
+                <button
+                  key={pill.value}
+                  type="button"
+                  onClick={() => setActiveCategory(pill.value)}
+                  aria-pressed={isActive}
+                  className={
+                    isActive
+                      ? 'px-3 py-1.5 rounded-full font-semibold text-[11px] bg-[#1d4ed8] text-white shadow-sm shrink-0 flex items-center gap-1 whitespace-nowrap'
+                      : 'px-3 py-1.5 rounded-full font-medium text-[11px] bg-white text-slate-700 border border-slate-200/80 shrink-0 flex items-center gap-1 whitespace-nowrap'
+                  }
+                >
+                  <span className="material-symbols-outlined text-[13px]">{pill.icon}</span>
+                  {pill.label}
+                </button>
+              );
+            })}
+          </div>
+        </header>
+        {/* END: AppHeader */}
+        <main className="flex-1 px-3 py-3 flex flex-col gap-3">
+          {/* BEGIN: OpportunityDetailCard (mobile adaptation of right REGION) */}
+          <aside id="opportunity-detail-card-mobile" className="bg-white border border-slate-200/90 rounded-2xl shadow-card p-3.5 flex flex-col gap-3">
+            {!selected ? (
+              <div className="flex flex-col items-center gap-1.5 py-6 text-center">
+                <span className="material-symbols-outlined text-[30px] text-slate-300">search_off</span>
+                <h2 className="text-[13px] font-bold text-slate-900">No opportunity selected</h2>
+                <p className="text-[10px] text-slate-500">{isLoading ? 'Loading opportunities…' : 'Select a card below to preview it here.'}</p>
+              </div>
+            ) : (
+              <>
+                <div className="flex items-center justify-between gap-2">
+                  <button
+                    className="w-8 h-8 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center shrink-0"
+                    title="Back to opportunities"
+                    type="button"
+                    onClick={handleBack}
+                  >
+                    <span className="material-symbols-outlined text-[18px]">arrow_back</span>
+                  </button>
+                  <div className="flex items-center gap-1 font-bold text-[13px] text-slate-800 min-w-0 flex-1 justify-center">
+                    <span className="truncate">{selectedOrgName}</span>
+                    <span className="material-symbols-outlined text-blue-600 text-[16px] shrink-0">verified</span>
+                  </div>
+                  <button
+                    className="w-8 h-8 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center shrink-0"
+                    title={isBookmarked ? 'Saved' : 'Bookmark'}
+                    type="button"
+                    aria-pressed={isBookmarked}
+                    onClick={() => toggleBookmark(selected.id)}
+                  >
+                    <span className={`material-symbols-outlined text-[18px] ${isBookmarked ? 'text-blue-600' : ''}`}>
+                      {isBookmarked ? 'bookmark' : 'bookmark_border'}
+                    </span>
+                  </button>
+                </div>
+                <div className="flex flex-col items-center text-center">
+                  {selectedLogo ? (
+                    <img src={selectedLogo} alt={`${selectedOrgName} logo`} className="w-12 h-12 rounded-full object-cover shadow-md ring-4 ring-blue-50 bg-white" />
+                  ) : (
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-blue-600 to-blue-400 text-white flex items-center justify-center text-base font-extrabold shadow-md ring-4 ring-blue-50">
+                      {getInitials(selectedOrgName)}
+                    </div>
+                  )}
+                  <span className="mt-2 inline-flex items-center gap-1 text-[10px] font-bold text-blue-700 bg-blue-50 border border-blue-200/80 px-2 py-0.5 rounded-full">
+                    <span className="material-symbols-outlined text-[12px]">{selectedConfig.icon}</span>
+                    {selectedConfig.label}
+                  </span>
+                  <h2 className="text-[15px] font-bold text-slate-900 mt-1.5 tracking-tight leading-snug">{selectedTitle}</h2>
+                  {selectedCompensation && (
+                    <p className="text-[11px] font-bold text-blue-700 mt-0.5">{selectedCompensation}</p>
+                  )}
+                  <div className="flex flex-wrap justify-center items-center gap-1 mt-2">
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-700">{selectedConfig.label}</span>
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-700">{selectedDelivery}</span>
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-lime-100 text-lime-800">{selectedPills.length} Accommodations</span>
+                  </div>
+                </div>
+                <div className="grid grid-cols-3 bg-slate-100 p-1 rounded-xl gap-1">
+                  {tabButton('overview', 'description', 'Overview')}
+                  {tabButton('company', 'domain', 'Company')}
+                  {tabButton('barrier', 'verified', 'Barrier-Free')}
+                </div>
+                {activeTab === 'overview' && (
+                  <>
+                    <div className="grid grid-cols-3 gap-1.5 bg-slate-50/80 rounded-xl p-2.5 border border-slate-100">
+                      <div className="flex flex-col text-left min-w-0">
+                        <div className="flex items-center gap-0.5 text-[9px] font-bold text-slate-400 uppercase leading-tight break-words">
+                          <span className="material-symbols-outlined text-[12px] text-amber-700 shrink-0">{selectedConfig.typeIcon}</span>
+                          <span className="truncate">{selectedConfig.typeLabel}</span>
+                        </div>
+                        <span className="text-[10px] font-bold text-slate-800 mt-0.5 truncate">{selectedConfig.label}</span>
+                      </div>
+                      <div className="flex flex-col text-left min-w-0">
+                        <div className="flex items-center gap-0.5 text-[9px] font-bold text-slate-400 uppercase leading-tight break-words">
+                          <span className="material-symbols-outlined text-[12px] text-blue-600 shrink-0">alarm</span>
+                          <span className="truncate">{selectedConfig.deadlineLabel}</span>
+                        </div>
+                        <span className="text-[10px] font-bold text-slate-800 mt-0.5 truncate">{selectedDeadline || 'Rolling'}</span>
+                      </div>
+                      <div className="flex flex-col text-left min-w-0">
+                        <div className="flex items-center gap-0.5 text-[9px] font-bold text-slate-400 uppercase leading-tight break-words">
+                          <span className="material-symbols-outlined text-[12px] text-teal-600 shrink-0">home</span>
+                          <span className="truncate">{selectedConfig.startLabel}</span>
+                        </div>
+                        <span className="text-[10px] font-bold text-slate-800 mt-0.5 truncate">{selectedStart || 'TBD'}</span>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-1.5">
+                      <div className="bg-white border border-slate-200/80 rounded-xl p-2.5 flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                          <span className="material-symbols-outlined text-[16px]">{selectedConfig.compensationIcon}</span>
+                        </div>
+                        <div className="flex flex-col min-w-0">
+                          <span className="text-[9px] font-bold text-slate-400 uppercase truncate">{selectedConfig.compensationLabel}</span>
+                          <span className="text-[10px] font-bold text-slate-800 truncate">{selectedCompensation || 'Not specified'}</span>
+                        </div>
+                      </div>
+                      <div className="bg-white border border-slate-200/80 rounded-xl p-2.5 flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-lg bg-lime-50 text-lime-700 flex items-center justify-center shrink-0">
+                          <span className="material-symbols-outlined text-[16px]">public</span>
+                        </div>
+                        <div className="flex flex-col min-w-0">
+                          <span className="text-[9px] font-bold text-slate-400 uppercase">Location</span>
+                          <span className="text-[10px] font-bold text-slate-800 truncate">{formatLocation(selected)}</span>
+                        </div>
+                      </div>
+                    </div>
+                    {selectedVenue && (
+                      <div className="bg-slate-50/80 border border-slate-100 rounded-xl p-2.5 flex items-start gap-2">
+                        <span className="material-symbols-outlined text-[16px] text-slate-500 shrink-0">location_on</span>
+                        <div className="flex flex-col min-w-0">
+                          <span className="text-[9px] font-bold text-slate-400 uppercase">{selectedConfig.venueLabel}</span>
+                          <span className="text-[10px] text-slate-700 mt-0.5 leading-snug">{selectedVenue}</span>
+                        </div>
+                      </div>
+                    )}
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <h3 className="text-[10px] font-bold text-slate-900 uppercase tracking-wide">{selectedConfig.detailsHeading}</h3>
+                        <button type="button" onClick={() => setExpanded((v) => !v)} aria-expanded={expanded} className="text-slate-400">
+                          <span className="material-symbols-outlined text-[15px]">more_horiz</span>
+                        </button>
+                      </div>
+                      {!expanded ? (
+                        <p className="text-[11px] leading-relaxed text-slate-600">
+                          {collapsedText.length > 219 ? `${collapsedText}…` : collapsedText || 'No description provided.'}{' '}
+                          <button type="button" onClick={() => setExpanded(true)} className="text-blue-600 font-bold">Read More</button>
+                        </p>
+                      ) : (
+                        <div className="flex flex-col gap-1.5">
+                          {selectedBlocks.map((block, index) => {
+                            if (block.type === 'heading') {
+                              return <h4 key={index} className="text-[11px] font-bold text-slate-900">{block.text}</h4>;
+                            }
+                            if (block.type === 'list') {
+                              return (
+                                <ul key={index} className="list-disc pl-4 space-y-1 text-[11px] text-slate-600">
+                                  {block.items.map((item, itemIndex) => <li key={itemIndex}>{item}</li>)}
+                                </ul>
+                              );
+                            }
+                            return <p key={index} className="text-[11px] leading-relaxed text-slate-600">{block.text}</p>;
+                          })}
+                          <button type="button" onClick={() => setExpanded(false)} className="self-start text-blue-600 font-bold text-[11px]">Show less</button>
+                        </div>
+                      )}
+                    </div>
+                  </>
+                )}
+                {activeTab === 'company' && (
+                  <div className="flex flex-col gap-2">
+                    <div className="bg-slate-50/80 border border-slate-100 rounded-xl p-2.5 flex items-start gap-2">
+                      {selectedLogo ? (
+                        <img src={selectedLogo} alt={`${selectedOrgName} logo`} className="w-9 h-9 rounded-xl object-cover border border-slate-200 bg-white shrink-0" />
+                      ) : (
+                        <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center font-bold text-[13px] shrink-0">
+                          {getInitials(selectedOrgName)}
+                        </div>
+                      )}
+                      <div className="flex flex-col gap-0.5 min-w-0">
+                        <span className="text-[11px] font-bold text-slate-900 truncate">{selectedOrgName}</span>
+                        {selectedOrg?.website ? (
+                          <a href={selectedOrg.website} target="_blank" rel="noreferrer" className="text-[10px] font-bold text-blue-600 hover:underline break-all">
+                            {selectedOrg.website}
+                          </a>
+                        ) : (
+                          <span className="text-[10px] text-slate-500">Website not provided</span>
+                        )}
+                        <span className="inline-flex w-fit items-center gap-1 text-[9px] font-bold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded-full">
+                          <span className="material-symbols-outlined text-[11px]">verified</span> Trusted organizer
+                        </span>
+                      </div>
+                    </div>
+                    {(selectedCoordinator.name || selectedContact) && (
+                      <div className="border border-slate-200/80 rounded-xl p-2.5">
+                        <h3 className="text-[10px] font-bold text-slate-900 uppercase tracking-wide flex items-center gap-1">
+                          <span className="material-symbols-outlined text-[14px] text-blue-600">support_agent</span>
+                          Accessibility coordinator
+                        </h3>
+                        {selectedCoordinator.name && <p className="text-[11px] font-bold text-slate-800 mt-1">{selectedCoordinator.name}</p>}
+                        {selectedContactHref ? (
+                          <a href={selectedContactHref} className="text-[10px] font-bold text-blue-600 hover:underline break-all">{selectedContact}</a>
+                        ) : selectedContact ? (
+                          <p className="text-[10px] text-slate-700">{selectedContact}</p>
+                        ) : null}
+                        {selectedCoordinator.noticePeriod && (
+                          <p className="text-[10px] text-slate-500 mt-0.5">Notice: {selectedCoordinator.noticePeriod}</p>
+                        )}
+                      </div>
+                    )}
+                    <div className="grid grid-cols-2 gap-1.5">
+                      <div className="bg-white border border-slate-200/80 rounded-xl p-2.5">
+                        <span className="text-[9px] font-bold text-slate-400 uppercase leading-tight block truncate">{selectedConfig.deadlineLabel}</span>
+                        <p className="text-[10px] font-bold text-slate-800 mt-0.5 truncate">{selectedDeadline || 'Rolling'}</p>
+                      </div>
+                      <div className="bg-white border border-slate-200/80 rounded-xl p-2.5">
+                        <span className="text-[9px] font-bold text-slate-400 uppercase leading-tight block truncate">{selectedConfig.startLabel}</span>
+                        <p className="text-[10px] font-bold text-slate-800 mt-0.5 truncate">{selectedStart || 'TBD'}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {activeTab === 'barrier' && (
+                  <div className="flex flex-col gap-2">
+                    <div className="border border-lime-200/70 bg-lime-50/40 rounded-xl p-2.5">
+                      <div className="flex items-center justify-between gap-2 pb-1.5 mb-1.5 border-b border-lime-200/60">
+                        <span className="text-[10px] font-bold text-lime-900 uppercase tracking-wider flex items-center gap-1 min-w-0">
+                          <span className="material-symbols-outlined text-lime-600 text-[15px] shrink-0">verified_user</span>
+                          <span className="truncate">Pre-Audited Accommodations</span>
+                        </span>
+                        <span className="text-[9px] font-extrabold bg-lime-200 text-lime-900 px-1.5 py-0.5 rounded-full shrink-0">{selectedPills.length} Verified</span>
+                      </div>
+                      {selectedPills.length > 0 ? (
+                        <ul className="space-y-1.5 text-[11px] text-slate-700">
+                          {selectedPills.map((pill) => (
+                            <li key={pill.key} className="flex items-start gap-1.5">
+                              <span className="material-symbols-outlined text-lime-600 text-[14px] shrink-0 mt-0.5">check_circle</span>
+                              <span><strong>{pill.label}</strong></span>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : (
+                        <p className="text-[11px] text-slate-600">Contact the coordinator for tailored accommodations.</p>
+                      )}
+                    </div>
+                    {noteEntries.length > 0 && (
+                      <div className="flex flex-col gap-1.5">
+                        {noteEntries.map(([area, value]) => (
+                          <p key={area} className="text-[11px] leading-relaxed text-slate-600">
+                            <strong className="text-slate-800">{area}: </strong>{value}
+                          </p>
+                        ))}
+                      </div>
+                    )}
+                    {selected?.details?.multimodalSupport && (
+                      <p className="text-[10px] font-bold text-blue-700 bg-blue-50 border border-blue-200/80 px-2 py-1.5 rounded-xl flex items-start gap-1.5 leading-snug">
+                        <span className="material-symbols-outlined text-[14px] shrink-0">videocam</span>
+                        Multimodal application supported (video, voice note, or assisted application)
+                      </p>
+                    )}
+                    {(selectedCoordinator.name || selectedContact) && (
+                      <div className="border border-slate-200/80 rounded-xl p-2.5">
+                        <span className="text-[9px] font-bold text-slate-400 uppercase">Coordinator</span>
+                        <p className="text-[11px] font-bold text-slate-800 mt-0.5">
+                          {selectedCoordinator.name || 'Access coordinator'}
+                          {selectedCoordinator.noticePeriod ? <span className="font-medium text-slate-500"> • {selectedCoordinator.noticePeriod}</span> : ''}
+                        </p>
+                        {selectedContactHref ? (
+                          <a href={selectedContactHref} className="text-[10px] font-bold text-blue-600 hover:underline break-all">{selectedContact}</a>
+                        ) : null}
+                      </div>
+                    )}
+                  </div>
+                )}
+                <div className="pt-0.5">
+                  <a
+                    href={selectedApplyUrl}
+                    target={selectedApplyUrl === '#' ? undefined : '_blank'}
+                    rel={selectedApplyUrl === '#' ? undefined : 'noreferrer'}
+                    className="w-full bg-[#1d4ed8] text-white rounded-full py-2.5 px-4 font-bold text-[13px] flex items-center justify-between"
+                  >
+                    <span className="pl-1.5">{selectedConfig.cta}</span>
+                    <span className="flex items-center text-blue-200">
+                      <span className="material-symbols-outlined text-[16px]">chevron_right</span>
+                      <span className="material-symbols-outlined text-[16px] -ml-2 text-white">chevron_right</span>
+                    </span>
+                  </a>
+                  <p className="text-center text-[10px] text-slate-400 mt-1.5 font-medium leading-snug px-2">{selectedConfig.ctaNote}</p>
+                </div>
+              </>
+            )}
+          </aside>
+          {/* END: OpportunityDetailCard */}
+          {/* BEGIN: RelatedFeedSection (mobile adaptation of left REGION feed) */}
+          <section>
+            <div className="flex flex-wrap items-center justify-between gap-1.5 mb-1.5">
+              <div className="flex items-center gap-1">
+                <h2 className="text-[13px] font-bold text-slate-900 tracking-tight">Related opportunities</h2>
+                <span className="bg-lime-100 text-lime-900 text-[9px] font-bold px-1.5 py-0.5 rounded-full flex items-center gap-1 whitespace-nowrap">
+                  <span className="w-1 h-1 rounded-full bg-lime-600"></span> Active WCAG Verified
+                </span>
+              </div>
+              <div className="flex items-center gap-1">
+                <span className="text-[10px] text-slate-500 font-medium">Sort:</span>
+                <button className="bg-white border border-slate-200 text-slate-700 text-[10px] font-semibold px-2 py-0.5 rounded-full flex items-center gap-0.5" type="button" title="Newest first">
+                  Recently Added
+                  <span className="material-symbols-outlined text-[12px] text-slate-400">expand_more</span>
+                </button>
+              </div>
+            </div>
+            <div className="flex items-center gap-1 overflow-x-auto no-scrollbar pb-1.5">
+              {FILTER_CHIPS.map((chip) => {
+                const isActive = activeChip === chip;
+                return (
+                  <button
+                    key={chip}
+                    type="button"
+                    onClick={() => setActiveChip(chip)}
+                    aria-pressed={isActive}
+                    className={
+                      isActive
+                        ? 'px-2.5 py-1 rounded-full text-[10px] font-bold bg-blue-100 text-blue-700 flex items-center gap-1 shrink-0 whitespace-nowrap'
+                        : 'px-2.5 py-1 rounded-full text-[10px] font-semibold bg-white border border-slate-200 text-slate-600 shrink-0 whitespace-nowrap'
+                    }
+                  >
+                    {chip}
+                    {isActive && <span className="material-symbols-outlined text-[12px]">close</span>}
+                  </button>
+                );
+              })}
+            </div>
+            <div className="mt-1 space-y-2.5">
+              {isLoading ? (
+                [0, 1, 2].map((skeleton) => (
+                  <article key={`m-skeleton-${skeleton}`} aria-busy="true" className="bg-white border border-slate-200/80 rounded-2xl p-3 shadow-card animate-pulse">
+                    <div className="h-3 w-24 rounded-full bg-slate-100" />
+                    <div className="mt-2 h-5 w-3/4 rounded bg-slate-100" />
+                    <div className="mt-2 flex gap-2">
+                      <div className="h-5 w-20 rounded-full bg-slate-100" />
+                      <div className="h-5 w-24 rounded-full bg-slate-100" />
+                    </div>
+                  </article>
+                ))
+              ) : loadError ? (
+                <div className="bg-white border border-red-200 rounded-2xl p-3.5 text-center flex flex-col items-center gap-1.5">
+                  <span className="material-symbols-outlined text-[24px] text-red-500">cloud_off</span>
+                  <h3 className="text-[13px] font-bold text-slate-900">Couldn&apos;t load opportunities</h3>
+                  <p className="text-[10px] text-slate-500">Check your connection, then try again.</p>
+                  <button
+                    type="button"
+                    onClick={() => setRetryTick((t) => t + 1)}
+                    className="bg-[#1d4ed8] text-white font-semibold text-[10px] px-3 py-1 rounded-full"
+                  >
+                    Retry
+                  </button>
+                </div>
+              ) : pagedFeed.length === 0 ? (
+                <div className="bg-white border border-slate-200/80 rounded-2xl p-3.5 text-center flex flex-col items-center gap-1.5">
+                  <span className="material-symbols-outlined text-[24px] text-slate-300">search_off</span>
+                  <h3 className="text-[13px] font-bold text-slate-900">No related opportunities</h3>
+                  <p className="text-[10px] text-slate-500">
+                    {opportunities.length === 0 ? 'No opportunities have been published yet.' : 'Try a different search term or category.'}
+                  </p>
+                </div>
+              ) : (
+                pagedFeed.map((opp, index) => {
+                  const orgName = opp?.basic?.organization?.name || 'Inclusive Employer';
+                  const title = opp?.basic?.title || 'Untitled opportunity';
+                  const logoUrl = opp?.basic?.organization?.logo?.downloadURL || null;
+                  const compensation = String(opp?.logistics?.compensation || '').trim();
+                  const pills = getAccommodationPills(opp);
+                  const isActive = selected && opp.id === selected.id;
+                  const isSaved = bookmarked.includes(opp.id);
+                  const avatarStyle = AVATAR_STYLES[index % AVATAR_STYLES.length];
+                  return (
+                    <article
+                      key={opp.id}
+                      onClick={() => handleSelect(opp)}
+                      className={
+                        isActive
+                          ? 'bg-white border-2 border-blue-500/80 rounded-2xl p-3 shadow-card ring-2 ring-blue-50 cursor-pointer'
+                          : 'bg-white border border-slate-200/80 rounded-2xl p-3 shadow-card cursor-pointer'
+                      }
+                    >
+                      <div className="flex items-start justify-between gap-1.5">
+                        <div className="flex items-start gap-2 min-w-0">
+                          {logoUrl ? (
+                            <img src={logoUrl} alt={`${orgName} logo`} loading="lazy" className="w-9 h-9 rounded-xl object-cover bg-slate-50 border border-slate-200/60 shrink-0" />
+                          ) : (
+                            <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold text-[13px] shrink-0 ${avatarStyle}`}>
+                              {getInitials(orgName)}
+                            </div>
+                          )}
+                          <div className="min-w-0">
+                            <div className="flex flex-wrap items-center gap-1">
+                              <span className="text-[9px] font-bold text-slate-500 uppercase tracking-wide truncate">{orgName}</span>
+                              <span className="inline-flex items-center gap-0.5 text-[8px] font-bold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded-full shrink-0">
+                                <span className="material-symbols-outlined text-[10px]">verified</span> Trusted
+                              </span>
+                            </div>
+                            <h3 className="text-[11px] font-bold text-slate-900 mt-0.5 leading-snug">{title}</h3>
+                            <div className="flex flex-wrap items-center gap-1 mt-1">
+                              {compensation && (
+                                <span className="text-[10px] font-bold text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded-full">{compensation}</span>
+                              )}
+                              <span className="text-[10px] font-medium text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded-full">{formatLocation(opp)}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          aria-label={`Save ${title}`}
+                          aria-pressed={isSaved}
+                          onClick={(e) => { e.stopPropagation(); toggleBookmark(opp.id); }}
+                          className="shrink-0"
+                        >
+                          <span className={`material-symbols-outlined text-[16px] ${isSaved ? 'text-blue-600' : 'text-slate-400'}`}>
+                            {isSaved ? 'bookmark' : 'bookmark_border'}
+                          </span>
+                        </button>
+                      </div>
+                      {pills.length > 0 && (
+                        <div className="mt-2 pt-2 border-t border-slate-100 flex flex-wrap items-center gap-1">
+                          <span className="text-[9px] font-bold text-lime-700 bg-lime-50 border border-lime-200/80 px-1.5 py-0.5 rounded-full flex items-center gap-1">
+                            <span className="material-symbols-outlined text-[11px]">{pills[0].icon}</span> {pills[0].label}
+                          </span>
+                          {pills.slice(1, 2).map((pill) => (
+                            <span key={pill.key} className="text-[9px] font-medium text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded-full">
+                              {pill.label}
+                            </span>
+                          ))}
+                          {pills.length > 2 && (
+                            <span className="text-[9px] font-semibold text-slate-500">+{pills.length - 2} more</span>
+                          )}
+                        </div>
+                      )}
+                      <div className="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
+                        <span className="text-[9px] text-slate-400 truncate">{formatPostedAgo(opp)}</span>
+                        <div className="flex items-center gap-1.5 shrink-0">
+                          {isActive && <span className="text-[9px] font-bold text-blue-600">Selected Preview</span>}
+                          <button
+                            type="button"
+                            onClick={(e) => { e.stopPropagation(); handleSelect(opp); }}
+                            className={
+                              isActive
+                                ? 'bg-[#1d4ed8] text-white font-semibold text-[10px] px-3 py-1 rounded-full'
+                                : 'bg-slate-100 text-slate-700 font-semibold text-[10px] px-3 py-1 rounded-full'
+                            }
+                          >
+                            View details
+                          </button>
+                        </div>
+                      </div>
+                    </article>
+                  );
+                })
+              )}
+            </div>
+            <nav aria-label="Pagination" className="flex items-center justify-center gap-1 pt-3 pb-1">
+              <button
+                type="button"
+                disabled={safePage === 1}
+                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-white border border-slate-200 text-slate-600 flex items-center gap-0.5 disabled:opacity-50"
+              >
+                <span className="material-symbols-outlined text-[14px]">chevron_left</span>
+                Previous
+              </button>
+              <div className="flex items-center gap-0.5">
+                {Array.from({ length: totalPages }, (_, i) => i + 1).slice(0, 3).map((page) => (
+                  <button
+                    key={page}
+                    type="button"
+                    aria-current={safePage === page ? 'page' : undefined}
+                    onClick={() => setCurrentPage(page)}
+                    className={
+                      safePage === page
+                        ? 'w-6 h-6 rounded-full text-[10px] font-bold bg-[#1d4ed8] text-white'
+                        : 'w-6 h-6 rounded-full text-[10px] font-semibold text-slate-600'
+                    }
+                  >
+                    {page}
+                  </button>
+                ))}
+              </div>
+              <button
+                type="button"
+                disabled={safePage === totalPages}
+                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-white border border-slate-200 text-slate-600 flex items-center gap-0.5 disabled:opacity-50"
+              >
+                Next
+                <span className="material-symbols-outlined text-[14px]">chevron_right</span>
+              </button>
+            </nav>
+          </section>
+          {/* END: RelatedFeedSection */}
+        </main>
+        {/* BEGIN: Footer (minimal mobile footer) */}
+        <footer className="mt-auto border-t border-slate-200/80 bg-white px-3 py-4">
+          <div className="flex flex-col items-center gap-2 text-center">
+            <img
+              alt="AccessAble Logo"
+              className="h-5 w-auto object-contain"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDr5881s4MY59MfVF4TM8OXqJ8RABAUG7jHO6uGql_63-aO3pE_UAwsGXnbYKvZj-uE4bnniuPNPTQafrlwKBJco7x3d4jjiEEl33NIBulca-xw7LDWZHrrl91isRVVRwKo-GNPeV2rkLzDqXRbsyvAHvVCrlbWwYYiKMDaapesVmJJmpm0zREBQKqUCK584JTat7QnFAEqqFCJ2AczHG-qpHbPmnGDpie-wkQQYvB976m2E0RsF0FLIMZkv38B5n6-uUQ"
+            />
+            <span className="text-[10px] text-slate-500 leading-snug">© 2025 AccessAble. Universal accessibility &amp; zero-barrier employment standard.</span>
+            <div className="flex flex-wrap justify-center gap-x-3 gap-y-1 text-[10px] font-semibold text-slate-600">
+              <a className="hover:text-blue-600" href="#">Employer Accommodation Guide</a>
+              <a className="hover:text-blue-600" href="#">Universal Statement</a>
+              <a className="hover:text-blue-600" href="#">WCAG 2.2 AAA Audit</a>
+              <a className="hover:text-blue-600" href="#">Privacy &amp; Security</a>
+            </div>
+          </div>
+        </footer>
+        {/* END: Footer */}
+      </div>
     </div>
   );
 }
