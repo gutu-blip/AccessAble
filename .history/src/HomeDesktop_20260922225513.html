@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AccessAble — Inclusive Opportunities Platform</title>
+<!-- Google Fonts: Plus Jakarta Sans & Inter -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=OpenDyslexic&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Play CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-primary": "#ffffff",
+            "background": "#f7f9fb",
+            "on-primary-container": "#cad3ff",
+            "on-surface-variant": "#434655",
+            "secondary-container": "#dae2fd",
+            "tertiary-container": "#006948",
+            "surface-container-highest": "#e0e3e5",
+            "secondary": "#565e74",
+            "on-error": "#ffffff",
+            "secondary-fixed": "#dae2fd",
+            "on-tertiary-fixed-variant": "#005137",
+            "inverse-on-surface": "#eff1f3",
+            "tertiary": "#004f35",
+            "on-primary-fixed-variant": "#0039b5",
+            "surface-bright": "#f7f9fb",
+            "on-tertiary": "#ffffff",
+            "on-secondary-container": "#5c647a",
+            "error": "#ba1a1a",
+            "on-error-container": "#93000a",
+            "inverse-surface": "#2d3133",
+            "error-container": "#ffdad6",
+            "primary-container": "#1d4ed8",
+            "primary": "#0037b0",
+            "on-primary-fixed": "#001551",
+            "on-secondary-fixed-variant": "#3f465c",
+            "on-tertiary-container": "#76eab6",
+            "primary-fixed": "#dce1ff",
+            "surface-container-high": "#e6e8ea",
+            "on-secondary": "#ffffff",
+            "surface-variant": "#e0e3e5",
+            "tertiary-fixed-dim": "#68dba9",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-fixed": "#002114",
+            "surface-tint": "#2151da",
+            "surface-container": "#eceef0",
+            "primary-fixed-dim": "#b7c4ff",
+            "outline": "#747686",
+            "surface-dim": "#d8dadc",
+            "inverse-primary": "#b7c4ff",
+            "surface-container-low": "#f2f4f6",
+            "on-surface": "#191c1e",
+            "on-secondary-fixed": "#131b2e",
+            "surface": "#f7f9fb",
+            "secondary-fixed-dim": "#bec6e0",
+            "outline-variant": "#c4c5d7",
+            "tertiary-fixed": "#85f8c4",
+            "on-background": "#191c1e"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "gutter": "1rem",
+            "margin": "1rem",
+            "space-sm": "0.5rem",
+            "space-xl": "2rem",
+            "space-xs": "0.25rem",
+            "space-md": "1rem",
+            "space-lg": "1.5rem"
+          },
+          "fontFamily": {
+            "label-lg": ["Plus Jakarta Sans"],
+            "headline-md": ["Plus Jakarta Sans"],
+            "headline-xl": ["Plus Jakarta Sans"],
+            "headline-sm": ["Plus Jakarta Sans"],
+            "label-md": ["Plus Jakarta Sans"],
+            "headline-xl-mobile": ["Plus Jakarta Sans"],
+            "headline-lg": ["Plus Jakarta Sans"],
+            "body-sm": ["Inter"],
+            "body-md": ["Inter"],
+            "label-sm": ["Plus Jakarta Sans"],
+            "body-lg": ["Inter"],
+            "headline-lg-mobile": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+            "label-lg": ["15px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "headline-xl": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-sm": ["18px", { "lineHeight": "26px", "fontWeight": "600" }],
+            "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "headline-xl-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "body-sm": ["14px", { "lineHeight": "22px", "fontWeight": "400" }],
+            "body-md": ["16px", { "lineHeight": "26px", "fontWeight": "400" }],
+            "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.03em", "fontWeight": "600" }],
+            "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-feature-settings: 'liga';
+      -webkit-font-smoothing: antialiased;
+    }
+    .high-contrast-mode {
+      filter: contrast(125%);
+    }
+    .dyslexia-font {
+      font-family: 'OpenDyslexic', 'Comic Sans MS', sans-serif !important;
+    }
+    /* Subtle custom card elevation from Design Tokens */
+    .card-elevation-1 {
+      box-shadow: 0px 2px 8px -2px rgba(15, 23, 42, 0.06), 0px 1px 3px 0px rgba(15, 23, 42, 0.04);
+    }
+    .card-elevation-1:hover {
+      box-shadow: 0px 8px 20px -4px rgba(15, 23, 42, 0.08), 0px 4px 6px -2px rgba(15, 23, 42, 0.03);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col antialiased selection:bg-secondary-container selection:text-primary" id="app-root">
+<!-- 1. PERSISTENT ACCESSIBILITY QUICK-TOOLBAR -->
+<aside aria-label="Accessibility quick controls" class="w-full bg-surface-container-lowest border-b border-outline-variant/60 sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-6 py-2 flex flex-wrap items-center justify-between gap-3 text-on-surface">
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-secondary-container text-primary">
+<span class="material-symbols-outlined text-[16px]">accessibility_new</span>
+</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold tracking-wide">
+          Universal Access Toolbar
+        </span>
+<span class="hidden sm:inline-block w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+<span class="hidden sm:inline font-body-sm text-body-sm text-on-surface-variant">WCAG 2.2 AAA Compliant Mode</span>
+</div>
+<div class="flex items-center gap-2 sm:gap-4 flex-wrap">
+<!-- Contrast Toggle -->
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-outline-variant bg-surface-container-low hover:bg-surface-container transition-colors duration-150 active:scale-[0.98] font-label-sm text-label-sm text-on-surface" id="toggle-contrast" type="button">
+<span class="material-symbols-outlined text-[18px]">contrast</span>
+<span>Contrast</span>
+</button>
+<!-- Font Size Scaler -->
+<div aria-label="Text Size Zoom" class="inline-flex items-center rounded-lg border border-outline-variant bg-surface-container-low p-0.5" role="group">
+<button aria-label="Decrease text size" class="px-2.5 py-1 font-label-sm text-label-sm text-on-surface hover:bg-surface-container rounded transition-colors duration-150 active:scale-[0.98]" id="btn-font-dec" type="button">
+            A-
+          </button>
+<span class="px-2 font-label-sm text-label-sm text-on-surface-variant font-bold border-x border-outline-variant/60" id="font-scale-display">
+            100%
+          </span>
+<button aria-label="Increase text size" class="px-2.5 py-1 font-label-sm text-label-sm text-on-surface hover:bg-surface-container rounded transition-colors duration-150 active:scale-[0.98]" id="btn-font-inc" type="button">
+            A+
+          </button>
+</div>
+<!-- Dyslexia Font -->
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-outline-variant bg-surface-container-low hover:bg-surface-container transition-colors duration-150 active:scale-[0.98] font-label-sm text-label-sm text-on-surface" id="toggle-dyslexia" type="button">
+<span class="material-symbols-outlined text-[18px]">format_size</span>
+<span>Dyslexia Font</span>
+</button>
+<!-- Screen Reader Audio Mode Status -->
+<button aria-pressed="true" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-tertiary-container/15 text-tertiary border border-tertiary/20 hover:bg-tertiary-container/25 transition-colors duration-150 active:scale-[0.98] font-label-sm text-label-sm font-semibold" type="button">
+<span class="material-symbols-outlined text-[18px]">record_voice_over</span>
+<span class="hidden md:inline">Announcements Active</span>
+<span class="md:hidden">A11y Audio</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- 2. TOPNAVBAR (Shared Component Implementation) -->
+<header class="w-full bg-surface-container-lowest dark:bg-inverse-surface border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none sticky top-10 z-40">
+<div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between gap-6">
+<!-- Brand Logo + PWD Emblem -->
+<div class="flex items-center gap-8">
+<a class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary flex items-center gap-2 group" href="#">
+<span class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-primary text-on-primary font-bold shadow-sm group-hover:scale-105 transition-transform duration-150">
+<span class="material-symbols-outlined text-[24px]">accessible</span>
+</span>
+<span class="tracking-tight flex items-center gap-2">
+            AccessAble
+            <span class="px-2 py-0.5 rounded-full text-[11px] tracking-wide font-bold bg-secondary-container text-on-secondary-container">
+              PWD
+            </span>
+</span>
+</a>
+<!-- Search Bar with Shortcut Indicator -->
+<div class="hidden lg:flex items-center relative w-80">
+<label class="sr-only" for="global-search">Search accessible jobs, events, grants</label>
+<span class="material-symbols-outlined absolute left-3.5 text-outline text-[20px] pointer-events-none">search</span>
+<input class="w-full h-11 pl-10 pr-12 rounded-xl bg-surface-container-low border border-outline-variant text-on-surface font-body-sm text-body-sm placeholder:text-on-surface-variant focus:bg-surface-container-lowest focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-150" id="global-search" placeholder="Search roles, accommodations, hubs..." type="search"/>
+<kbd class="absolute right-3 px-2 py-0.5 rounded bg-surface-container-high border border-outline-variant text-[11px] font-mono text-on-surface-variant font-semibold select-none shadow-xs">
+            ⌘K
+          </kbd>
+</div>
+</div>
+<!-- Navigation Links (Active state determined autonomously: 'Browse Opportunities' is active on this Home feed screen) -->
+<nav class="hidden md:flex items-center gap-7">
+<!-- Active: Browse Opportunities -->
+<a class="border-b-2 border-primary dark:border-inverse-primary text-primary dark:text-inverse-primary font-bold pb-1 font-label-lg text-label-lg inline-flex items-center gap-1.5" href="#">
+<span class="material-symbols-outlined text-[18px]">explore</span>
+          Browse Opportunities
+        </a>
+<a class="text-on-surface-variant dark:text-inverse-on-surface hover:text-on-surface dark:hover:text-surface-bright transition-colors font-label-lg text-label-lg" href="#">
+          Employers &amp; Partners
+        </a>
+<a class="text-on-surface-variant dark:text-inverse-on-surface hover:text-on-surface dark:hover:text-surface-bright transition-colors font-label-lg text-label-lg" href="#">
+          Accessibility Standards
+        </a>
+<a class="text-on-surface-variant dark:text-inverse-on-surface hover:text-on-surface dark:hover:text-surface-bright transition-colors font-label-lg text-label-lg inline-flex items-center gap-1.5" href="#">
+<span class="material-symbols-outlined text-[18px]">bookmark</span>
+          Saved (3)
+        </a>
+</nav>
+<!-- Trailing Primary & Secondary Actions -->
+<div class="flex items-center gap-3">
+<button class="hidden sm:inline-flex items-center gap-2 bg-primary-container text-on-primary font-label-lg text-label-lg px-5 h-11 rounded-xl shadow-sm hover:bg-primary transition-colors duration-150 active:scale-[0.98] font-bold" type="button">
+<span class="material-symbols-outlined text-[20px]">add_circle</span>
+          Post an Opportunity
+        </button>
+<!-- Profile Avatar / Account -->
+<button aria-label="User Account and Profile" class="flex items-center gap-2 p-1.5 rounded-xl border border-outline-variant/80 hover:bg-surface-container-low transition-colors duration-150 active:scale-[0.98]" type="button">
+<img class="w-8 h-8 rounded-lg object-cover border border-outline-variant" data-alt="A dignified close-up photographic portrait of an empowered professional individual with a warm, confident expression in an ultra-modern, high-contrast, naturally lit office setting. The background shows subtle assistive technology work peripherals and soft blue architectural accents matching the design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCs2a8me0OjRU8oc96oLBQYgh_fdvrr3aHWqrrXsu8yrvGNIDJ4-2BpvwLisUIL-__jwV63w_J7xKODs0PWD7sAfcuFczyZ5cCQS2g8yZktGQPUy9FP1xzYFZFToCtMt18flHvDWUDiwc9DxRtlc61a3gc0caUtAIUGCupXjn4MaXRQvWpoCoVBBLZkbBcic76gtEZiJamSwZEc8yURzGJvq56laEiv3Y8OSV3-V6IDmv2Hz549uMJz"/>
+<span class="material-symbols-outlined text-outline text-[18px] pr-1">keyboard_arrow_down</span>
+</button>
+</div>
+</div>
+</header>
+<!-- 3. HERO & QUICK FILTER PILLS SECTION -->
+<section class="bg-surface-container-lowest border-b border-outline-variant/60 pt-10 pb-8 px-6">
+<div class="max-w-7xl mx-auto space-y-6">
+<!-- Radical Inclusion Live Badge -->
+<div class="flex items-center gap-3">
+<span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-label-sm font-label-sm bg-tertiary-container/15 text-tertiary font-bold tracking-wider uppercase border border-tertiary/25">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+          RADICAL INCLUSION
+        </span>
+<span class="font-body-sm text-body-sm text-on-surface-variant hidden sm:inline">
+          100% Pre-vetted accommodations &amp; universal ergonomics
+        </span>
+</div>
+<!-- Main Headline & Narrative -->
+<div class="max-w-4xl space-y-3">
+<h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight font-extrabold">
+          Discover inclusive jobs, events, and programs.
+        </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl">
+          Empowering Persons with Disabilities (PWDs) through dignified careers, verified accessible spaces, transparent hiring processes, and dedicated growth funding.
+        </p>
+</div>
+<!-- Quick Category Pills Filter Bar (Horizontal Pill Scroll / Wrap) -->
+<div aria-label="Opportunity categories" class="flex items-center gap-2.5 overflow-x-auto pt-2 pb-1 no-scrollbar" role="tablist">
+<button aria-selected="true" class="shrink-0 px-4 py-2 rounded-full bg-primary text-on-primary font-label-md text-label-md font-bold shadow-xs active:scale-[0.98] transition-transform" role="tab">
+          All Opportunities (18)
+        </button>
+<button aria-selected="false" class="shrink-0 px-4 py-2 rounded-full bg-surface-container-low text-on-surface hover:bg-surface-container border border-outline-variant font-label-md text-label-md transition-colors active:scale-[0.98]" role="tab">
+          Jobs &amp; Internships (11)
+        </button>
+<button aria-selected="false" class="shrink-0 px-4 py-2 rounded-full bg-surface-container-low text-on-surface hover:bg-surface-container border border-outline-variant font-label-md text-label-md transition-colors active:scale-[0.98]" role="tab">
+          Events &amp; Webinars (4)
+        </button>
+<button aria-selected="false" class="shrink-0 px-4 py-2 rounded-full bg-surface-container-low text-on-surface hover:bg-surface-container border border-outline-variant font-label-md text-label-md transition-colors active:scale-[0.98]" role="tab">
+          Grants &amp; Funding (2)
+        </button>
+<button aria-selected="false" class="shrink-0 px-4 py-2 rounded-full bg-surface-container-low text-on-surface hover:bg-surface-container border border-outline-variant font-label-md text-label-md transition-colors active:scale-[0.98]" role="tab">
+          Training &amp; Mentorship (1)
+        </button>
+</div>
+</div>
+</section>
+<!-- 4. TWO-COLUMN MAIN CONTENT WORKSPACE -->
+<main class="flex-1 max-w-7xl mx-auto w-full px-6 py-8">
+<div class="flex flex-col lg:flex-row gap-8 items-start">
+<!-- LEFT SIDEBAR: FACETED FILTERS (Shared Component SideNavBar blueprint) -->
+<aside aria-label="Filter opportunities" class="w-full lg:w-72 flex-shrink-0 bg-surface-container-lowest border border-outline-variant rounded-xl p-5 lg:sticky lg:top-28 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto space-y-6 shadow-sm">
+<!-- Sidebar Header -->
+<div class="flex items-center justify-between border-b border-outline-variant/60 pb-4">
+<div>
+<h2 class="font-headline-sm text-headline-sm font-bold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">tune</span>
+              Faceted Filters
+            </h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant text-[13px]">
+              Tailor opportunities to your needs
+            </p>
+</div>
+<button class="text-primary hover:underline font-label-sm text-label-sm font-semibold" type="button">
+            Reset
+          </button>
+</div>
+<!-- Filter Group 1: Opportunity Type -->
+<fieldset class="space-y-3">
+<legend class="font-label-lg text-label-lg text-on-surface font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">work</span>
+            Opportunity Type
+          </legend>
+<div class="space-y-2.5 pt-1">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary/30" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface group-hover:text-primary transition-colors">Full-time Job</span>
+<span class="ml-auto font-label-sm text-label-sm text-outline">8</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary/30" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface group-hover:text-primary transition-colors">Webinar / Event</span>
+<span class="ml-auto font-label-sm text-label-sm text-outline">4</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary/30" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface group-hover:text-primary transition-colors">Grant &amp; Funding</span>
+<span class="ml-auto font-label-sm text-label-sm text-outline">2</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary/30" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface group-hover:text-primary transition-colors">Mentorship &amp; Fellowship</span>
+<span class="ml-auto font-label-sm text-label-sm text-outline">4</span>
+</label>
+</div>
+</fieldset>
+<!-- Filter Group 2: Verified Accommodations -->
+<fieldset class="space-y-3 border-t border-outline-variant/60 pt-5">
+<legend class="font-label-lg text-label-lg text-on-surface font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">accessible</span>
+            Verified Accommodations
+          </legend>
+<div class="space-y-2.5 pt-1">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary/30" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface group-hover:text-primary transition-colors">Screen Reader Verified</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary/30" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface group-hover:text-primary transition-colors">Sign Language (ASL/ISL)</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary/30" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface group-hover:text-primary transition-colors">Wheelchair Accessible</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary/30" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface group-hover:text-primary transition-colors">Real-time Captions (CART)</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary/30" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface group-hover:text-primary transition-colors">Alternative Formats (Audio)</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary/30" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface group-hover:text-primary transition-colors">Assistive Tech Provided</span>
+</label>
+</div>
+</fieldset>
+<!-- Filter Group 3: Work Mode -->
+<fieldset class="space-y-3 border-t border-outline-variant/60 pt-5">
+<legend class="font-label-lg text-label-lg text-on-surface font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-secondary">home_work</span>
+            Work Mode
+          </legend>
+<div class="space-y-2 pt-1">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="w-4 h-4 text-primary border-outline-variant focus:ring-primary/30" name="work_mode" type="radio"/>
+<span class="font-body-sm text-body-sm text-on-surface group-hover:text-primary">100% Remote</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 text-primary border-outline-variant focus:ring-primary/30" name="work_mode" type="radio"/>
+<span class="font-body-sm text-body-sm text-on-surface group-hover:text-primary">Hybrid</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 text-primary border-outline-variant focus:ring-primary/30" name="work_mode" type="radio"/>
+<span class="font-body-sm text-body-sm text-on-surface group-hover:text-primary">In-Person / On-site</span>
+</label>
+</div>
+</fieldset>
+<!-- Filter Actions -->
+<div class="pt-4 border-t border-outline-variant/60 space-y-2">
+<button class="w-full py-3 px-4 rounded-xl bg-primary text-on-primary font-label-lg text-label-lg font-bold hover:bg-primary-container transition-colors shadow-sm active:scale-[0.98]" type="button">
+            Apply Filters
+          </button>
+<a class="w-full flex items-center justify-center gap-1.5 py-2 text-on-surface-variant hover:text-primary font-label-sm text-label-sm transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px]">help</span>
+            Accessibility Guide
+          </a>
+</div>
+</aside>
+<!-- RIGHT MAIN FEED: OPPORTUNITY CARDS GRID -->
+<section aria-label="Available opportunities feed" class="flex-1 w-full space-y-6">
+<!-- Controls Header Bar -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-4 flex flex-wrap items-center justify-between gap-4">
+<div class="flex items-center gap-3 flex-wrap">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">
+              18 Opportunities Available Now
+            </span>
+<!-- Active Filter Badges -->
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-semibold">
+              Screen Reader Verified
+              <button aria-label="Remove filter" class="hover:text-error transition-colors" type="button">×</button>
+</span>
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-semibold">
+              Sign Language
+              <button aria-label="Remove filter" class="hover:text-error transition-colors" type="button">×</button>
+</span>
+</div>
+<!-- Sort Select -->
+<div class="flex items-center gap-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant shrink-0" for="sort-select">Sort By:</label>
+<div class="relative">
+<select class="h-10 pl-3 pr-8 rounded-lg bg-surface-container-low border border-outline-variant text-on-surface font-label-sm text-label-sm font-semibold focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none" id="sort-select">
+<option selected="">Deadline: Soonest</option>
+<option>Recently Added</option>
+<option>Highest Accommodation Rating</option>
+</select>
+</div>
+</div>
+</div>
+<!-- 2-Column Responsive Card Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+<!-- CARD 1: Full-time Job -->
+<article class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 card-elevation-1 transition-all duration-150 flex flex-col justify-between group">
+<div class="space-y-4">
+<div class="flex items-center justify-between gap-2">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-label-sm font-label-sm font-bold bg-primary-fixed text-on-primary-fixed border border-outline-variant/60">
+<span class="material-symbols-outlined text-[16px]">work</span>
+                  Job • Full-time
+                </span>
+<span class="inline-flex items-center gap-1 text-label-sm font-label-sm text-error font-bold bg-error-container/40 px-2.5 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[16px]">timer</span>
+                  Closes in 4 days
+                </span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface group-hover:text-primary transition-colors">
+                  Senior Accessible Frontend Engineer
+                </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 flex items-center gap-2">
+<span class="font-semibold text-on-surface">InclusiveTech Labs</span>
+<span>•</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">public</span>
+                    Remote (Global)
+                  </span>
+<span>•</span>
+<span>$135k – $160k</span>
+</p>
+</div>
+<!-- Accessibility Pills -->
+<div class="flex flex-wrap gap-2 pt-2">
+<!-- Screen Reader Verified Pill -->
+<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-label-sm font-label-sm font-medium bg-[#F5F3FF] text-[#6D28D9] border border-[#DDD6FE]">
+<span class="material-symbols-outlined text-[15px]">screen_search_desktop</span>
+                  Screen Reader Verified
+                </span>
+<!-- Remote Pill -->
+<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-label-sm font-label-sm font-medium bg-[#F1F5F9] text-[#334155] border border-[#CBD5E1]">
+<span class="material-symbols-outlined text-[15px]">home</span>
+                  100% Remote
+                </span>
+<!-- Flexible Hours -->
+<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-label-sm font-label-sm font-medium bg-[#F0F9FF] text-[#0369A1] border border-[#BAE6FD]">
+<span class="material-symbols-outlined text-[15px]">schedule</span>
+                  Flexible Hours
+                </span>
+<!-- Mental Health Days -->
+<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-label-sm font-label-sm font-medium bg-[#ECFDF5] text-[#047857] border border-[#A7F3D0]">
+<span class="material-symbols-outlined text-[15px]">spa</span>
+                  Mental Health Days
+                </span>
+</div>
+</div>
+<!-- Card Footer Affordance -->
+<div class="flex items-center justify-between pt-6 mt-6 border-t border-outline-variant/60">
+<button aria-label="Bookmark Senior Accessible Frontend Engineer" class="w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors border border-outline-variant/60 active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[20px]">bookmark_border</span>
+</button>
+<a class="inline-flex items-center gap-1.5 font-label-lg text-label-lg font-bold text-primary hover:translate-x-1 transition-transform" href="#">
+                View Details
+                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</div>
+</article>
+<!-- CARD 2: Free Webinar / Event -->
+<article class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 card-elevation-1 transition-all duration-150 flex flex-col justify-between group">
+<div class="space-y-4">
+<div class="flex items-center justify-between gap-2">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-label-sm font-label-sm font-bold bg-secondary-fixed text-on-secondary-fixed border border-outline-variant/60">
+<span class="material-symbols-outlined text-[16px]">event</span>
+                  Event • Free Webinar
+                </span>
+<span class="inline-flex items-center gap-1 text-label-sm font-label-sm text-primary font-bold bg-primary-fixed/50 px-2.5 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[16px]">calendar_today</span>
+                  Tomorrow • 2:00 PM EST
+                </span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface group-hover:text-primary transition-colors">
+                  Global Disability Inclusion Summit 2025
+                </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 flex items-center gap-2">
+<span class="font-semibold text-on-surface">World PWD Alliance</span>
+<span>•</span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">videocam</span>
+                    Live Stream / Virtual
+                  </span>
+<span>•</span>
+<span>Free Attendance</span>
+</p>
+</div>
+<!-- Accessibility Pills -->
+<div class="flex flex-wrap gap-2 pt-2">
+<!-- Sign Language Pill -->
+<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-label-sm font-label-sm font-medium bg-[#EFF6FF] text-[#1D4ED8] border border-[#DBEAFE]">
+<span class="material-symbols-outlined text-[15px]">sign_language</span>
+                  Live Sign Language (ASL/ISL)
+                </span>
+<!-- Real-time Captions -->
+<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-label-sm font-label-sm font-medium bg-[#ECFDF5] text-[#047857] border border-[#A7F3D0]">
+<span class="material-symbols-outlined text-[15px]">closed_caption</span>
+                  Real-time Captions (CART)
+                </span>
+<!-- Accessible Slides -->
+<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-label-sm font-label-sm font-medium bg-[#F5F3FF] text-[#6D28D9] border border-[#DDD6FE]">
+<span class="material-symbols-outlined text-[15px]">description</span>
+                  Accessible Slides Ahead
+                </span>
+</div>
+</div>
+<!-- Card Footer Affordance -->
+<div class="flex items-center justify-between pt-6 mt-6 border-t border-outline-variant/60">
+<button aria-label="Bookmark Global Disability Inclusion Summit" class="w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors border border-outline-variant/60 active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[20px]">bookmark_border</span>
+</button>
+<a class="inline-flex items-center gap-1.5 font-label-lg text-label-lg font-bold text-primary hover:translate-x-1 transition-transform" href="#">
+                Register &amp; Details
+                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</div>
+</article>
+<!-- CARD 3: Grant & Funding -->
+<article class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 card-elevation-1 transition-all duration-150 flex flex-col justify-between group">
+<div class="space-y-4">
+<div class="flex items-center justify-between gap-2">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-label-sm font-label-sm font-bold bg-tertiary-container/20 text-tertiary border border-tertiary/30">
+<span class="material-symbols-outlined text-[16px]">payments</span>
+                  Grant &amp; Funding
+                </span>
+<span class="inline-flex items-center gap-1 text-label-sm font-label-sm text-on-surface-variant font-bold bg-surface-container-high px-2.5 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[16px]">event_available</span>
+                  Deadline: Nov 15, 2025
+                </span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface group-hover:text-primary transition-colors">
+                  Neurodivergent Entrepreneurs Innovation Grant
+                </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 flex items-center gap-2">
+<span class="font-semibold text-on-surface">Horizon Impact Trust</span>
+<span>•</span>
+<span class="font-bold text-tertiary">Grant of $25,000 USD</span>
+</p>
+</div>
+<!-- Accessibility Pills -->
+<div class="flex flex-wrap gap-2 pt-2">
+<!-- Alternative Formats -->
+<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-label-sm font-label-sm font-medium bg-[#F0F9FF] text-[#0369A1] border border-[#BAE6FD]">
+<span class="material-symbols-outlined text-[15px]">audio_file</span>
+                  Alternative Formats (Audio/Video)
+                </span>
+<!-- 1-on-1 Assistance -->
+<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-label-sm font-label-sm font-medium bg-[#ECFDF5] text-[#047857] border border-[#A7F3D0]">
+<span class="material-symbols-outlined text-[15px]">support_agent</span>
+                  1-on-1 Application Assistance
+                </span>
+<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-label-sm font-label-sm font-medium bg-[#F1F5F9] text-[#334155] border border-[#CBD5E1]">
+<span class="material-symbols-outlined text-[15px]">schedule</span>
+                  Extended Review Window
+                </span>
+</div>
+</div>
+<!-- Card Footer Affordance -->
+<div class="flex items-center justify-between pt-6 mt-6 border-t border-outline-variant/60">
+<button aria-label="Bookmark Innovation Grant" class="w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors border border-outline-variant/60 active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[20px]">bookmark_border</span>
+</button>
+<a class="inline-flex items-center gap-1.5 font-label-lg text-label-lg font-bold text-primary hover:translate-x-1 transition-transform" href="#">
+                Grant Guidelines
+                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</div>
+</article>
+<!-- CARD 4: Training & Mentorship -->
+<article class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 card-elevation-1 transition-all duration-150 flex flex-col justify-between group">
+<div class="space-y-4">
+<div class="flex items-center justify-between gap-2">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-label-sm font-label-sm font-bold bg-primary-fixed text-on-primary-fixed border border-outline-variant/60">
+<span class="material-symbols-outlined text-[16px]">school</span>
+                  Training &amp; Mentorship
+                </span>
+<span class="inline-flex items-center gap-1 text-label-sm font-label-sm text-primary font-bold bg-secondary-container/60 px-2.5 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[16px]">flag</span>
+                  Starts Nov 10
+                </span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface group-hover:text-primary transition-colors">
+                  Digital Accessibility QA Mentorship Cohort
+                </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 flex items-center gap-2">
+<span class="font-semibold text-on-surface">A11y Guild</span>
+<span>•</span>
+<span>Hybrid (New York &amp; Online)</span>
+<span>•</span>
+<span>Sponsored Stipend</span>
+</p>
+</div>
+<!-- Accessibility Pills -->
+<div class="flex flex-wrap gap-2 pt-2">
+<!-- Wheelchair Accessible -->
+<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-label-sm font-label-sm font-medium bg-[#ECFDF5] text-[#047857] border border-[#A7F3D0]">
+<span class="material-symbols-outlined text-[15px]">accessible</span>
+                  Wheelchair Accessible Lab
+                </span>
+<!-- Assistive Tech Provided -->
+<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-label-sm font-label-sm font-medium bg-[#F5F3FF] text-[#6D28D9] border border-[#DDD6FE]">
+<span class="material-symbols-outlined text-[15px]">developer_board</span>
+                  Assistive Tech Provided
+                </span>
+<!-- Live Captioning -->
+<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-label-sm font-label-sm font-medium bg-[#EFF6FF] text-[#1D4ED8] border border-[#DBEAFE]">
+<span class="material-symbols-outlined text-[15px]">subtitles</span>
+                  Live Captioning
+                </span>
+</div>
+</div>
+<!-- Card Footer Affordance -->
+<div class="flex items-center justify-between pt-6 mt-6 border-t border-outline-variant/60">
+<button aria-label="Bookmark Mentorship Cohort" class="w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors border border-outline-variant/60 active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[20px]">bookmark_border</span>
+</button>
+<a class="inline-flex items-center gap-1.5 font-label-lg text-label-lg font-bold text-primary hover:translate-x-1 transition-transform" href="#">
+                Apply for Cohort
+                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</div>
+</article>
+<!-- CARD 5: Job • Part-time -->
+<article class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 card-elevation-1 transition-all duration-150 flex flex-col justify-between group">
+<div class="space-y-4">
+<div class="flex items-center justify-between gap-2">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-label-sm font-label-sm font-bold bg-primary-fixed text-on-primary-fixed border border-outline-variant/60">
+<span class="material-symbols-outlined text-[16px]">work</span>
+                  Job • Part-time
+                </span>
+<span class="inline-flex items-center gap-1 text-label-sm font-label-sm text-error font-bold bg-error-container/40 px-2.5 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[16px]">timer</span>
+                  Closes in 8 days
+                </span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface group-hover:text-primary transition-colors">
+                  Accessibility UX Researcher &amp; Tester
+                </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 flex items-center gap-2">
+<span class="font-semibold text-on-surface">Universal Design Lab</span>
+<span>•</span>
+<span>Remote (US)</span>
+<span>•</span>
+<span>$60 - $80 / hr</span>
+</p>
+</div>
+<!-- Accessibility Pills -->
+<div class="flex flex-wrap gap-2 pt-2">
+<!-- Screen Reader Verified -->
+<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-label-sm font-label-sm font-medium bg-[#F5F3FF] text-[#6D28D9] border border-[#DDD6FE]">
+<span class="material-symbols-outlined text-[15px]">screen_search_desktop</span>
+                  Screen Reader Verified
+                </span>
+<!-- Async Comm -->
+<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-label-sm font-label-sm font-medium bg-[#F0F9FF] text-[#0369A1] border border-[#BAE6FD]">
+<span class="material-symbols-outlined text-[15px]">chat</span>
+                  Asynchronous Communication
+                </span>
+<!-- Ergonomic Stipend -->
+<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-label-sm font-label-sm font-medium bg-[#ECFDF5] text-[#047857] border border-[#A7F3D0]">
+<span class="material-symbols-outlined text-[15px]">chair</span>
+                  Ergonomic Equipment Stipend
+                </span>
+</div>
+</div>
+<!-- Card Footer Affordance -->
+<div class="flex items-center justify-between pt-6 mt-6 border-t border-outline-variant/60">
+<button aria-label="Bookmark UX Researcher position" class="w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors border border-outline-variant/60 active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[20px]">bookmark_border</span>
+</button>
+<a class="inline-flex items-center gap-1.5 font-label-lg text-label-lg font-bold text-primary hover:translate-x-1 transition-transform" href="#">
+                View Details
+                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</div>
+</article>
+<!-- CARD 6: Fellowship & Residency -->
+<article class="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 card-elevation-1 transition-all duration-150 flex flex-col justify-between group">
+<div class="space-y-4">
+<div class="flex items-center justify-between gap-2">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-label-sm font-label-sm font-bold bg-secondary-fixed text-on-secondary-fixed border border-outline-variant/60">
+<span class="material-symbols-outlined text-[16px]">palette</span>
+                  Fellowship &amp; Residency
+                </span>
+<span class="inline-flex items-center gap-1 text-label-sm font-label-sm text-on-surface-variant font-bold bg-surface-container-high px-2.5 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[16px]">calendar_month</span>
+                  Deadline: Dec 1, 2025
+                </span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface group-hover:text-primary transition-colors">
+                  Inclusive Arts &amp; Media Fellowship 2026
+                </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 flex items-center gap-2">
+<span class="font-semibold text-on-surface">Creative Access Initiative</span>
+<span>•</span>
+<span>Los Angeles, CA</span>
+<span>•</span>
+<span>$40,000 Stipend</span>
+</p>
+</div>
+<!-- Accessibility Pills -->
+<div class="flex flex-wrap gap-2 pt-2">
+<!-- Sensory-friendly -->
+<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-label-sm font-label-sm font-medium bg-[#F0F9FF] text-[#0369A1] border border-[#BAE6FD]">
+<span class="material-symbols-outlined text-[15px]">dark_mode</span>
+                  Sensory-friendly Studio
+                </span>
+<!-- ASL Interpreters on Site -->
+<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-label-sm font-label-sm font-medium bg-[#EFF6FF] text-[#1D4ED8] border border-[#DBEAFE]">
+<span class="material-symbols-outlined text-[15px]">sign_language</span>
+                  ASL Interpreters on Site
+                </span>
+<!-- Personal Care Assistant Access -->
+<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-label-sm font-label-sm font-medium bg-[#ECFDF5] text-[#047857] border border-[#A7F3D0]">
+<span class="material-symbols-outlined text-[15px]">accessibility</span>
+                  PCA Accompaniment Allowed
+                </span>
+</div>
+</div>
+<!-- Card Footer Affordance -->
+<div class="flex items-center justify-between pt-6 mt-6 border-t border-outline-variant/60">
+<button aria-label="Bookmark Fellowship" class="w-10 h-10 rounded-lg flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors border border-outline-variant/60 active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[20px]">bookmark_border</span>
+</button>
+<a class="inline-flex items-center gap-1.5 font-label-lg text-label-lg font-bold text-primary hover:translate-x-1 transition-transform" href="#">
+                Fellowship Specs
+                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+</div>
+</article>
+</div>
+<!-- Pagination & Load More Section -->
+<div class="mt-10 pt-6 border-t border-outline-variant/60 flex flex-col sm:flex-row items-center justify-between gap-4">
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Showing <span class="font-bold text-on-surface">1 - 6</span> of <span class="font-bold text-on-surface">18</span> curated opportunities
+          </p>
+<div class="flex items-center gap-2">
+<button class="px-4 py-2 rounded-lg border border-outline-variant bg-surface-container-low text-outline font-label-md text-label-md cursor-not-allowed" disabled="" type="button">
+              Previous
+            </button>
+<button class="px-3.5 py-2 rounded-lg bg-primary text-on-primary font-label-md text-label-md font-bold shadow-xs" type="button">
+              1
+            </button>
+<button class="px-3.5 py-2 rounded-lg border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low text-on-surface font-label-md text-label-md" type="button">
+              2
+            </button>
+<button class="px-3.5 py-2 rounded-lg border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low text-on-surface font-label-md text-label-md" type="button">
+              3
+            </button>
+<button class="px-4 py-2 rounded-lg border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low text-on-surface font-label-md text-label-md font-semibold" type="button">
+              Next
+            </button>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- 5. FOOTER (Shared Component Implementation) -->
+<footer class="w-full bg-surface-container-low dark:bg-inverse-surface border-t border-outline-variant dark:border-outline mt-auto">
+<div class="max-w-7xl mx-auto py-12 px-6 space-y-8">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+<div>
+<span class="font-headline-sm text-headline-sm font-bold text-primary dark:text-inverse-primary flex items-center gap-2">
+<span class="material-symbols-outlined text-[22px]">accessible_forward</span>
+            AccessAble
+          </span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1 max-w-md">
+            The national career &amp; development bridge uniting ambitious persons with disabilities with certified inclusive organizations.
+          </p>
+</div>
+<!-- Links from Shared JSON -->
+<nav aria-label="Footer navigation links" class="flex flex-wrap gap-x-6 gap-y-2 font-label-md text-label-md">
+<a class="text-on-surface-variant dark:text-inverse-on-surface hover:text-primary dark:hover:text-inverse-primary underline transition-colors duration-150" href="#">Accessibility Statement</a>
+<a class="text-on-surface-variant dark:text-inverse-on-surface hover:text-primary dark:hover:text-inverse-primary underline transition-colors duration-150" href="#">Universal Design Standards</a>
+<a class="text-on-surface-variant dark:text-inverse-on-surface hover:text-primary dark:hover:text-inverse-primary underline transition-colors duration-150" href="#">Employer Inclusivity Guide</a>
+<a class="text-on-surface-variant dark:text-inverse-on-surface hover:text-primary dark:hover:text-inverse-primary underline transition-colors duration-150" href="#">Terms of Service</a>
+<a class="text-on-surface-variant dark:text-inverse-on-surface hover:text-primary dark:hover:text-inverse-primary underline transition-colors duration-150" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant dark:text-inverse-on-surface hover:text-primary dark:hover:text-inverse-primary underline transition-colors duration-150" href="#">Contact Support</a>
+</nav>
+</div>
+<div class="pt-6 border-t border-outline-variant/60 flex flex-col sm:flex-row items-center justify-between gap-4 font-body-sm text-body-sm text-on-surface-variant">
+<p>© 2025 AccessAble. Designed for radical accessibility and empowerment.</p>
+<p class="flex items-center gap-2">
+<span class="inline-block w-2 h-2 rounded-full bg-tertiary"></span>
+          WCAG 2.2 Level AAA Certified Architecture
+        </p>
+</div>
+</div>
+</footer>
+<!-- Light Vanilla JS for Accessibility Toolbar Micro-Interactions -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const appRoot = document.getElementById('app-root');
+      
+      // 1. Contrast Toggle
+      const contrastBtn = document.getElementById('toggle-contrast');
+      let highContrast = false;
+      contrastBtn.addEventListener('click', () => {
+        highContrast = !highContrast;
+        appRoot.classList.toggle('high-contrast-mode', highContrast);
+        contrastBtn.setAttribute('aria-pressed', highContrast.toString());
+      });
+
+      // 2. Dyslexia Font Toggle
+      const dyslexiaBtn = document.getElementById('toggle-dyslexia');
+      let dyslexiaActive = false;
+      dyslexiaBtn.addEventListener('click', () => {
+        dyslexiaActive = !dyslexiaActive;
+        appRoot.classList.toggle('dyslexia-font', dyslexiaActive);
+        dyslexiaBtn.setAttribute('aria-pressed', dyslexiaActive.toString());
+      });
+
+      // 3. Dynamic Text Scaler
+      const fontIncBtn = document.getElementById('btn-font-inc');
+      const fontDecBtn = document.getElementById('btn-font-dec');
+      const fontDisplay = document.getElementById('font-scale-display');
+      let currentScale = 100;
+
+      function updateScale(newScale) {
+        currentScale = Math.max(90, Math.min(130, newScale));
+        document.documentElement.style.fontSize = `${(currentScale / 100) * 16}px`;
+        fontDisplay.textContent = `${currentScale}%`;
+      }
+
+      fontIncBtn.addEventListener('click', () => updateScale(currentScale + 10));
+      fontDecBtn.addEventListener('click', () => updateScale(currentScale - 10));
+
+      // 4. Keyboard Shortcut Handler for Search (⌘K / Ctrl+K)
+      window.addEventListener('keydown', (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+          e.preventDefault();
+          const searchInput = document.getElementById('global-search');
+          if (searchInput) {
+            searchInput.focus();
+          }
+        }
+      });
+    });
+  </script>
+</body></html>

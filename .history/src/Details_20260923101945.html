@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Senior Accessible Frontend Engineer &amp; Design Technologist | InclusiveTech Labs - AccessAble</title>
+<!-- Material Symbols & Typography -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS & Theme Config -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-highest": "#e0e3e5",
+            "on-primary-fixed": "#001551",
+            "on-surface": "#191c1e",
+            "surface": "#f7f9fb",
+            "primary-container": "#1d4ed8",
+            "secondary-fixed": "#dae2fd",
+            "on-background": "#191c1e",
+            "secondary": "#565e74",
+            "tertiary-fixed": "#85f8c4",
+            "on-primary-fixed-variant": "#0039b5",
+            "inverse-on-surface": "#eff1f3",
+            "surface-tint": "#2151da",
+            "on-secondary-fixed-variant": "#3f465c",
+            "inverse-primary": "#b7c4ff",
+            "on-error-container": "#93000a",
+            "surface-container-low": "#f2f4f6",
+            "secondary-container": "#dae2fd",
+            "on-tertiary-fixed-variant": "#005137",
+            "surface-container": "#eceef0",
+            "on-primary": "#ffffff",
+            "on-secondary": "#ffffff",
+            "surface-dim": "#d8dadc",
+            "outline-variant": "#c4c5d7",
+            "primary": "#0037b0",
+            "error-container": "#ffdad6",
+            "on-tertiary-container": "#76eab6",
+            "secondary-fixed-dim": "#bec6e0",
+            "surface-variant": "#e0e3e5",
+            "on-error": "#ffffff",
+            "tertiary-container": "#006948",
+            "tertiary-fixed-dim": "#68dba9",
+            "on-secondary-fixed": "#131b2e",
+            "on-secondary-container": "#5c647a",
+            "error": "#ba1a1a",
+            "tertiary": "#004f35",
+            "on-tertiary": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-fixed": "#002114",
+            "primary-fixed-dim": "#b7c4ff",
+            "surface-container-high": "#e6e8ea",
+            "primary-fixed": "#dce1ff",
+            "outline": "#747686",
+            "on-primary-container": "#cad3ff",
+            "surface-bright": "#f7f9fb",
+            "background": "#f7f9fb",
+            "inverse-surface": "#2d3133",
+            "on-surface-variant": "#434655"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin": "1rem",
+            "space-md": "1rem",
+            "gutter": "1rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2rem",
+            "space-xs": "0.25rem",
+            "space-sm": "0.5rem"
+          },
+          "fontFamily": {
+            "body-md": ["Inter", "sans-serif"],
+            "label-sm": ["Plus Jakarta Sans", "sans-serif"],
+            "label-md": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-xl-mobile": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-sm": ["Plus Jakarta Sans", "sans-serif"],
+            "body-lg": ["Inter", "sans-serif"],
+            "headline-xl": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-md": ["Plus Jakarta Sans", "sans-serif"],
+            "label-lg": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-lg": ["Plus Jakarta Sans", "sans-serif"],
+            "headline-lg-mobile": ["Plus Jakarta Sans", "sans-serif"],
+            "body-sm": ["Inter", "sans-serif"]
+          },
+          "fontSize": {
+            "body-md": ["16px", { "lineHeight": "26px", "fontWeight": "400" }],
+            "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.03em", "fontWeight": "600" }],
+            "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "600" }],
+            "headline-xl-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "headline-sm": ["18px", { "lineHeight": "26px", "fontWeight": "600" }],
+            "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "headline-xl": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "label-lg": ["15px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+            "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+            "body-sm": ["14px", { "lineHeight": "22px", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .material-symbols-outlined.filled {
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    }
+    /* Dyslexia friendly toggle class */
+    body.font-dyslexia {
+      font-family: 'Atkinson Hyperlegible', sans-serif !important;
+    }
+    body.font-dyslexia * {
+      font-family: inherit !important;
+      letter-spacing: 0.04em !important;
+      word-spacing: 0.08em !important;
+    }
+    /* High contrast mode */
+    body.high-contrast {
+      background-color: #000000 !important;
+      color: #ffffff !important;
+    }
+    body.high-contrast .contrast-card {
+      background-color: #000000 !important;
+      border: 2px solid #ffffff !important;
+      color: #ffffff !important;
+    }
+    body.high-contrast button, body.high-contrast a {
+      outline: 2px solid #ffff00 !important;
+    }
+    :focus-visible {
+      outline: 3px solid #1d4ed8;
+      outline-offset: 3px;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md text-body-md antialiased min-h-screen flex flex-col selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- ==================== 1. PERSISTENT ACCESSIBILITY UTILITY TOOLBAR ==================== -->
+<aside aria-label="Quick Accessibility Settings" class="w-full bg-surface-container-high border-b border-outline-variant py-2 px-4 z-50">
+<div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-on-surface-variant font-label-md text-label-md">
+<!-- Left: Mode and Assistive Indicator -->
+<div class="flex items-center gap-3">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-surface-container-lowest rounded-full border border-outline-variant font-medium text-primary">
+<span class="material-symbols-outlined filled text-primary" style="font-size: 16px;">verified_user</span>
+          WCAG 2.2 AAA Environment
+        </span>
+<div aria-live="polite" class="sr-only" id="sr-announcer">Accessibility toolbar loaded. Standard view active.</div>
+<span class="hidden sm:inline text-secondary font-label-sm">Screen Reader Optimized</span>
+</div>
+<!-- Right: Real Interactive Accessibility Toggles -->
+<div class="flex items-center gap-2">
+<!-- High Contrast Toggle -->
+<button aria-pressed="false" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container border border-outline-variant font-label-md transition-colors active:scale-95" id="contrast-toggle" title="Toggle High Contrast Mode" type="button">
+<span class="material-symbols-outlined" style="font-size: 18px;">contrast</span>
+<span>High Contrast</span>
+</button>
+<!-- Font Size Scale -->
+<div aria-label="Text Size Controls" class="inline-flex items-center bg-surface-container-lowest border border-outline-variant rounded-lg p-0.5" role="group">
+<button aria-label="Smaller text" class="px-2.5 py-1 text-sm font-bold hover:bg-surface-container rounded transition-colors" id="zoom-out" title="Decrease font size" type="button">A-</button>
+<span class="px-2 text-xs font-semibold text-secondary" id="zoom-indicator">100%</span>
+<button aria-label="Larger text" class="px-2.5 py-1 text-sm font-bold hover:bg-surface-container rounded transition-colors" id="zoom-in" title="Increase font size" type="button">A+</button>
+</div>
+<!-- Dyslexia Font Swap -->
+<button aria-pressed="false" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container border border-outline-variant font-label-md transition-colors active:scale-95" id="dyslexia-toggle" title="Toggle Dyslexia-Friendly Typeface" type="button">
+<span class="material-symbols-outlined" style="font-size: 18px;">format_size</span>
+<span>Dyslexia Font</span>
+</button>
+<!-- Audio Reading Assistance Indicator -->
+<button class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container border border-outline-variant font-label-md text-primary transition-colors active:scale-95" onclick="announcePageSummary()" title="Read Page Overview" type="button">
+<span class="material-symbols-outlined" style="font-size: 18px;">record_voice_over</span>
+<span>Read Listing</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- ==================== TOP NAVIGATION BAR ==================== -->
+<header class="w-full sticky top-0 z-40 bg-surface-container-lowest border-b border-outline-variant shadow-sm transition-colors duration-150">
+<div class="w-full max-w-7xl mx-auto px-6 py-3 flex justify-between items-center gap-4">
+<!-- Brand Logo & Badge -->
+<div class="flex items-center gap-6">
+<a aria-label="AccessAble Home" class="font-headline-md text-headline-md font-bold text-primary flex items-center gap-2 group focus:outline-none" href="#top">
+<span class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-on-primary shadow-sm group-hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined text-2xl">accessibility_new</span>
+</span>
+<span class="tracking-tight text-on-surface group-hover:text-primary transition-colors">AccessAble</span>
+</a>
+<!-- Global Search Bar -->
+<div class="hidden lg:flex items-center relative w-80">
+<span class="material-symbols-outlined absolute left-3.5 text-secondary pointer-events-none" style="font-size: 20px;">search</span>
+<input aria-label="Search opportunities by skill, accommodation, or employer" class="w-full h-11 pl-10 pr-4 bg-surface-container-low rounded-xl border border-outline-variant text-body-sm placeholder:text-secondary focus:bg-surface-container-lowest focus:border-primary focus:ring-2 focus:ring-primary-fixed outline-none transition-all" placeholder="Search accommodations, roles..." type="search"/>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav aria-label="Main Navigation" class="hidden md:flex items-center gap-8 font-label-lg text-label-lg">
+<a aria-current="page" class="border-b-2 border-primary text-primary font-bold pb-1 transition-colors flex items-center gap-1.5" href="#browse">
+<span class="material-symbols-outlined" style="font-size: 18px;">work</span>
+          Browse Opportunities
+        </a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-1.5" href="#bookmarks">
+<span class="material-symbols-outlined" style="font-size: 18px;">bookmark</span>
+          Saved Bookmarks
+          <span class="px-2 py-0.5 bg-secondary-container text-on-secondary-fixed text-xs font-bold rounded-full">3</span>
+</a>
+<a class="text-on-surface-variant hover:text-on-surface transition-colors flex items-center gap-1.5" href="#standards">
+<span class="material-symbols-outlined" style="font-size: 18px;">verified</span>
+          Universal Standards
+        </a>
+</nav>
+<!-- Trailing Action Controls -->
+<div class="flex items-center gap-3">
+<button class="hidden sm:inline-flex items-center justify-center px-4 py-2.5 rounded-xl bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-container font-semibold transition-all shadow-sm active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined mr-1.5" style="font-size: 18px;">add_circle</span>
+          Post an Opportunity
+        </button>
+<!-- User Profile Pill -->
+<button aria-label="Account Settings for Alex Rivers" class="flex items-center gap-2 p-1.5 rounded-xl hover:bg-surface-container-low border border-outline-variant transition-colors" type="button">
+<div class="w-8 h-8 rounded-lg bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center font-bold text-sm">
+            AR
+          </div>
+<span class="hidden xl:inline text-body-sm font-medium text-on-surface pr-1">Alex R.</span>
+<span class="material-symbols-outlined text-secondary" style="font-size: 18px;">arrow_drop_down</span>
+</button>
+</div>
+</div>
+</header>
+<!-- ==================== BREADCRUMB & RETURN ACTION ==================== -->
+<div class="w-full bg-surface-container-low border-b border-outline-variant py-3 px-6">
+<div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+<nav aria-label="Breadcrumbs" class="flex items-center gap-2 font-label-sm text-label-sm text-secondary">
+<a class="hover:text-primary flex items-center gap-1 transition-colors" href="#browse">
+<span class="material-symbols-outlined" style="font-size: 16px;">arrow_back</span>
+<span>Opportunities</span>
+</a>
+<span class="material-symbols-outlined text-outline-variant" style="font-size: 16px;">chevron_right</span>
+<span class="hover:text-primary cursor-pointer transition-colors">Tech &amp; Engineering</span>
+<span class="material-symbols-outlined text-outline-variant" style="font-size: 16px;">chevron_right</span>
+<span aria-current="location" class="text-on-surface font-semibold truncate max-w-xs md:max-w-md">
+          Senior Accessible Frontend Engineer &amp; Design Technologist
+        </span>
+</nav>
+<div class="flex items-center gap-2 font-label-sm">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="text-tertiary font-bold tracking-wide">ACTIVELY RECRUITING</span>
+<span class="text-outline-variant">•</span>
+<span class="text-secondary">Verified Listing ID: <strong class="text-on-surface">#ACC-8821</strong></span>
+</div>
+</div>
+</div>
+<!-- ==================== MAIN OPPORTUNITY CONTENT WRAPPER ==================== -->
+<main class="w-full max-w-7xl mx-auto px-4 md:px-6 py-8 flex-1">
+<!-- ==================== 2. HEADER & QUICK OVERVIEW (HERO / LISTING HEADER) ==================== -->
+<header class="contrast-card bg-surface-container-lowest border border-outline-variant rounded-2xl p-6 md:p-8 shadow-sm mb-8 transition-shadow">
+<!-- Top badges row -->
+<div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+<div class="flex flex-wrap items-center gap-2.5">
+<!-- Urgency Badge -->
+<span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-error-container text-on-error-container rounded-full font-label-md text-label-md font-semibold">
+<span class="material-symbols-outlined" style="font-size: 18px;">timer</span>
+            Closes in 4 days (Oct 28, 2025)
+          </span>
+<!-- Verification Badge -->
+<span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-tertiary-container text-on-tertiary rounded-full font-label-md text-label-md font-semibold shadow-xs">
+<span class="material-symbols-outlined" style="font-size: 18px;">verified</span>
+            WCAG 2.2 AAA Verified Opportunity
+          </span>
+</div>
+<!-- Social Action Controls -->
+<div class="flex items-center gap-2">
+<button aria-label="Toggle Bookmark" aria-pressed="true" class="h-11 px-4 rounded-xl border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low text-on-surface font-label-md flex items-center gap-2 transition-all active:scale-95" id="bookmark-btn" onclick="toggleBookmark()" type="button">
+<span class="material-symbols-outlined filled text-primary" id="bookmark-icon" style="font-size: 20px;">bookmark</span>
+<span class="font-semibold text-primary" id="bookmark-label">Saved to Bookmarks</span>
+</button>
+<button aria-label="Share Opportunity Link" class="h-11 w-11 rounded-xl border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low text-on-surface-variant flex items-center justify-center transition-all active:scale-95" onclick="copyLinkToClipboard()" title="Share Opportunity" type="button">
+<span class="material-symbols-outlined" style="font-size: 20px;">share</span>
+</button>
+<button aria-label="Download or Print Accessible PDF Specification" class="h-11 w-11 rounded-xl border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low text-on-surface-variant flex items-center justify-center transition-all active:scale-95" onclick="window.print()" title="Print Accessible Specification" type="button">
+<span class="material-symbols-outlined" style="font-size: 20px;">print</span>
+</button>
+</div>
+</div>
+<!-- Title & Organization Info -->
+<div class="flex flex-col lg:flex-row lg:items-start justify-between gap-6 pb-6 border-b border-outline-variant">
+<div class="space-y-3">
+<h1 class="font-headline-xl text-headline-xl font-bold text-on-surface tracking-tight leading-tight">
+            Senior Accessible Frontend Engineer &amp; Design Technologist
+          </h1>
+<!-- Organization Row -->
+<div class="flex flex-wrap items-center gap-3">
+<div class="w-12 h-12 rounded-xl bg-primary-container text-on-primary font-bold font-headline-sm flex items-center justify-center shadow-xs">
+              IT
+            </div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-semibold text-on-surface">InclusiveTech Labs</span>
+<span class="material-symbols-outlined filled text-primary" style="font-size: 18px;" title="Verified Employer">verified</span>
+<span class="px-2 py-0.5 bg-secondary-fixed text-on-secondary-fixed text-xs font-semibold rounded-md">Featured Partner</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary">
+                50–200 employees • Certified Disability-Owned &amp; Inclusive Business Enterprise (DOBE)
+              </p>
+</div>
+</div>
+</div>
+<!-- Hero Primary Action Button -->
+<div class="flex flex-col sm:flex-row lg:flex-col items-stretch lg:items-end gap-2.5 min-w-[260px]">
+<a class="h-13 px-8 py-3.5 bg-primary hover:bg-primary-container text-on-primary font-headline-sm text-headline-sm font-bold rounded-xl flex items-center justify-center gap-3 transition-all shadow-md active:scale-98 text-center" href="#apply-section">
+<span>Apply Now</span>
+<span class="material-symbols-outlined" style="font-size: 22px;">open_in_new</span>
+</a>
+<p class="text-xs text-secondary text-center lg:text-right font-body-sm">
+            Avg. response time: <span class="font-semibold text-on-surface">Within 48 hours</span>
+</p>
+</div>
+</div>
+<!-- Quick Metadata Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-6">
+<div class="flex items-start gap-3 p-3.5 rounded-xl bg-surface-container-low border border-outline-variant/60">
+<span class="material-symbols-outlined text-primary p-2 bg-surface-container-lowest rounded-lg border border-outline-variant" style="font-size: 22px;">work</span>
+<div>
+<div class="font-label-sm text-label-sm text-secondary">Opportunity Type</div>
+<div class="font-headline-sm text-headline-sm font-semibold text-on-surface">Full-Time Staff Role</div>
+<div class="text-xs text-on-surface-variant font-medium">Senior / Staff Technologist</div>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3.5 rounded-xl bg-surface-container-low border border-outline-variant/60">
+<span class="material-symbols-outlined text-primary p-2 bg-surface-container-lowest rounded-lg border border-outline-variant" style="font-size: 22px;">home_work</span>
+<div>
+<div class="font-label-sm text-label-sm text-secondary">Work Mode &amp; Location</div>
+<div class="font-headline-sm text-headline-sm font-semibold text-on-surface">100% Remote</div>
+<div class="text-xs text-on-surface-variant font-medium">Global Async Core Hours</div>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3.5 rounded-xl bg-surface-container-low border border-outline-variant/60">
+<span class="material-symbols-outlined text-primary p-2 bg-surface-container-lowest rounded-lg border border-outline-variant" style="font-size: 22px;">payments</span>
+<div>
+<div class="font-label-sm text-label-sm text-secondary">Base Compensation</div>
+<div class="font-headline-sm text-headline-sm font-semibold text-on-surface">$135,000 – $160,000</div>
+<div class="text-xs text-tertiary font-bold">+ $2.5k Ergonomic Setup</div>
+</div>
+</div>
+<div class="flex items-start gap-3 p-3.5 rounded-xl bg-surface-container-low border border-outline-variant/60">
+<span class="material-symbols-outlined text-primary p-2 bg-surface-container-lowest rounded-lg border border-outline-variant" style="font-size: 22px;">calendar_month</span>
+<div>
+<div class="font-label-sm text-label-sm text-secondary">Application Deadline</div>
+<div class="font-headline-sm text-headline-sm font-semibold text-on-surface">October 28, 2025</div>
+<div class="text-xs text-on-surface-variant font-medium">Target Start: Dec 2025</div>
+</div>
+</div>
+</div>
+</header>
+<!-- ==================== 3. SPOTLIGHT: DEDICATED ACCESSIBILITY & ACCOMMODATIONS SECTION ==================== -->
+<section aria-labelledby="accommodations-heading" class="contrast-card bg-surface-container-lowest border-2 border-primary/40 rounded-2xl p-6 md:p-8 shadow-sm mb-10 relative overflow-hidden">
+<!-- Top banner ribbon -->
+<div class="absolute top-0 right-0 transform translate-x-12 translate-y-4 rotate-45 bg-primary text-on-primary py-1 px-14 text-xs font-bold tracking-wider uppercase hidden sm:block">
+        Pre-Funded
+      </div>
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+<div>
+<div class="flex items-center gap-2.5 text-primary font-bold font-label-md text-label-md mb-1">
+<span class="w-8 h-8 rounded-lg bg-primary-fixed text-on-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-xl">accessibility</span>
+</span>
+            RADICAL ACCESSIBILITY COMMITMENT
+          </div>
+<h2 class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tight" id="accommodations-heading">
+            Verified Accommodations &amp; Universal Ergonomics
+          </h2>
+<p class="font-body-md text-body-md text-secondary mt-1">
+            All accommodations listed below are guaranteed, unconditionally pre-funded, and managed through confidential self-identification.
+          </p>
+</div>
+<div class="flex items-center gap-2 bg-tertiary-container/10 border border-tertiary-container/30 px-3.5 py-2 rounded-xl">
+<span class="material-symbols-outlined text-tertiary font-bold">check_circle</span>
+<span class="text-sm font-semibold text-tertiary">Verified by AccessAble Auditor</span>
+</div>
+</div>
+<!-- 4 Categorized Accommodation Pillars (Responsive Grid) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+<!-- Pillar 1: Physical & Workspace -->
+<article class="p-5 rounded-xl bg-surface-container-low border border-outline-variant hover:border-primary/50 transition-colors">
+<div class="flex items-center gap-3 mb-3">
+<span class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl">accessible_forward</span>
+</span>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Physical &amp; Workspace Ergonomics</h3>
+<span class="text-xs font-medium text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-full">Autonomous Setup</span>
+</div>
+</div>
+<ul class="space-y-2 text-body-sm text-on-surface-variant">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-emerald-600 mt-0.5" style="font-size: 18px;">check</span>
+<span><strong>100% Remote flexibility:</strong> Work from any location with no mandatory return-to-office demands.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-emerald-600 mt-0.5" style="font-size: 18px;">check</span>
+<span><strong>$2,500 Home Office Stipend:</strong> Custom motorized desks, ergonomic seating, specialized keyboards, or trackballs.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-emerald-600 mt-0.5" style="font-size: 18px;">check</span>
+<span><strong>Flexible schedule:</strong> Asynchronous communication cadence with customizable core overlapping hours.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-emerald-600 mt-0.5" style="font-size: 18px;">check</span>
+<span><strong>Step-free access &amp; braille wayfinding:</strong> Full physical accessibility if attending optional annual summit.</span>
+</li>
+</ul>
+</article>
+<!-- Pillar 2: Auditory & Communication -->
+<article class="p-5 rounded-xl bg-surface-container-low border border-outline-variant hover:border-primary/50 transition-colors">
+<div class="flex items-center gap-3 mb-3">
+<span class="w-10 h-10 rounded-lg bg-blue-50 text-blue-700 border border-blue-200 flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl">sign_language</span>
+</span>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Auditory &amp; Communication Support</h3>
+<span class="text-xs font-medium text-blue-800 bg-blue-100 px-2 py-0.5 rounded-full">Full CART &amp; ASL Coverage</span>
+</div>
+</div>
+<ul class="space-y-2 text-body-sm text-on-surface-variant">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-blue-600 mt-0.5" style="font-size: 18px;">check</span>
+<span><strong>Sign Language Interpreters:</strong> Certified ASL &amp; ISL professionals available for all team synchs and 1-on-1s.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-blue-600 mt-0.5" style="font-size: 18px;">check</span>
+<span><strong>Human Real-Time Captioners (CART):</strong> Dedicated human captioners for all organizational meetings upon request.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-blue-600 mt-0.5" style="font-size: 18px;">check</span>
+<span><strong>Written summaries default:</strong> All audio/video communications provide instant searchable transcripts.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-blue-600 mt-0.5" style="font-size: 18px;">check</span>
+<span><strong>Zero-latency chat culture:</strong> Slack-first and Loom-with-subtitles environment to eliminate oral pressure.</span>
+</li>
+</ul>
+</article>
+<!-- Pillar 3: Visual & Assistive Tech -->
+<article class="p-5 rounded-xl bg-surface-container-low border border-outline-variant hover:border-primary/50 transition-colors">
+<div class="flex items-center gap-3 mb-3">
+<span class="w-10 h-10 rounded-lg bg-purple-50 text-purple-700 border border-purple-200 flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl">screen_search_desktop</span>
+</span>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Visual &amp; Assistive Technology</h3>
+<span class="text-xs font-medium text-purple-800 bg-purple-100 px-2 py-0.5 rounded-full">Native Tooling Stack</span>
+</div>
+</div>
+<ul class="space-y-2 text-body-sm text-on-surface-variant">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-purple-600 mt-0.5" style="font-size: 18px;">check</span>
+<span><strong>Screen Reader Certified Dev Stack:</strong> Full compatibility with NVDA, JAWS, VoiceOver, and Orca terminal setups.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-purple-600 mt-0.5" style="font-size: 18px;">check</span>
+<span><strong>Assistive software licenses:</strong> Company-covered licenses for ZoomText, Kurzweil, Dragon NaturallySpeaking, etc.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-purple-600 mt-0.5" style="font-size: 18px;">check</span>
+<span><strong>High contrast &amp; dark mode:</strong> Every internal dashboard, repo, and document adheres to 7:1 contrast minimums.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-purple-600 mt-0.5" style="font-size: 18px;">check</span>
+<span><strong>Hardware Refresh Grant:</strong> Annual refresh for refreshable Braille displays and specialized visual displays.</span>
+</li>
+</ul>
+</article>
+<!-- Pillar 4: Cognitive, Neurodivergent & Sensory -->
+<article class="p-5 rounded-xl bg-surface-container-low border border-outline-variant hover:border-primary/50 transition-colors">
+<div class="flex items-center gap-3 mb-3">
+<span class="w-10 h-10 rounded-lg bg-sky-50 text-sky-700 border border-sky-200 flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl">psychology</span>
+</span>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Cognitive, Neurodivergent &amp; Sensory</h3>
+<span class="text-xs font-medium text-sky-800 bg-sky-100 px-2 py-0.5 rounded-full">Psychologically Safe</span>
+</div>
+</div>
+<ul class="space-y-2 text-body-sm text-on-surface-variant">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-sky-600 mt-0.5" style="font-size: 18px;">check</span>
+<span><strong>Camera-optional standard:</strong> Zero expectation of camera-on during meetings to minimize sensory fatigue.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-sky-600 mt-0.5" style="font-size: 18px;">check</span>
+<span><strong>No impromptu pop-up syncs:</strong> All meetings require advance agendas with at least 24-hour reading windows.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-sky-600 mt-0.5" style="font-size: 18px;">check</span>
+<span><strong>Plain language documentation:</strong> Direct, unambiguous task rubrics and sprint goal breakdowns.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-sky-600 mt-0.5" style="font-size: 18px;">check</span>
+<span><strong>Focus Fridays &amp; Recharge Days:</strong> Protected no-meeting deep work blocks and monthly sensory rest days.</span>
+</li>
+</ul>
+</article>
+</div>
+<!-- Accommodation Liaison Callout Card -->
+<div class="p-6 rounded-2xl bg-secondary-fixed/40 border border-secondary-fixed-dim/60 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+<div class="flex items-start gap-4">
+<div class="w-14 h-14 rounded-2xl bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-lg border border-outline-variant flex-shrink-0">
+            MV
+          </div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm font-bold text-on-surface">Marcus Vance</span>
+<span class="text-xs px-2 py-0.5 bg-surface-container-lowest text-primary rounded-full font-bold border border-outline-variant">Accommodation Liaison</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary">Director of People &amp; Universal Accessibility Operations, InclusiveTech Labs</p>
+<p class="font-body-sm text-body-sm text-on-surface mt-1">
+              "We consider accessibility inquiries a core metric of candidate success, not a special accommodation request. Feel empowered to ask for whatever workflow allows you to thrive."
+            </p>
+</div>
+</div>
+<!-- Contact Methods -->
+<div class="flex flex-col sm:flex-row items-stretch lg:items-center gap-3 w-full lg:w-auto">
+<a class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-surface-container-lowest hover:bg-surface-container border border-outline-variant text-body-sm font-semibold text-primary shadow-xs transition-colors" href="mailto:accommodations@inclusivetechlabs.org">
+<span class="material-symbols-outlined" style="font-size: 18px;">mail</span>
+<span>accommodations@inclusivetechlabs.org</span>
+</a>
+<a class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-surface-container-lowest hover:bg-surface-container border border-outline-variant text-body-sm font-semibold text-on-surface shadow-xs transition-colors" href="tel:+15554382234">
+<span class="material-symbols-outlined" style="font-size: 18px;">phone_iphone</span>
+<span>+1 (555) 438-2234</span>
+</a>
+</div>
+</div>
+<!-- Notice timeline banner -->
+<div class="mt-4 pt-3 border-t border-outline-variant/60 flex items-center gap-2 text-xs text-secondary font-medium">
+<span class="material-symbols-outlined text-primary" style="font-size: 16px;">info</span>
+<span>Recommended interview prep notice: Please notify our team 5 business days prior to interviews for specialized CART dialect or tactile braille materials.</span>
+</div>
+</section>
+<!-- ==================== 4. CORE DETAILS & CONTENT BODY (SPLIT RAIL) ==================== -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- MAIN DETAILS COLUMN (8 Cols) -->
+<section aria-label="Job Description and Technical Scope" class="lg:col-span-8 space-y-8">
+<!-- Role Mission & Overview Card -->
+<article class="contrast-card bg-surface-container-lowest border border-outline-variant rounded-2xl p-6 md:p-8 shadow-sm">
+<h2 class="font-headline-lg text-headline-lg font-bold text-on-surface mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">flag</span>
+            Mission &amp; Opportunity Overview
+          </h2>
+<div class="space-y-4 font-body-md text-body-md text-on-surface-variant leading-relaxed">
+<p>
+              At <strong>InclusiveTech Labs</strong>, we are building software foundations where digital access is engineered from the first commit—never retrofitted as an afterthought. We are seeking a <strong>Senior Accessible Frontend Engineer &amp; Design Technologist</strong> to lead our global component architecture and champion WCAG 2.2 Level AAA benchmarks across our flagship cloud services.
+            </p>
+<p>
+              In this role, you will bridge the creative nuances of design systems with the algorithmic rigor of accessible web components. You will work closely with deaf, blind, low-vision, neurodivergent, and motor-disabled engineers and usability testers to invent frictionless digital interactions that set industry standards.
+            </p>
+<p class="p-4 rounded-xl bg-surface-container-low border-l-4 border-primary text-on-surface italic font-medium">
+              "We actively encourage candidates who identify as disabled, chronically ill, neurodivergent, or who utilize assistive technologies in their daily lives to apply. Your lived expertise with assistive interfaces is recognized as a direct technical superpower."
+            </p>
+</div>
+</article>
+<!-- What You'll Do Card -->
+<article class="contrast-card bg-surface-container-lowest border border-outline-variant rounded-2xl p-6 md:p-8 shadow-sm">
+<h2 class="font-headline-lg text-headline-lg font-bold text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">terminal</span>
+            What You'll Drive &amp; Deliver
+          </h2>
+<div class="space-y-6">
+<div class="space-y-2">
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface flex items-center gap-2">
+<span class="w-6 h-6 rounded-md bg-primary/10 text-primary flex items-center justify-center text-xs font-bold">1</span>
+                Design System Architecture &amp; WCAG AAA Component Engineering
+              </h3>
+<p class="font-body-md text-body-md text-on-surface-variant pl-8">
+                Architect, refactor, and document robust, reusable UI components using TypeScript, React, and semantic HTML5. Ensure all interactive primitives (comboboxes, modal dialogs, complex data grids) strictly respect the WAI-ARIA 1.2 authoring patterns and keyboard navigation paradigms.
+              </p>
+</div>
+<div class="space-y-2">
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface flex items-center gap-2">
+<span class="w-6 h-6 rounded-md bg-primary/10 text-primary flex items-center justify-center text-xs font-bold">2</span>
+                Automated &amp; Manual Screen Reader Diagnostics
+              </h3>
+<p class="font-body-md text-body-md text-on-surface-variant pl-8">
+                Build continuous integration pipelines combining Axe-core, Playwright A11y tests, and Pa11y checks. Conduct hands-on auditory testing across screen reader combinations (VoiceOver on Safari/iOS, NVDA on Firefox, JAWS on Chrome) to eradicate cognitive noise and focus traps.
+              </p>
+</div>
+<div class="space-y-2">
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface flex items-center gap-2">
+<span class="w-6 h-6 rounded-md bg-primary/10 text-primary flex items-center justify-center text-xs font-bold">3</span>
+                Inclusive Design Advocacy &amp; Engineering Mentorship
+              </h3>
+<p class="font-body-md text-body-md text-on-surface-variant pl-8">
+                Mentor 14+ frontend engineers across product squads in accessible DOM layout, ARIA live region management, and motion sickness prevention (<code class="text-xs bg-surface-container px-1 py-0.5 rounded font-mono">prefers-reduced-motion</code>). Organize internal hackathons and open-source contributions to universal assistive utilities.
+              </p>
+</div>
+</div>
+</article>
+<!-- Technology Stack & Tools -->
+<article class="contrast-card bg-surface-container-lowest border border-outline-variant rounded-2xl p-6 md:p-8 shadow-sm">
+<h2 class="font-headline-lg text-headline-lg font-bold text-on-surface mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">code</span>
+            Technology Stack &amp; Testing Ecosystem
+          </h2>
+<p class="font-body-sm text-body-sm text-secondary mb-4">
+            Hands-on familiarity with these technologies will help you hit the ground running:
+          </p>
+<div class="flex flex-wrap gap-2.5">
+<!-- Tech Pills -->
+<span class="px-3.5 py-1.5 rounded-full bg-surface-container-low border border-outline-variant text-on-surface font-label-md text-label-md flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-blue-600"></span> React 18 / Next.js
+            </span>
+<span class="px-3.5 py-1.5 rounded-full bg-surface-container-low border border-outline-variant text-on-surface font-label-md text-label-md flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-blue-500"></span> TypeScript 5.x
+            </span>
+<span class="px-3.5 py-1.5 rounded-full bg-surface-container-low border border-outline-variant text-on-surface font-label-md text-label-md flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-purple-600"></span> WAI-ARIA Authoring Practices
+            </span>
+<span class="px-3.5 py-1.5 rounded-full bg-surface-container-low border border-outline-variant text-on-surface font-label-md text-label-md flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-teal-500"></span> Tailwind CSS &amp; Design Tokens
+            </span>
+<span class="px-3.5 py-1.5 rounded-full bg-surface-container-low border border-outline-variant text-on-surface font-label-md text-label-md flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-red-600"></span> Axe-core &amp; Jest-axe
+            </span>
+<span class="px-3.5 py-1.5 rounded-full bg-surface-container-low border border-outline-variant text-on-surface font-label-md text-label-md flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-green-600"></span> Playwright / Cypress
+            </span>
+<span class="px-3.5 py-1.5 rounded-full bg-surface-container-low border border-outline-variant text-on-surface font-label-md text-label-md flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-amber-600"></span> NVDA, JAWS &amp; VoiceOver
+            </span>
+<span class="px-3.5 py-1.5 rounded-full bg-surface-container-low border border-outline-variant text-on-surface font-label-md text-label-md flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-indigo-600"></span> Radix UI / Headless UI
+            </span>
+</div>
+</article>
+<!-- Benefits & Holistic Wellness -->
+<article class="contrast-card bg-surface-container-lowest border border-outline-variant rounded-2xl p-6 md:p-8 shadow-sm">
+<h2 class="font-headline-lg text-headline-lg font-bold text-on-surface mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">volunteer_activism</span>
+            Equitable Benefits &amp; Holistic Wellness
+          </h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant">
+<div class="flex items-center gap-2 font-headline-sm text-headline-sm font-bold text-on-surface mb-1">
+<span class="material-symbols-outlined text-tertiary">health_and_safety</span>
+                Comprehensive Healthcare
+              </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                100% employer-covered premium health, vision, and dental plans, with explicit coverage for physical therapy, occupational health, and neurodiversity diagnostics.
+              </p>
+</div>
+<div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant">
+<div class="flex items-center gap-2 font-headline-sm text-headline-sm font-bold text-on-surface mb-1">
+<span class="material-symbols-outlined text-tertiary">event_available</span>
+                Flexible Time Off &amp; Sick Leave
+              </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                Unlimited flexible PTO policy with a mandatory 25-day annual minimum, plus 100% paid chronic illness &amp; recovery leave without burdensome proof cycles.
+              </p>
+</div>
+<div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant">
+<div class="flex items-center gap-2 font-headline-sm text-headline-sm font-bold text-on-surface mb-1">
+<span class="material-symbols-outlined text-tertiary">school</span>
+                $3,000 Learning &amp; A11y Grant
+              </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                Dedicated annual budget for CSUN Assistive Tech Conference, IAAP WAS/CPACC certifications, and specialized accessible engineering workshops.
+              </p>
+</div>
+<div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant">
+<div class="flex items-center gap-2 font-headline-sm text-headline-sm font-bold text-on-surface mb-1">
+<span class="material-symbols-outlined text-tertiary">savings</span>
+                401(k) Retirement &amp; Equity
+              </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                Generous 5% company matching 401(k) plan with immediate vesting, alongside meaningful employee equity stock options in InclusiveTech Labs.
+              </p>
+</div>
+</div>
+</article>
+<!-- 4-Stage Transparent Application Journey -->
+<article class="contrast-card bg-surface-container-lowest border border-outline-variant rounded-2xl p-6 md:p-8 shadow-sm" id="application-process">
+<div class="mb-6">
+<span class="font-label-md text-label-md text-primary font-bold tracking-wide">NO SURPRISES POLICY</span>
+<h2 class="font-headline-lg text-headline-lg font-bold text-on-surface">Transparent 4-Stage Hiring Journey</h2>
+<p class="font-body-md text-body-md text-secondary mt-1">
+              We eliminate whiteboard ambushes and high-pressure timed puzzle tasks. You choose your preferred interview format at every milestone.
+            </p>
+</div>
+<div class="space-y-6 relative before:absolute before:top-3 before:bottom-3 before:left-5 before:w-0.5 before:bg-outline-variant">
+<!-- Stage 1 -->
+<div class="flex items-start gap-4 relative">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-sm shadow-sm flex-shrink-0 z-10">
+                1
+              </div>
+<div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant flex-1">
+<div class="flex items-center justify-between gap-2">
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Format-Flexible Intro Screen</h3>
+<span class="text-xs font-semibold px-2 py-0.5 bg-surface-container-lowest rounded border border-outline-variant text-secondary">30 mins</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+                  Casual conversation with Marcus Vance (Accommodations Liaison) or team lead. Available via Zoom video, voice call, or async Slack conversation.
+                </p>
+</div>
+</div>
+<!-- Stage 2 -->
+<div class="flex items-start gap-4 relative">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-sm shadow-sm flex-shrink-0 z-10">
+                2
+              </div>
+<div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant flex-1">
+<div class="flex items-center justify-between gap-2">
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Practical Architecture Review (Take-Home or Oral)</h3>
+<span class="text-xs font-semibold px-2 py-0.5 bg-surface-container-lowest rounded border border-outline-variant text-secondary">Paid ($400 stipend)</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+                  Inspect a realistic un-accessible component and suggest semantic fixes. Zero timed live coding. Complete in your own setup with your preferred assistive stack.
+                </p>
+</div>
+</div>
+<!-- Stage 3 -->
+<div class="flex items-start gap-4 relative">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-sm shadow-sm flex-shrink-0 z-10">
+                3
+              </div>
+<div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant flex-1">
+<div class="flex items-center justify-between gap-2">
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Team Dialogue &amp; Culture Integration</h3>
+<span class="text-xs font-semibold px-2 py-0.5 bg-surface-container-lowest rounded border border-outline-variant text-secondary">45 mins</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+                  Meet fellow accessibility engineers, designers, and user researchers. CART captioners and ASL interpreters provided automatically.
+                </p>
+</div>
+</div>
+<!-- Stage 4 -->
+<div class="flex items-start gap-4 relative">
+<div class="w-10 h-10 rounded-full bg-tertiary text-on-tertiary flex items-center justify-center font-bold text-sm shadow-sm flex-shrink-0 z-10">
+                4
+              </div>
+<div class="p-4 rounded-xl bg-tertiary-container/10 border border-tertiary-container/40 flex-1">
+<div class="flex items-center justify-between gap-2">
+<h3 class="font-headline-sm text-headline-sm font-bold text-tertiary">Transparent Offer &amp; Ergonomics Prep</h3>
+<span class="text-xs font-bold px-2 py-0.5 bg-tertiary text-on-tertiary rounded">Decision within 3 days</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface mt-1">
+                  Clear compensation breakdown without adversarial negotiations. Your home office equipment stipend is dispatched 2 weeks before your official start date.
+                </p>
+</div>
+</div>
+</div>
+</article>
+<!-- Final Application Box -->
+<div class="contrast-card bg-surface-container-lowest border-2 border-primary rounded-2xl p-6 md:p-8 shadow-md" id="apply-section">
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+<div>
+<h2 class="font-headline-lg text-headline-lg font-bold text-on-surface">Ready to Shape the Future of Web Access?</h2>
+<p class="font-body-md text-body-md text-secondary mt-1">Applications close October 28, 2025 at 11:59 PM UTC.</p>
+</div>
+<a class="h-12 px-8 bg-primary hover:bg-primary-container text-on-primary font-headline-sm text-headline-sm font-bold rounded-xl flex items-center gap-2 shadow-sm transition-all active:scale-95" href="https://example.com/apply" rel="noopener noreferrer" target="_blank">
+<span>Submit Application</span>
+<span class="material-symbols-outlined" style="font-size: 20px;">open_in_new</span>
+</a>
+</div>
+<!-- Alternative Submission Modes -->
+<div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant">
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary">alternate_email</span>
+              Alternative &amp; Multimodal Application Methods
+            </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-3">
+              Standard web forms can sometimes pose unexpected accessibility hurdles. If you prefer applying via an audio recording, video intro with sign language, shared GitHub profile, or an informal email summary of your past projects:
+            </p>
+<div class="flex flex-wrap items-center gap-3">
+<a class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container-lowest border border-outline-variant font-label-md text-primary hover:underline" href="mailto:careers-accessible@inclusivetechlabs.org?subject=Application:%20Senior%20Accessible%20Frontend%20Engineer">
+<span class="material-symbols-outlined" style="font-size: 16px;">mail</span>
+                careers-accessible@inclusivetechlabs.org
+              </a>
+<span class="text-xs text-secondary">Subject: "Application: Senior Accessible Frontend Engineer"</span>
+</div>
+</div>
+</div>
+</section>
+<!-- ==================== SIDE RAIL / SIDEBAR (4 Cols) ==================== -->
+<aside aria-label="Organization Background and Integrity Tools" class="lg:col-span-4 space-y-6">
+<!-- Sticky Organizer Profile Card -->
+<div class="contrast-card bg-surface-container-lowest border border-outline-variant rounded-2xl p-6 shadow-sm">
+<div class="flex items-center gap-3 pb-4 border-b border-outline-variant mb-4">
+<div class="w-14 h-14 rounded-2xl bg-primary-container text-on-primary font-bold text-xl flex items-center justify-center shadow-xs">
+              IT
+            </div>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">InclusiveTech Labs</h3>
+<p class="font-body-sm text-body-sm text-secondary">San Francisco, CA • Distributed</p>
+</div>
+</div>
+<!-- DEI Scorecard -->
+<div class="space-y-4 mb-6">
+<div>
+<div class="flex justify-between items-center text-sm font-semibold mb-1">
+<span class="text-on-surface">Disability Equality Index</span>
+<span class="text-primary font-bold">100 / 100</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2.5">
+<div class="bg-primary h-2.5 rounded-full" style="width: 100%"></div>
+</div>
+</div>
+<div class="p-3 bg-surface-container-low rounded-xl border border-outline-variant text-xs space-y-1.5">
+<div class="flex items-center justify-between">
+<span class="text-secondary">Disabled Staff in Leadership:</span>
+<strong class="text-on-surface">42%</strong>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-secondary">Employee Resource Groups:</span>
+<strong class="text-on-surface">A11y Allies &amp; NeuroDiverge</strong>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-secondary">Annual A11y Audit:</span>
+<strong class="text-tertiary">Level AAA Certified</strong>
+</div>
+</div>
+</div>
+<div class="space-y-2">
+<a class="w-full h-11 px-4 rounded-xl border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-low text-on-surface font-label-md flex items-center justify-center gap-2 transition-colors" href="#inclusion-policy">
+<span class="material-symbols-outlined" style="font-size: 18px;">policy</span>
+<span>View Inclusion Policy</span>
+</a>
+<a class="w-full h-11 px-4 rounded-xl bg-surface-container-low hover:bg-surface-container text-primary font-label-md flex items-center justify-center gap-2 transition-colors" href="#all-jobs">
+<span>More Jobs from InclusiveTech (4)</span>
+<span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Listing Safety & Accessibility Reporting Card -->
+<div class="contrast-card bg-surface-container-lowest border border-outline-variant rounded-2xl p-6 shadow-sm">
+<div class="flex items-center gap-2.5 text-secondary font-headline-sm text-headline-sm font-bold mb-3">
+<span class="material-symbols-outlined text-primary">gavel</span>
+            AccessAble Trust &amp; Safety
+          </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-4">
+            Found an expired link, mislabeled accommodation, or encountered an unexpected barrier during this listing application?
+          </p>
+<button class="w-full py-2.5 px-4 rounded-xl border border-error/30 hover:bg-error-container/20 text-error font-label-md text-label-md flex items-center justify-center gap-2 transition-colors" onclick="openReportModal()" type="button">
+<span class="material-symbols-outlined" style="font-size: 18px;">report</span>
+<span>Report Listing Barrier</span>
+</button>
+</div>
+<!-- Listing Statistics Quick Box -->
+<div class="p-5 rounded-2xl bg-surface-container-low border border-outline-variant text-body-sm text-secondary space-y-2.5">
+<div class="flex justify-between items-center">
+<span>Posted On:</span>
+<span class="text-on-surface font-semibold">October 14, 2025</span>
+</div>
+<div class="flex justify-between items-center">
+<span>Active Applicants:</span>
+<span class="text-on-surface font-semibold">142 candidates</span>
+</div>
+<div class="flex justify-between items-center">
+<span>Audited By:</span>
+<span class="text-tertiary font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">verified</span> AccessAble
+            </span>
+</div>
+<div class="flex justify-between items-center">
+<span>License / Verification:</span>
+<span class="font-mono text-xs text-on-surface">CERT-2025-AAA-09</span>
+</div>
+</div>
+</aside>
+</div>
+<!-- ==================== 5. SIMILAR ACCESSIBLE OPPORTUNITIES ==================== -->
+<section aria-labelledby="related-heading" class="mt-14 pt-10 border-t border-outline-variant">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+<div>
+<span class="font-label-md text-label-md text-primary font-bold uppercase tracking-wider">Expand Your Search</span>
+<h2 class="font-headline-lg text-headline-lg font-bold text-on-surface" id="related-heading">Similar Inclusive Tech Opportunities</h2>
+</div>
+<a class="inline-flex items-center gap-1 text-primary font-label-lg font-bold hover:underline" href="#browse">
+<span>Explore All 84 Tech Roles</span>
+<span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<article class="contrast-card bg-surface-container-lowest border border-outline-variant hover:border-primary rounded-2xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start gap-2 mb-3">
+<span class="px-2.5 py-1 bg-purple-50 text-purple-700 border border-purple-200 text-xs font-bold rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined" style="font-size: 14px;">screen_search_desktop</span>
+                Screen Reader Verified
+              </span>
+<span class="text-xs text-secondary font-medium">Closes Nov 02</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface hover:text-primary transition-colors cursor-pointer mb-1">
+              Accessibility UX Researcher &amp; Usability Tester
+            </h3>
+<p class="font-body-sm text-body-sm text-secondary mb-3">Universal Design Lab • 100% Remote</p>
+<p class="font-headline-sm text-headline-sm font-semibold text-on-surface mb-4">$60 – $80 / hr (Contract to Hire)</p>
+<div class="flex flex-wrap gap-1.5 mb-4">
+<span class="px-2 py-0.5 bg-surface-container-low text-on-surface text-xs rounded-md">Qualitative Auditing</span>
+<span class="px-2 py-0.5 bg-surface-container-low text-on-surface text-xs rounded-md">Screen Readers</span>
+</div>
+</div>
+<a class="w-full py-2.5 px-4 rounded-xl border border-outline-variant hover:bg-surface-container-low text-primary font-label-md text-label-md font-bold flex items-center justify-center gap-1 transition-colors" href="#view-card-1">
+<span>View Opportunity</span>
+<span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+</a>
+</article>
+<!-- Card 2 -->
+<article class="contrast-card bg-surface-container-lowest border border-outline-variant hover:border-primary rounded-2xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start gap-2 mb-3">
+<span class="px-2.5 py-1 bg-blue-50 text-blue-700 border border-blue-200 text-xs font-bold rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined" style="font-size: 14px;">sign_language</span>
+                ASL Interpreters Active
+              </span>
+<span class="text-xs text-secondary font-medium">Closes Nov 12</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface hover:text-primary transition-colors cursor-pointer mb-1">
+              Digital Accessibility QA Mentorship Cohort
+            </h3>
+<p class="font-body-sm text-body-sm text-secondary mb-3">A11y Guild • Hybrid (Austin, TX)</p>
+<p class="font-headline-sm text-headline-sm font-semibold text-on-surface mb-4">Paid Stipend + Tech Kit Provided</p>
+<div class="flex flex-wrap gap-1.5 mb-4">
+<span class="px-2 py-0.5 bg-surface-container-low text-on-surface text-xs rounded-md">Mentorship</span>
+<span class="px-2 py-0.5 bg-surface-container-low text-on-surface text-xs rounded-md">WCAG 2.2</span>
+</div>
+</div>
+<a class="w-full py-2.5 px-4 rounded-xl border border-outline-variant hover:bg-surface-container-low text-primary font-label-md text-label-md font-bold flex items-center justify-center gap-1 transition-colors" href="#view-card-2">
+<span>View Opportunity</span>
+<span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+</a>
+</article>
+<!-- Card 3 -->
+<article class="contrast-card bg-surface-container-lowest border border-outline-variant hover:border-primary rounded-2xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start gap-2 mb-3">
+<span class="px-2.5 py-1 bg-sky-50 text-sky-700 border border-sky-200 text-xs font-bold rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined" style="font-size: 14px;">psychology</span>
+                Neurodiversity Friendly
+              </span>
+<span class="text-xs text-secondary font-medium">Closes Nov 20</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface hover:text-primary transition-colors cursor-pointer mb-1">
+              Neurodivergent Tech Fellowship &amp; Open Lab
+            </h3>
+<p class="font-body-sm text-body-sm text-secondary mb-3">Horizon Impact Trust • 100% Remote</p>
+<p class="font-headline-sm text-headline-sm font-semibold text-on-surface mb-4">$25,000 Unrestricted Grant</p>
+<div class="flex flex-wrap gap-1.5 mb-4">
+<span class="px-2 py-0.5 bg-surface-container-low text-on-surface text-xs rounded-md">Fellowship</span>
+<span class="px-2 py-0.5 bg-surface-container-low text-on-surface text-xs rounded-md">Async Work</span>
+</div>
+</div>
+<a class="w-full py-2.5 px-4 rounded-xl border border-outline-variant hover:bg-surface-container-low text-primary font-label-md text-label-md font-bold flex items-center justify-center gap-1 transition-colors" href="#view-card-3">
+<span>View Opportunity</span>
+<span class="material-symbols-outlined" style="font-size: 16px;">arrow_forward</span>
+</a>
+</article>
+</div>
+</section>
+</main>
+<!-- ==================== 6. INCLUSIVE DESKTOP FOOTER ==================== -->
+<footer class="w-full bg-surface-container-low border-t border-outline-variant mt-16 pt-12 pb-8">
+<div class="max-w-7xl mx-auto px-6">
+<!-- Top row: Brand & Statement -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 pb-8 border-b border-outline-variant">
+<div>
+<div class="font-headline-sm text-headline-sm font-bold text-primary flex items-center gap-2 mb-2">
+<span class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-lg">accessibility_new</span>
+</span>
+            AccessAble
+          </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-xl">
+            Designed for radical accessibility, economic empowerment, and workplace dignity. We certify that every listing meets stringent real-world accommodation covenants.
+          </p>
+</div>
+<div class="flex items-center gap-3">
+<div class="p-3 bg-surface-container-lowest border border-outline-variant rounded-xl flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary">check_circle</span>
+<div class="text-left font-label-sm">
+<div class="text-on-surface font-bold">WCAG 2.2 AAA Validated</div>
+<div class="text-secondary text-xs">Conforms with Section 508 &amp; EN 301 549</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Links Grid -->
+<div class="py-6 flex flex-wrap justify-between items-center gap-4 text-body-sm text-on-surface-variant">
+<nav aria-label="Footer Accessibility &amp; Legal Links" class="flex flex-wrap gap-x-6 gap-y-2">
+<a class="hover:text-primary underline transition-colors" href="#statement">Accessibility Statement</a>
+<a class="hover:text-primary underline transition-colors" href="#standards">Universal Design Standards</a>
+<a class="hover:text-primary underline transition-colors" href="#employer-guide">Employer Inclusivity Guide</a>
+<a class="hover:text-primary underline transition-colors" href="#terms">Terms of Service</a>
+<a class="hover:text-primary underline transition-colors" href="#privacy">Privacy Policy</a>
+<a class="hover:text-primary underline transition-colors" href="#contact">Contact Support</a>
+</nav>
+<p class="font-body-sm text-body-sm text-secondary">
+          © 2025 AccessAble. Designed for radical accessibility and empowerment.
+        </p>
+</div>
+</div>
+</footer>
+<!-- ==================== REPORT BARRIER MODAL (ACCESSIBLE POPUP) ==================== -->
+<div aria-labelledby="report-modal-title" aria-modal="true" class="fixed inset-0 z-50 bg-black/60 hidden items-center justify-center p-4 backdrop-blur-xs" id="report-modal" role="dialog">
+<div class="bg-surface-container-lowest border-2 border-outline rounded-2xl max-w-lg w-full p-6 shadow-2xl relative">
+<div class="flex items-center justify-between pb-3 border-b border-outline-variant mb-4">
+<h3 class="font-headline-sm font-bold text-on-surface flex items-center gap-2" id="report-modal-title">
+<span class="material-symbols-outlined text-error">report_problem</span>
+          Report an Accessibility Barrier
+        </h3>
+<button aria-label="Close dialog" class="w-8 h-8 rounded-lg hover:bg-surface-container flex items-center justify-center text-secondary" onclick="closeReportModal()" type="button">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<p class="text-body-sm text-secondary mb-4">
+        Our accessibility advocacy team investigates barrier reports within 12 hours. If InclusiveTech Labs has failed to fulfill an accommodation guarantee, this listing will be placed under formal review.
+      </p>
+<form class="space-y-4" onsubmit="handleReportSubmit(event)">
+<div>
+<label class="block font-label-md text-on-surface mb-1" for="barrier-type">Barrier Category</label>
+<select class="w-full h-11 px-3 bg-surface-container-low rounded-xl border border-outline-variant font-body-sm text-on-surface" id="barrier-type">
+<option>External application form inaccessible with screen reader</option>
+<option>Host did not provide requested ASL / CART accommodation</option>
+<option>Inaccurate salary or remote work description</option>
+<option>Discriminatory language or prerequisite barrier</option>
+<option>Expired or non-functional application URL</option>
+</select>
+</div>
+<div>
+<label class="block font-label-md text-on-surface mb-1" for="barrier-desc">Details (Optional)</label>
+<textarea class="w-full p-3 bg-surface-container-low rounded-xl border border-outline-variant font-body-sm text-on-surface" id="barrier-desc" placeholder="Describe the assistive technology or specific hurdle you faced..." rows="3"></textarea>
+</div>
+<div class="flex justify-end gap-3 pt-2">
+<button class="px-4 py-2 rounded-xl border border-outline-variant hover:bg-surface-container font-label-md" onclick="closeReportModal()" type="button">Cancel</button>
+<button class="px-5 py-2 rounded-xl bg-error text-on-error font-label-md font-bold shadow-xs" type="submit">Submit Report</button>
+</div>
+</form>
+</div>
+</div>
+<!-- ==================== JAVASCRIPT: ACCESSIBILITY & STATE CONTROLS ==================== -->
+<script>
+    // 1. Zoom / Text Size Controller
+    let currentZoom = 100;
+    const zoomLevels = [100, 115, 125, 140];
+    let zoomIndex = 0;
+
+    const zoomInBtn = document.getElementById('zoom-in');
+    const zoomOutBtn = document.getElementById('zoom-out');
+    const zoomIndicator = document.getElementById('zoom-indicator');
+    const announcer = document.getElementById('sr-announcer');
+
+    function applyZoom(index) {
+      zoomIndex = Math.max(0, Math.min(zoomLevels.length - 1, index));
+      currentZoom = zoomLevels[zoomIndex];
+      zoomIndicator.textContent = currentZoom + '%';
+      document.documentElement.style.fontSize = (currentZoom / 100 * 16) + 'px';
+      announce('Text size scaled to ' + currentZoom + ' percent');
+    }
+
+    zoomInBtn.addEventListener('click', () => applyZoom(zoomIndex + 1));
+    zoomOutBtn.addEventListener('click', () => applyZoom(zoomIndex - 1));
+
+    // 2. High Contrast Toggle
+    const contrastBtn = document.getElementById('contrast-toggle');
+    contrastBtn.addEventListener('click', () => {
+      const isHigh = document.body.classList.toggle('high-contrast');
+      contrastBtn.setAttribute('aria-pressed', isHigh);
+      contrastBtn.classList.toggle('bg-primary', isHigh);
+      contrastBtn.classList.toggle('text-on-primary', isHigh);
+      announce(isHigh ? 'High contrast mode turned on' : 'High contrast mode turned off');
+    });
+
+    // 3. Dyslexia Font Toggle
+    const dyslexiaBtn = document.getElementById('dyslexia-toggle');
+    dyslexiaBtn.addEventListener('click', () => {
+      const isDyslexic = document.body.classList.toggle('font-dyslexia');
+      dyslexiaBtn.setAttribute('aria-pressed', isDyslexic);
+      dyslexiaBtn.classList.toggle('bg-primary', isDyslexic);
+      dyslexiaBtn.classList.toggle('text-on-primary', isDyslexic);
+      announce(isDyslexic ? 'Atkinson Hyperlegible dyslexia font active' : 'Default font restored');
+    });
+
+    // 4. Bookmark Toggle
+    let isBookmarked = true;
+    function toggleBookmark() {
+      isBookmarked = !isBookmarked;
+      const btn = document.getElementById('bookmark-btn');
+      const icon = document.getElementById('bookmark-icon');
+      const label = document.getElementById('bookmark-label');
+
+      btn.setAttribute('aria-pressed', isBookmarked);
+      if (isBookmarked) {
+        icon.classList.add('filled', 'text-primary');
+        label.textContent = 'Saved to Bookmarks';
+        label.classList.add('text-primary');
+        announce('Saved to your AccessAble bookmarks');
+      } else {
+        icon.classList.remove('filled', 'text-primary');
+        label.textContent = 'Bookmark Opportunity';
+        label.classList.remove('text-primary');
+        announce('Removed from bookmarks');
+      }
+    }
+
+    // 5. Announce Function for Screen Readers
+    function announce(message) {
+      if (announcer) {
+        announcer.textContent = message;
+      }
+    }
+
+    // 6. Read Summary
+    function announcePageSummary() {
+      const summary = "Senior Accessible Frontend Engineer at InclusiveTech Labs. 100% Remote, offering 135 to 160 thousand dollars, with guaranteed ASL interpreters, CART captions, and screen-reader tested tooling. Applications close October 28.";
+      announce(summary);
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(summary);
+        utterance.rate = 1.0;
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    // 7. Clipboard Copy
+    function copyLinkToClipboard() {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        announce('Listing link copied to clipboard');
+        alert('Listing link copied to clipboard!');
+      }).catch(() => {
+        alert('Could not copy link.');
+      });
+    }
+
+    // 8. Modal Management
+    const reportModal = document.getElementById('report-modal');
+    function openReportModal() {
+      reportModal.classList.remove('hidden');
+      reportModal.classList.add('flex');
+      document.getElementById('barrier-type').focus();
+    }
+    function closeReportModal() {
+      reportModal.classList.add('hidden');
+      reportModal.classList.remove('flex');
+    }
+    function handleReportSubmit(e) {
+      e.preventDefault();
+      closeReportModal();
+      announce('Barrier report received. Thank you for making AccessAble safer.');
+      alert('Thank you. AccessAble advocates have logged this barrier for investigation.');
+    }
+  </script>
+</body></html>
